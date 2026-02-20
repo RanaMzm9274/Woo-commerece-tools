@@ -261,6 +261,7 @@ const NewCardsForm = ({ editProduct }: Props) => {
 
   const previewRef = useRef<HTMLDivElement>(null);
 
+<<<<<<< HEAD
   // âœ… hydrate when meaningful layout arrives
   const lastGoodLayoutRef = useRef<any>(null);
 
@@ -274,12 +275,19 @@ const NewCardsForm = ({ editProduct }: Props) => {
     if (nextLayout) {
       applyPolygonLayoutToContexts(nextLayout, slide1, slide2, slide3, slide4);
     }  }, [editLayout]);
+=======
+  // ✅ hydrate when meaningful layout arrives
+  useEffect(() => {
+    applyPolygonLayoutToContexts(editLayout, slide1, slide2, slide3, slide4);
+  }, [editLayout]);
+>>>>>>> a14ba4f93fd745df71dd2fa5e97ab521e4c1538a
 
   // AddNewCards page
   const handleEditLayout = async () => {
     if (editLoading) return;
     setEditLoading(true);
 
+<<<<<<< HEAD
     try {
       const layoutNow = buildPolygonLayout(slide1, slide2, slide3, slide4);
       const layoutToSend =
@@ -299,6 +307,29 @@ const NewCardsForm = ({ editProduct }: Props) => {
     } finally {
       setEditLoading(false);
     }  };
+=======
+    await sleep(300);
+
+    // ✅ snapshot of current form (so nothing is lost)
+    const formSnapshot = getValues();
+
+    // ✅ send latest layout
+    const layoutNow = buildPolygonLayout(slide1, slide2, slide3, slide4);
+    const designToSend = pickPolygonLayout(layoutNow, editLayout) ?? null;
+
+    // ⚠️ setLoading false BEFORE navigate (component unmount ho jata hai)
+    setEditLoading(false);
+
+    navigate(ADMINS_DASHBOARD.ADMIN_EDITOR, {
+      state: {
+        mode: id ? "edit" : "create",
+        id,
+        design: designToSend,
+        formData: formSnapshot,
+      },
+    });
+  };
+>>>>>>> a14ba4f93fd745df71dd2fa5e97ab521e4c1538a
 
 
   const onSubmit = async (data: FormValue) => {
@@ -366,10 +397,18 @@ const NewCardsForm = ({ editProduct }: Props) => {
       }
     } catch (err: any) {
       toast.error("Failed to save card: " + (err?.message || "Unknown error"));
+<<<<<<< HEAD
   } finally {
     setLoading(false);
   }
 };
+=======
+    } finally {
+      setLoading(false);
+    }
+  };
+
+>>>>>>> a14ba4f93fd745df71dd2fa5e97ab521e4c1538a
 
   return (
     <Box>
@@ -520,10 +559,17 @@ const NewCardsForm = ({ editProduct }: Props) => {
           </Box>
 
           <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 1 }}>
+<<<<<<< HEAD
             <CustomInput label="Sale Price" placeholder="Sale price" type="number" defaultValue="" register={register("saleprice", { setValueAs: toFloat })} error={errors.saleprice?.message} showRequiredAsterisk={false} />
             <CustomInput label="Sale A4 Price" placeholder="A4 Price" type="number" defaultValue="" register={register("salea4price", { setValueAs: toFloat })} error={errors.salea4price?.message} showRequiredAsterisk={false} />
             <CustomInput label="Sale A5 Price" placeholder="A5 Price" type="number" defaultValue="" register={register("salea5price", { setValueAs: toFloat })} error={errors.salea5price?.message} showRequiredAsterisk={false} />
             <CustomInput label="Sale US Letter" placeholder="US Letter" type="number" defaultValue="" register={register("saleusletter", { setValueAs: toFloat })} error={errors.saleusletter?.message} showRequiredAsterisk={false} />
+=======
+            <CustomInput label="Sale Price" placeholder="Sale price" type="number" defaultValue="" register={register("saleprice", { setValueAs: toFloat })} error={errors.saleprice?.message} />
+            <CustomInput label="Sale A4 Price" placeholder="A4 Price" type="number" defaultValue="" register={register("salea4price", { setValueAs: toFloat })} error={errors.salea4price?.message} />
+            <CustomInput label="Sale A5 Price" placeholder="A5 Price" type="number" defaultValue="" register={register("salea5price", { setValueAs: toFloat })} error={errors.salea5price?.message} />
+            <CustomInput label="Sale US Letter" placeholder="US Letter" type="number" defaultValue="" register={register("saleusletter", { setValueAs: toFloat })} error={errors.saleusletter?.message} />
+>>>>>>> a14ba4f93fd745df71dd2fa5e97ab521e4c1538a
           </Box>
 
           <CustomInput
