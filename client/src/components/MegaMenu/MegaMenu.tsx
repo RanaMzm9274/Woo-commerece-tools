@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { useMemo, useState, useEffect } from "react";
+=======
+// File: src/components/MegaMenu/MegaMenu.tsx
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 import {
   Box,
   List,
@@ -7,10 +11,18 @@ import {
   Typography,
 } from "@mui/material";
 import { COLORS } from "../../constant/color";
+<<<<<<< HEAD
 
 interface Category {
   name: string;      // main category
   links: string[];   // subCategories or "sub > subSub" strings (optional)
+=======
+import React, { useMemo, useState } from "react";
+
+interface Category {
+  name: string;
+  links: string[];
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 }
 
 interface MegaMenuItem {
@@ -18,6 +30,7 @@ interface MegaMenuItem {
   categories: Category[];
 }
 
+<<<<<<< HEAD
 type MegaSelectPayload = {
   tabName: string;                 // main category (active.name)
   subCategory?: string | null;     // selected subCategory
@@ -152,6 +165,49 @@ const MegaMenu = ({
       label,
     });
   };
+=======
+const splitFooters = (links: string[] = []) => {
+  const footers = links.filter((l) => /shop all/i.test(l) || /all .*$/i.test(l));
+  const items = links.filter((l) => !footers.includes(l));
+  return { items, footers };
+};
+
+const distributeIntoThree = <T,>(arr: T[]) => {
+  const cols: [T[], T[], T[]] = [[], [], []];
+  arr.forEach((item, i) => cols[i % 3].push(item));
+  return cols;
+};
+
+const MegaMenu = ({
+  data,
+  onSelect,
+}: {
+  data: MegaMenuItem;
+  onSelect?: (payload: { parent: string; label: string }) => void;
+}) => {
+  const columns = useMemo(() => {
+    const cats = data?.categories ?? [];
+    return cats.map((col) => {
+      const { items, footers } = splitFooters(col.links ?? []);
+      return { ...col, items, footers };
+    });
+  }, [data]);
+
+  const [activeIdx, setActiveIdx] = useState(0);
+
+  // why: keep active index valid when data changes
+  React.useEffect(() => {
+    if (activeIdx >= columns.length) setActiveIdx(0);
+  }, [columns.length, activeIdx]);
+
+  const active = columns[activeIdx];
+
+  // 3 columns of names (balanced)
+  const [colA, colB, colC] = useMemo(
+    () => distributeIntoThree(columns),
+    [columns]
+  );
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
   return (
     <Box
@@ -170,14 +226,22 @@ const MegaMenu = ({
     >
       <Box
         sx={{
+<<<<<<< HEAD
           width: { lg: 1340, md: "100%", sm: "100%", xs: "100%" },
+=======
+          width: { lg: 1660, md: "100%", sm: "100%", xs: "100%" },
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           bgcolor: "#fff",
           p: 3,
           boxShadow: 3,
           position: "absolute",
           top: 0,
           minHeight: 240,
+<<<<<<< HEAD
           maxHeight: 520,
+=======
+          maxHeight: 480,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           overflowY: "auto",
           "&::-webkit-scrollbar": { height: "6px", width: 6 },
           "&::-webkit-scrollbar-track": {
@@ -191,6 +255,7 @@ const MegaMenu = ({
           display: "grid",
           gap: 3,
           gridTemplateColumns: {
+<<<<<<< HEAD
             xs: "1fr",
             sm: "1fr",
             // 3 columns for main category names, then subCategories, then subSubCategories
@@ -199,6 +264,15 @@ const MegaMenu = ({
         }}
       >
         {/* Column 1 */}
+=======
+            xs: "1fr", // stack on mobile
+            sm: "1fr", // stack on small
+            md: "repeat(3, minmax(0, 1fr)) minmax(0, 1.5fr)", // 3 name cols + 1 list col
+          },
+        }}
+      >
+        {/* Column 1 — category names */}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         <Box role="list" aria-label="Categories column 1">
           {colA.map((category, idx) => {
             const realIdx = columns.indexOf(category);
@@ -226,7 +300,11 @@ const MegaMenu = ({
           })}
         </Box>
 
+<<<<<<< HEAD
         {/* Column 2 */}
+=======
+        {/* Column 2 — category names */}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         <Box role="list" aria-label="Categories column 2">
           {colB.map((category, idx) => {
             const realIdx = columns.indexOf(category);
@@ -254,7 +332,11 @@ const MegaMenu = ({
           })}
         </Box>
 
+<<<<<<< HEAD
         {/* Column 3 */}
+=======
+        {/* Column 3 — category names */}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         <Box role="list" aria-label="Categories column 3">
           {colC.map((category, idx) => {
             const realIdx = columns.indexOf(category);
@@ -282,6 +364,7 @@ const MegaMenu = ({
           })}
         </Box>
 
+<<<<<<< HEAD
         {/* Column 4 — SubCategories */}
         <Box>
           {active ? (
@@ -387,6 +470,11 @@ const MegaMenu = ({
           </Typography>
 
           {subSubList.length > 0 ? (
+=======
+        {/* Column 4 — active category links */}
+        <Box>
+          {active ? (
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             <List
               dense
               disablePadding
@@ -401,21 +489,36 @@ const MegaMenu = ({
                   borderRadius: 10,
                 },
               }}
+<<<<<<< HEAD
               aria-label={`Sub-subcategories of ${activeSub ?? ""}`}
             >
               {subSubList.map((ss, i) => (
                 <ListItemButton
                   key={`subsub-${active?.name}-${activeSub}-${ss}-${i}`}
+=======
+              aria-label={`Subcategories of ${active.name}`}
+            >
+              {active.items.map((link, linkIndex: number) => (
+                <ListItemButton
+                  key={`item-${active.name}-${link}-${linkIndex}`}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                   sx={{
                     py: 0.25,
                     px: 0,
                     "&:hover": { bgcolor: "transparent" },
                   }}
                   disableRipple
+<<<<<<< HEAD
                   onClick={() => handleSubSubClick(ss)} // ✅ navigate with tab + sub + subSub
                 >
                   <ListItemText
                     primary={ss}
+=======
+                  onClick={() => onSelect?.({ parent: data.title, label: link })}
+                >
+                  <ListItemText
+                    primary={link}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                     primaryTypographyProps={{ fontSize: 14, color: "#212121" }}
                     sx={{
                       m: 0,
@@ -426,10 +529,49 @@ const MegaMenu = ({
                   />
                 </ListItemButton>
               ))}
+<<<<<<< HEAD
             </List>
           ) : (
             <Typography variant="body2" color="text.secondary">
               {activeSub ? "No sub-subcategories" : "Hover a subcategory"}
+=======
+
+              {active.footers.length > 0 && (
+                <Box sx={{ pt: 0.75 }}>
+                  {active.footers.map((link, i) => (
+                    <ListItemButton
+                      key={`footer-${active.name}-${link}-${i}`}
+                      sx={{
+                        py: 0.25,
+                        px: 0,
+                        "&:hover": { bgcolor: "transparent" },
+                      }}
+                      disableRipple
+                      onClick={() => onSelect?.({ parent: data.title, label: link })}
+                    >
+                      <ListItemText
+                        primary={link}
+                        primaryTypographyProps={{
+                          fontSize: 14,
+                          fontWeight: 600,
+                          color: COLORS.primary,
+                        }}
+                        sx={{
+                          m: 0,
+                          "& .MuiListItemText-primary:hover": {
+                            textDecoration: "underline",
+                          },
+                        }}
+                      />
+                    </ListItemButton>
+                  ))}
+                </Box>
+              )}
+            </List>
+          ) : (
+            <Typography variant="body2" color="text.secondary">
+              No subcategories
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             </Typography>
           )}
         </Box>

@@ -34,7 +34,11 @@ const upsertUser = async (authUser: User) => {
       .from("Users")
       .select("id")
       .eq("auth_id", authUser.id)
+<<<<<<< HEAD
       .maybeSingle();
+=======
+      .single();
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
     if (!existing) {
       await supabase.from("Users").insert([
@@ -168,4 +172,8 @@ export const initializeAuth = async () => {
     console.error('Error initializing auth:', error);
     setLoading(false);
   }
+<<<<<<< HEAD
 };
+=======
+};
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0

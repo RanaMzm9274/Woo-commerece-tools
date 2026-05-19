@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Box, IconButton, useMediaQuery } from "@mui/material";
+=======
+import { useMemo, useRef, useState } from "react";
+import { Box, IconButton, Typography, useMediaQuery } from "@mui/material";
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 import "./card.css";
 import GlobalWatermark from "../../../../../components/GlobalWatermark/GlobalWatermark";
@@ -9,6 +14,7 @@ import Slide3 from "../Slide3/Slide3";
 import Slide4 from "../Slide4/Slide4";
 import { useNavigate } from "react-router-dom";
 import { USER_ROUTES } from "../../../../../constant/route";
+<<<<<<< HEAD
 import LandingButton from "../../../../../components/LandingButton/LandingButton";
 import { clearSlidesFromIdb, saveSlidesToIdb } from "../../../../../lib/idbSlides";
 import { resolveSlidesScopeCandidates, saveSlidesToScopes } from "../../../../../lib/slidesScope";
@@ -540,12 +546,17 @@ const mapPolygonSlideToTemplateSlide = (id: number, payload?: SlidePayloadV2 | n
     ],
   };
 };
+=======
+import { toPng } from "html-to-image";
+import LandingButton from "../../../../../components/LandingButton/LandingButton";
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
 const PreviewBookCard = () => {
   // currentLocation is 1..(numOfPapers+1) for the flip-book
   const [currentLocation, setCurrentLocation] = useState(1);
   // single index for mobile 1..4
   const [mobileIndex, setMobileIndex] = useState(1);
+<<<<<<< HEAD
   const [downloading, setDownloading] = useState(false);
   const navigate = useNavigate();
   const isIosWebKit = useMemo(() => isIosTouchDevice(), []);
@@ -591,6 +602,15 @@ const PreviewBookCard = () => {
   }, []);
 
   const numOfPapers = 2;
+=======
+  const [loading,setLoading] = useState(false)
+  const navigate = useNavigate()
+
+
+  const isMobile = useMediaQuery("(max-width:480px)");
+
+  const numOfPapers = 2; // 4 slides across 2 papers
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   const maxLocation = numOfPapers + 1;
 
   const slides = useMemo(() => [<Slide1 key="s1" />, <Slide2 key="s2" />, <Slide3 key="s3" />, <Slide4 key="s4" />], []);
@@ -620,6 +640,7 @@ const PreviewBookCard = () => {
   const isPrevDisabled = isMobile ? mobileIndex === 1 : currentLocation === 1;
   const isNextDisabled = isMobile ? mobileIndex === slides.length : currentLocation === maxLocation;
 
+<<<<<<< HEAD
   useEffect(() => {
     try {
       sessionStorage.setItem("card_preview_downloaded", "0");
@@ -884,10 +905,63 @@ const PreviewBookCard = () => {
       setDownloading(false);
     }
   }, [captureCardSlides, captureCardSlidesFromCanvasRenderer, downloading, isIosWebKit, isSafariWebKitBrowser, navigate]);
+=======
+
+  const slideRefs: any = {
+    s1: useRef(null),
+    s2: useRef(null),
+    s3: useRef(null),
+    s4: useRef(null),
+  };
+
+  const [slideImages, setSlideImages] = useState({
+    slide1: "",
+    slide2: "",
+    slide3: "",
+    slide4: "",
+  });
+
+  console.log(slideImages, '--')
+
+ const captureSlides = async () => {
+  setLoading(true)
+  const results: any = {};
+
+  // 1️⃣ Disable transform ONLY on slide sections
+  const slidesForCapture = document.querySelectorAll(".capture-slide");
+  slidesForCapture.forEach((el) => {
+    el.classList.add("capture-no-transform");
+  });
+
+  // 2️⃣ Capture each slide
+  for (let key of ["s1", "s2", "s3", "s4"]) {
+    const node = slideRefs[key].current;
+    if (!node) continue;
+
+    const dataUrl = await toPng(node, {
+      cacheBust: true,
+      pixelRatio: 2,
+    });
+
+    results[key.replace("s", "slide")] = dataUrl;
+  }
+
+  // 3️⃣ Restore transforms
+  slidesForCapture.forEach((el) => {
+    el.classList.remove("capture-no-transform");
+  });
+
+  setSlideImages(results);
+  setLoading(false)
+  return results;
+};
+
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
 
   return (
     <>
+<<<<<<< HEAD
       <Box sx={{ display: "flex", gap: 3, justifyContent: 'flex-end', alignItems: 'flex-end', m: 'auto', p: 2, mt: -9 }}>
         <LandingButton
           title="Download"
@@ -939,10 +1013,38 @@ const PreviewBookCard = () => {
                   {slides[mobileIndex - 1]}
                 </div>
               </div>
+=======
+      {/* Header */}
+      <Box sx={{ display: "flex", justifyContent: "space-between", p: 2 }}>
+        <Typography sx={{ fontSize: "30px", fontFamily: "cursive" }}>
+          Preview
+        </Typography>
+        <Box sx={{ display: "flex", gap: 3 }}>
+          <LandingButton
+            title="Download"
+            loading={loading}
+            onClick={async () => {
+              const slidesCaptured = await captureSlides();
+              sessionStorage.setItem("slides", JSON.stringify(slidesCaptured));
+              navigate(USER_ROUTES.SUBSCRIPTION);
+            }}
+
+          />
+        </Box>
+      </Box>
+
+      <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", m: "auto", flexDirection: "column" }}>
+        {/* MOBILE: one slide at a time */}
+        {isMobile ? (
+          <div className="book-container mobile-only">
+            <div className="mobile-slide" aria-live="polite">
+              {slides[mobileIndex - 1]}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             </div>
           </div>
         ) : (
           // DESKTOP/TABLET: 3D flip-book
+<<<<<<< HEAD
           <div
             style={{
               width: `${BASE_BOOK.w * bookScale}px`,
@@ -969,6 +1071,15 @@ const PreviewBookCard = () => {
                     transition: "transform 0.5s ease",
                   }}
                 >
+=======
+          <div className="book-container">
+            <div id="book" className="book"
+              style={{
+                transform: getBookTransform(),
+                transition: "transform 0.5s ease",
+              }}
+            >
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
               {/* Paper 1 */}
               <div id="p1" className={`paper ${currentLocation > 1 ? "flipped" : ""}`}
@@ -976,12 +1087,20 @@ const PreviewBookCard = () => {
               >
                 <div className="front">
                   <div className="front-content capture-slide" id="sf1">
+<<<<<<< HEAD
                     <Slide1 />
+=======
+                    <Slide1 ref={slideRefs.s1} />
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                   </div>
                 </div>
                 <div className="back">
                   <div className="back-content capture-slide" id="b1">
+<<<<<<< HEAD
                     <Slide2 />
+=======
+                    <Slide2 ref={slideRefs.s2}  />
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                   </div>
                 </div>
               </div>
@@ -992,23 +1111,37 @@ const PreviewBookCard = () => {
               >
                 <div className="front">
                   <div className="front-content capture-slide" id="f2">
+<<<<<<< HEAD
                     <Slide3 />
+=======
+                    <Slide3 ref={slideRefs.s3}  />
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                   </div>
                 </div>
                 <div className="back">
                   <div className="back-content capture-slide" id="b2">
+<<<<<<< HEAD
                     <Slide4 />
+=======
+                    <Slide4  ref={slideRefs.s4} />
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                   </div>
                 </div>
               </div>
 
+<<<<<<< HEAD
                 </div>
               </div>
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             </div>
           </div>
 
         )}
+<<<<<<< HEAD
         </Box>
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
         {/* Controls */}
         <Box sx={{ display: "flex", gap: "10px", alignItems: "center", mt: 3 }}>
@@ -1040,6 +1173,7 @@ const PreviewBookCard = () => {
         </Box>
         <GlobalWatermark />
       </Box>
+<<<<<<< HEAD
 
       <Box
         aria-hidden
@@ -1067,6 +1201,8 @@ const PreviewBookCard = () => {
           <Slide4 />
         </Box>
       </Box>
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     </>
 
   );

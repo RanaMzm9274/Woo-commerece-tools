@@ -31,12 +31,19 @@ type ModalType = {
   btnText?: string;
   icon?: React.ReactNode;
   onClick?: () => void;
+<<<<<<< HEAD
   isDraftOpen?: boolean
   onCancel?: () => void;
 };
 
 const ConfirmModal = (props: ModalType) => {
   const { open, onCloseModal, title, btnText, icon, onClick, isDraftOpen, onCancel } = props || {};
+=======
+};
+
+const ConfirmModal = (props: ModalType) => {
+  const { open, onCloseModal, title, btnText, icon, onClick } = props || {};
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
   const { signOut } = useAuthStore();
   const navigate = useNavigate();
@@ -111,6 +118,7 @@ const ConfirmModal = (props: ModalType) => {
               personal
               variant="outlined"
               width="200px"
+<<<<<<< HEAD
               onClick={() => {
                 onCancel?.();
                 if (isDraftOpen) {
@@ -119,6 +127,9 @@ const ConfirmModal = (props: ModalType) => {
                 }
                 onCloseModal();
               }}
+=======
+              onClick={() => onCloseModal()}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             />
             <LandingButton
               title={btnText || "Logout"}

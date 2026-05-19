@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿// /src/context/CategoriesEditorContext.tsx
 import React, { createContext, useContext, useMemo, useRef, useState, useCallback } from "react";
 import * as htmlToImage from "html-to-image";
@@ -6,6 +7,14 @@ import { supabaseAdmin } from "../supabase/supabase";
 import toast from "react-hot-toast";
 import { getCanvasMultiplier } from "../lib/lib";
 import { prepareTemplateRawStoresForStorage } from "../lib/templateEditorScale";
+=======
+// /src/context/CategoriesEditorContext.tsx
+import React, { createContext, useContext, useMemo, useRef, useState, useCallback } from "react";
+import * as htmlToImage from "html-to-image";
+import { CATEGORY_CONFIG, type CategoryKey } from "../constant/data";
+import { supabase } from "../supabase/supabase";
+import toast from "react-hot-toast";
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
 /* ---------- Types ---------- */
 export type Slide = { id: number };
@@ -27,8 +36,11 @@ export type TextElement = {
   editable?: boolean;
   // align exists in editor code via ts-expect-error; keep flexible
   align?: "left" | "center" | "right";
+<<<<<<< HEAD
   rotation?: number;
   curve?: number;
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 };
 
 export type ImageElement = {
@@ -66,6 +78,7 @@ export type SnapshotSlide = {
   elements: SnapshotAnyEl[];
 };
 
+<<<<<<< HEAD
 
 // path: src/context/CategoriesEditorContext.ts
 export type PriceText = string | number | null | undefined;
@@ -103,17 +116,46 @@ export type PublishMeta = {
   // Optional map storage (kept inside raw_stores)
   pricing?: Record<string, PriceText>;
   salePricing?: Record<string, PriceText>;
+=======
+export type PublishMeta = {
+  id?: string;     // ✅ add
+  mode?: "edit" | "create" | string;
+  cardname?: string;
+
+  // IMPORTANT: this is the product category chosen in the form
+  cardcategory?: string;
+
+  subCategory?: string;
+  subSubCategory?: string;
+
+  actualprice?: string;
+  a4price?: string;
+  a5price?: string;
+  usletter?: string;
+
+  saleprice?: string;
+  salea4price?: string;
+  salea5price?: string;
+  saleusletter?: string;
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
   description?: string;
   sku?: string;
   imgUrl?: string;
 };
 
+<<<<<<< HEAD
 
 type CategoriesEditorContextType = {
   // editor "template type"
   category: string;
   setCategory: (c: string) => void;
+=======
+type CategoriesEditorContextType = {
+  // editor "template type"
+  category: CategoryKey;
+  setCategory: (c: CategoryKey) => void;
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   config: (typeof CATEGORY_CONFIG)[CategoryKey];
 
   selectedSlide: number;
@@ -147,7 +189,11 @@ type CategoriesEditorContextType = {
   getSlidesWithElements: () => SnapshotSlide[];
 
   serialize: () => {
+<<<<<<< HEAD
     category: string;
+=======
+    category: CategoryKey;
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     config: (typeof CATEGORY_CONFIG)[CategoryKey];
     slides: Slide[];
     textElements: TextElement[];
@@ -157,23 +203,36 @@ type CategoriesEditorContextType = {
   };
 
   serializeWithElements: () => {
+<<<<<<< HEAD
     editorCategory: string;
+=======
+    editorCategory: CategoryKey;
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     size_mm: { w: number; h: number };
     slides: SnapshotSlide[];
   };
 
+<<<<<<< HEAD
   saveDesign: (meta?: PublishMeta) => Promise<boolean>;
+=======
+  saveDesign: (meta?: PublishMeta) => Promise<void>;
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   captureFirstSlidePng: () => Promise<string | null>;
 
   mainScrollerRef: React.MutableRefObject<HTMLDivElement | null>;
   registerFirstSlideNode: (node: HTMLDivElement | null) => void;
 
+<<<<<<< HEAD
   resetState: () => void;
+=======
+  reset: () => void;
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 };
 
 const CategoriesEditorContext = createContext<CategoriesEditorContextType | undefined>(undefined);
 
 /* ---------- Helpers ---------- */
+<<<<<<< HEAD
 const DEFAULT_CATEGORY: CategoryKey = "Invites";
 const mmToPx = (mm: number, dpi = 96) => (mm / 25.4) * dpi;
 
@@ -192,12 +251,22 @@ const resolveEditorCategory = (value: unknown, fallback: CategoryKey = DEFAULT_C
 };
 
 export const CategoriesEditorProvider = ({ children }: { children: React.ReactNode }) => {
+=======
+const mmToPx = (mm: number, dpi = 96) => (mm / 25.4) * dpi;
+
+export const CategoriesEditorProvider = ({ children }: { children: React.ReactNode }) => {
+  const DEFAULT_CATEGORY: CategoryKey = "Invites";
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   const initialConfig = CATEGORY_CONFIG[DEFAULT_CATEGORY];
   const initialSlides: Slide[] = initialConfig.slideLabels?.length
     ? initialConfig.slideLabels.map((_, i) => ({ id: i + 1 }))
     : [{ id: 1 }];
 
+<<<<<<< HEAD
   const [category, setCategory] = useState<string>(DEFAULT_CATEGORY);
+=======
+  const [category, setCategory] = useState<CategoryKey>(DEFAULT_CATEGORY);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   const [config, setConfig] = useState<(typeof CATEGORY_CONFIG)[CategoryKey]>(initialConfig);
   const [slides, setSlides] = useState<Slide[]>(initialSlides);
   const [selectedSlide, setSelectedSlide] = useState(0);
@@ -218,6 +287,7 @@ export const CategoriesEditorProvider = ({ children }: { children: React.ReactNo
     firstSlideRef.current = node;
   }, []);
 
+<<<<<<< HEAD
   const getConfigForCategory = useCallback((name: string) => {
     const key = resolveEditorCategory(name, DEFAULT_CATEGORY);
     const known = CATEGORY_CONFIG[key as CategoryKey];
@@ -233,6 +303,11 @@ export const CategoriesEditorProvider = ({ children }: { children: React.ReactNo
     const resolved = resolveEditorCategory(c, DEFAULT_CATEGORY);
     setCategory(resolved);
     const cfg = getConfigForCategory(resolved);
+=======
+  const applyCategory = useCallback((c: CategoryKey) => {
+    setCategory(c);
+    const cfg = CATEGORY_CONFIG[c];
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     setConfig(cfg);
 
     const newSlides = cfg.slideLabels?.length ? cfg.slideLabels.map((_, i) => ({ id: i + 1 })) : [{ id: 1 }];
@@ -245,7 +320,11 @@ export const CategoriesEditorProvider = ({ children }: { children: React.ReactNo
     setImageElements([]);
     setStickerElements([]);
     setSlideBg({});
+<<<<<<< HEAD
   }, [getConfigForCategory]);
+=======
+  }, []);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
   const getTexts = (slideId: number) => textElements.filter((t) => t.slideId === slideId);
   const getImages = (slideId: number) => imageElements.filter((i) => i.slideId === slideId);
@@ -271,8 +350,13 @@ export const CategoriesEditorProvider = ({ children }: { children: React.ReactNo
 
   const getSlidesWithElements = useCallback(() => buildSlidesWithElements(), [buildSlidesWithElements]);
 
+<<<<<<< HEAD
   const resetState = () => {
     const cfg = getConfigForCategory(category);
+=======
+  const reset = () => {
+    const cfg = CATEGORY_CONFIG[category];
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     const newSlides = cfg.slideLabels?.length ? cfg.slideLabels.map((_, i) => ({ id: i + 1 })) : [{ id: 1 }];
     setSlides(newSlides);
     setSelectedSlide(0);
@@ -317,10 +401,13 @@ export const CategoriesEditorProvider = ({ children }: { children: React.ReactNo
       const blob = await resp.blob();
       return await readBlobAsDataUrl(blob);
     } catch {
+<<<<<<< HEAD
       // Keep original remote/static URLs if conversion fails.
       // Returning a transparent pixel here can silently drop design assets.
       if (src.startsWith("http") || src.startsWith("/")) return src;
       // blob URLs are usually session-bound; do not persist them as-is.
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       return "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNgYAAAAAMAASsJTYQAAAAASUVORK5CYII=";
     }
   };
@@ -377,6 +464,10 @@ export const CategoriesEditorProvider = ({ children }: { children: React.ReactNo
         pixelRatio: 2,
         backgroundColor: "transparent",
         skipFonts: false,
+<<<<<<< HEAD
+=======
+        filter: (n: Node) => !(n instanceof HTMLLinkElement && /fonts\.googleapis\.com/i.test(n.href)),
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         imagePlaceholder: transparentPx,
         width: Math.round(w),
         height: Math.round(h),
@@ -392,6 +483,7 @@ export const CategoriesEditorProvider = ({ children }: { children: React.ReactNo
     }
   }, []);
 
+<<<<<<< HEAD
   const saveDesign = async (meta?: PublishMeta): Promise<boolean> => {
     setLoading(true);
     let saved = false;
@@ -419,13 +511,30 @@ export const CategoriesEditorProvider = ({ children }: { children: React.ReactNo
           ...el,
           sticker: await urlToDataUrl(el.sticker),
         }))
+=======
+  const saveDesign = async (meta?: PublishMeta) => {
+    setLoading(true);
+    try {
+      const combined = serializeWithElements(); // { editorCategory, size_mm, slides }
+      const rawStores = serialize(); // editor raw stores
+
+      const normImageElements = await Promise.all(
+        rawStores.imageElements.map(async (el) => ({ ...el, src: await urlToDataUrl(el.src) }))
+      );
+      const normStickerElements = await Promise.all(
+        rawStores.stickerElements.map(async (el) => ({ ...el, sticker: await urlToDataUrl(el.sticker) }))
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       );
 
       const idToImgBase64 = new Map(normImageElements.map((e) => [e.id, e.src]));
       const idToStickerBase64 = new Map(normStickerElements.map((e) => [e.id, e.sticker]));
 
       const normSlides = await Promise.all(
+<<<<<<< HEAD
         storedSlides.map(async (s) => {
+=======
+        combined.slides.map(async (s) => {
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           const elements = await Promise.all(
             s.elements.map(async (el: any) => {
               if (el.type === "image") {
@@ -445,6 +554,7 @@ export const CategoriesEditorProvider = ({ children }: { children: React.ReactNo
 
       const imgUrl = meta?.imgUrl ?? null;
 
+<<<<<<< HEAD
       // Store product cardCategory into DB column "category"
       const dbCategory = meta?.cardcategory?.trim() || null;
 
@@ -460,12 +570,20 @@ export const CategoriesEditorProvider = ({ children }: { children: React.ReactNo
         h: productMm.h * multiplier,
       };
 
+=======
+      // ✅ Store product cardCategory into DB column "category"
+      const dbCategory = meta?.cardcategory?.trim() || null;
+
+      // ✅ store "canvas size" safely INSIDE raw_stores (json) to avoid DB schema changes
+      const canvasMm = { w: rawStores.config.mmWidth, h: rawStores.config.mmHeight };
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       const canvasPx = {
         w: Math.round(mmToPx(canvasMm.w, 96)),
         h: Math.round(mmToPx(canvasMm.h, 96)),
         dpi: 96,
       };
 
+<<<<<<< HEAD
       const fitCanvas = {
         width: Math.round(rawStores.config.mmWidth * multiplier),
         height: Math.round(rawStores.config.mmHeight * multiplier),
@@ -479,18 +597,25 @@ export const CategoriesEditorProvider = ({ children }: { children: React.ReactNo
 
 
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       const payload: any = {
         // DB COLUMN: category (must be the form cardcategory)
         category: dbCategory,
 
         // keep config & slides
+<<<<<<< HEAD
         config: configWithMultiplier,
+=======
+        config: rawStores.config,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         slides: normSlides,
 
         img_url: imgUrl ?? null,
 
         // json storage (safe place for everything)
         raw_stores: {
+<<<<<<< HEAD
           ...storedRawStores,
           config: configWithMultiplier,
           // keep image/sticker sources persisted safely while coords stay in product space
@@ -511,6 +636,19 @@ export const CategoriesEditorProvider = ({ children }: { children: React.ReactNo
             px: canvasPx, // display size
             multiplier,
           },
+=======
+          ...rawStores,
+          // keep original arrays normalized
+          imageElements: normImageElements,
+          stickerElements: normStickerElements,
+          slideBg: rawStores.slideBg,
+
+          // ✅ do NOT lose editor template type
+          editorCategory: rawStores.category, // CategoryKey: Invites/Stickers etc
+
+          // ✅ size used by your renderers
+          canvas: { mm: canvasMm, px: canvasPx },
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         },
 
         title: meta?.cardname ?? rawStores?.config?.label ?? null,
@@ -528,6 +666,7 @@ export const CategoriesEditorProvider = ({ children }: { children: React.ReactNo
         salea4price: meta?.salea4price != null ? String(meta.salea4price) : null,
         salea5price: meta?.salea5price != null ? String(meta.salea5price) : null,
         saleusletter: meta?.saleusletter != null ? String(meta.saleusletter) : null,
+<<<<<<< HEAD
         a3price: meta?.a3price != null ? String(meta.a3price) : null,
         halfusletter: meta?.halfusletter != null ? String(meta.halfusletter) : null,
         ustabloid: meta?.ustabloid != null ? String(meta.ustabloid) : null,
@@ -535,6 +674,8 @@ export const CategoriesEditorProvider = ({ children }: { children: React.ReactNo
         salea3price: meta?.salea3price != null ? String(meta.salea3price) : null,
         salehalfusletter: meta?.salehalfusletter != null ? String(meta.salehalfusletter) : null,
         saleustabloid: meta?.saleustabloid != null ? String(meta.saleustabloid) : null,
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
         description: meta?.description ?? null,
         sku: meta?.sku ?? null,
@@ -542,11 +683,16 @@ export const CategoriesEditorProvider = ({ children }: { children: React.ReactNo
 
       if (!payload.category) {
         toast.error("Card Category is required (DB column: category).");
+<<<<<<< HEAD
         return false;
+=======
+        return;
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       }
 
       const isEdit = !!meta?.id;
 
+<<<<<<< HEAD
       const db = supabaseAdmin;
       const { error } = isEdit
         ? await db.from("templetDesign").update(payload).eq("id", meta!.id)
@@ -568,15 +714,31 @@ export const CategoriesEditorProvider = ({ children }: { children: React.ReactNo
         toast.success(isEdit ? "âœ… Updated template Design" : "âœ… Saved template Design");
         resetState();
         saved = true;
+=======
+      const { error } = isEdit
+        ? await supabase.from("templetDesign").update(payload).eq("id", meta!.id)
+        : await supabase.from("templetDesign").insert([payload]);
+
+      if (error) {
+        console.error("DB save failed:", error);
+        toast.error("Save failed");
+      } else {
+        toast.success("✅ Saved template");
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       }
     } catch (e) {
       console.error("Save error:", e);
       toast.error("Save error");
     } finally {
       setLoading(false);
+<<<<<<< HEAD
       // resetState();
     }
     return saved;
+=======
+      reset();
+    }
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   };
 
   const value = useMemo<CategoriesEditorContextType>(
@@ -623,7 +785,11 @@ export const CategoriesEditorProvider = ({ children }: { children: React.ReactNo
       mainScrollerRef,
       registerFirstSlideNode,
 
+<<<<<<< HEAD
       resetState,
+=======
+      reset,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     }),
     [
       category,
@@ -652,4 +818,7 @@ export const useCategoriesEditorState = () => {
   if (!ctx) throw new Error("useCategoriesEditorState must be used within CategoriesEditorProvider");
   return ctx;
 };
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0

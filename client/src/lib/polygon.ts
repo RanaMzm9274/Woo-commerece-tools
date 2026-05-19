@@ -388,7 +388,11 @@ const normalizeSlideV2 = (ctx: any, opts?: BuildOptions): SlidePayloadV2 => {
   };
 
   // ✅ Keep selection but DON'T filter saved images
+<<<<<<< HEAD
   const selectedImg = pick<string[] | undefined>(
+=======
+  const selectedImg = pick<string[]>(
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     ctx,
     [
       "selectedImg1",
@@ -397,7 +401,11 @@ const normalizeSlideV2 = (ctx: any, opts?: BuildOptions): SlidePayloadV2 => {
       "selectedImg4",
       "selectedImg",
     ],
+<<<<<<< HEAD
     undefined
+=======
+    []
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   );
 
   const imagesRaw = pick<any[]>(
@@ -413,6 +421,7 @@ const normalizeSlideV2 = (ctx: any, opts?: BuildOptions): SlidePayloadV2 => {
   );
 
   // ✅ IMPORTANT: if selection empty, treat as "all selected"
+<<<<<<< HEAD
   const imageIdSet = new Set((imagesRaw ?? []).map((i: any) => String(i.id)));
   const hasSelectedField = Array.isArray(selectedImg);
   const selectedRaw = hasSelectedField ? selectedImg : [];
@@ -422,6 +431,12 @@ const normalizeSlideV2 = (ctx: any, opts?: BuildOptions): SlidePayloadV2 => {
   const selectedFinalIds = hasSelectedField
     ? selectedFiltered
     : (imagesRaw ?? []).map((i: any) => i.id);
+=======
+  const selectedFinalIds =
+    Array.isArray(selectedImg) && selectedImg.length > 0
+      ? selectedImg
+      : (imagesRaw ?? []).map((i: any) => i.id);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
   const selectedSet = new Set(selectedFinalIds);
 
@@ -626,6 +641,7 @@ export const buildPolygonLayout = (
 
 export async function captureNodeToPng(
   node: HTMLElement,
+<<<<<<< HEAD
   bg?: string,
   opts?: { width?: number; height?: number }
 ): Promise<string> {
@@ -704,6 +720,15 @@ export async function captureNodeToPng(
       });
     }
   }
+=======
+  bg?: string
+): Promise<string> {
+  return htmlToImage.toPng(node, {
+    cacheBust: true,
+    pixelRatio: 2,
+    backgroundColor: bg ?? getComputedStyle(node).backgroundColor ?? "#ffffff",
+  });
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 }
 
 /* ------------------------ Apply (hydrate) helper ------------------------- */
@@ -930,6 +955,7 @@ export const isMeaningfulPolygonLayout = (layout: any): boolean => {
   return Object.keys(layout).length > 0;
 };
 
+<<<<<<< HEAD
 const normalizeLayoutCandidate = (layout: any) => {
   if (typeof layout !== "string") return layout;
   try {
@@ -942,6 +968,10 @@ const normalizeLayoutCandidate = (layout: any) => {
 
 export const pickPolygonLayout = (...candidates: any[]) =>
   candidates.map(normalizeLayoutCandidate).find(isMeaningfulPolygonLayout) ?? null;
+=======
+export const pickPolygonLayout = (...candidates: any[]) =>
+  candidates.find(isMeaningfulPolygonLayout) ?? null;
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
 const suffixFor = (n: 1 | 2 | 3 | 4) => (n === 2 ? "" : String(n));
 const fnName = (base: string, n: 1 | 2 | 3 | 4) => `${base}${suffixFor(n)}`;
@@ -1003,6 +1033,7 @@ function applySlideV2ToContext(
   callFn("setDraggableImages", Array.isArray(images) ? images : []);
 
   // ✅ Selection (THIS is why images weren't showing)
+<<<<<<< HEAD
   const selected = payload.user?.selectedImageIds;
   const imageIdSet = new Set((images ?? []).map((i: any) => String(i.id)));
   const hasSelectedField = Array.isArray(selected);
@@ -1013,6 +1044,13 @@ function applySlideV2ToContext(
   const selectedFinal = hasSelectedField
     ? selectedFiltered
     : (images ?? []).map((i: any) => i.id);
+=======
+  const selected = payload.user?.selectedImageIds ?? [];
+  const selectedFinal =
+    Array.isArray(selected) && selected.length > 0
+      ? selected
+      : (images ?? []).map((i: any) => i.id);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
   // contexts naming:
   // slide1: setSelectedImage1

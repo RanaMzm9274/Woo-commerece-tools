@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { createContext, useContext, useEffect, useRef, useState } from "react";
 import { safeGetStorage, safeSetLocalStorage } from "../lib/storage";
 import { getDraftCardId } from "../lib/draftCardId";
@@ -8,6 +9,9 @@ import {
   loadSlideStateFromIdb,
   saveSlideStateToIdb,
 } from "../lib/idbSlideState";
+=======
+import React, { createContext, useContext, useEffect, useState } from "react";
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 const fontColors = [
   "#000000",
   "#FF0000",
@@ -21,6 +25,7 @@ const fontColors = [
   "#FFD700",
 ];
 
+<<<<<<< HEAD
 const normalizeStoredUrl = (value: unknown): string | null => {
   if (typeof value === "string") {
     const trimmed = value.trim();
@@ -33,6 +38,8 @@ const normalizeStoredUrl = (value: unknown): string | null => {
   return null;
 };
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 interface Position {
   x: number;
   y: number;
@@ -454,12 +461,15 @@ export const Slide1Provider: React.FC<{ children: React.ReactNode }> = ({
   const [duration1, setDuration1] = useState<number | null>(null);
   const [poster1, setPoster1] = useState<string | null>(null);
 
+<<<<<<< HEAD
   // --- 💾 Persist heavy image data to IndexedDB ---
   useEffect(() => {
     const [key] = getSlideStateKeys(1, getDraftCardId());
     void saveSlideStateToIdb(key, { images1, draggableImages1 }).catch(() => {});
   }, [images1, draggableImages1]);
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   // New states for position and size
   const [textPositions1, setTextPositions1] = useState<Position[]>(
     texts1.map(() => ({ x: 0, y: 0 }))
@@ -653,6 +663,10 @@ export const Slide1Provider: React.FC<{ children: React.ReactNode }> = ({
 
     // Clear data store snapshot
     setSlide1DataStore1([]);
+<<<<<<< HEAD
+=======
+    slide1DataStore1;
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
     setBgColor1(null);
     setBgImage1(null);
@@ -661,6 +675,7 @@ export const Slide1Provider: React.FC<{ children: React.ReactNode }> = ({
 
   };
 
+<<<<<<< HEAD
   const lastSavedStatePayloadRef = useRef("");
   const storageFullLoggedRef = useRef(false);
 
@@ -698,6 +713,21 @@ export const Slide1Provider: React.FC<{ children: React.ReactNode }> = ({
           if (videoUrl) setSelectedVideoUrl1(videoUrl);
           if (audioUrl) setSelectedAudioUrl1(audioUrl);
         }
+=======
+
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("slide1_state");
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed.textElements3) setTextElements1(parsed.textElements1);
+        if (parsed.draggableImages1) setDraggableImages1(parsed.draggableImages1);
+        if (parsed.images1) setImages1(parsed.images1);
+        if (parsed.selectedImg1) setSelectedImage1(parsed.selectedImg1);
+        if (parsed.selectedVideoUrl1) setSelectedVideoUrl1(parsed.selectedVideoUrl1);
+        if (parsed.selectedAudioUrl1) setSelectedAudioUrl1(parsed.selectedAudioUrl1);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         if (parsed.selectedLayout1) setSelectedLayout1(parsed.selectedLayout1);
         if (parsed.oneTextValue1) setOneTextValue1(parsed.oneTextValue1);
         if (parsed.showOneTextRightSideBox1) setShowOneTextRightSideBox1(parsed.showOneTextRightSideBox1);
@@ -707,7 +737,11 @@ export const Slide1Provider: React.FC<{ children: React.ReactNode }> = ({
           setSelectedStickers1(parsed.selectedStickers1);
         if (parsed.qrPosition1) setQrPosition1(parsed.qrPosition1);
         if (parsed.qrAudioPosition1) setQrAudioPosition1(parsed.qrAudioPosition1);
+<<<<<<< HEAD
         if (parsed.aimage1) setAIImage1(parsed.aimage1);
+=======
+        if (parsed.aimage2) setAIImage1(parsed.aimage2);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         if (typeof parsed.isAIimage1 === "boolean") setIsAIimage1(parsed.isAIimage1);
         if (parsed.selectedAIimageUrl1)
           setSelectedAIimageUrl1(parsed.selectedAIimageUrl1);
@@ -717,7 +751,10 @@ export const Slide1Provider: React.FC<{ children: React.ReactNode }> = ({
 
         if (parsed.bgColor1 !== undefined) setBgColor1(parsed.bgColor1);
         if (parsed.bgImage1 !== undefined) setBgImage1(parsed.bgImage1);
+<<<<<<< HEAD
         if (parsed.bgRect1 !== undefined) setBgRect1(parsed.bgRect1);
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         if (Object.prototype.hasOwnProperty.call(parsed, "selectedShapePath1")) setSelectedShapePath1(parsed.selectedShapePath1);
 
         if (parsed.fontSize1) setFontSize1(parsed.fontSize1);
@@ -728,6 +765,7 @@ export const Slide1Provider: React.FC<{ children: React.ReactNode }> = ({
         if (parsed.verticalAlign1) setVerticalAlign1(parsed.verticalAlign1);
         if (parsed.letterSpacing1 !== undefined) setLetterSpacing1(parsed.letterSpacing1);
         if (parsed.lineHeight1 !== undefined) setLineHeight1(parsed.lineHeight1);
+<<<<<<< HEAD
         if (parsed.rotation1 !== undefined) setRotation1(parsed.rotation1);
 
         try {
@@ -790,6 +828,22 @@ export const Slide1Provider: React.FC<{ children: React.ReactNode }> = ({
     const stateToSave = {
       draftId: getDraftCardId() ?? null,
       textElements1,
+=======
+        if (parsed.rotation1 !== undefined) setRotation1(parsed.rotation3);
+
+      }
+    } catch (error) {
+      console.error("❌ Error restoring slide1_state:", error);
+    }
+  }, []);
+
+  // --- 💾 Auto-save changes ---
+  useEffect(() => {
+    const stateToSave = {
+      textElements1,
+      draggableImages1,
+      images1,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       selectedImg1,
       selectedVideoUrl1,
       selectedAudioUrl1,
@@ -814,6 +868,7 @@ export const Slide1Provider: React.FC<{ children: React.ReactNode }> = ({
       lineHeight1,
       rotation1,
 
+<<<<<<< HEAD
       bgColor1,
       bgImage1,
       bgRect1,
@@ -850,6 +905,23 @@ export const Slide1Provider: React.FC<{ children: React.ReactNode }> = ({
       });
   }, [
     textElements1,
+=======
+      // + new
+      bgColor1,
+      bgImage1,
+      selectedShapePath1,
+    };
+
+    try {
+      localStorage.setItem("slide1_state", JSON.stringify(stateToSave));
+    } catch (error) {
+      console.error("❌ Error saving slide1_state:", error);
+    }
+  }, [
+    textElements1,
+    draggableImages1,
+    images1,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     selectedImg1,
     selectedVideoUrl1,
     selectedAudioUrl1,
@@ -872,6 +944,7 @@ export const Slide1Provider: React.FC<{ children: React.ReactNode }> = ({
     letterSpacing1,
     lineHeight1,
     rotation1,
+<<<<<<< HEAD
     bgColor1,
     bgImage1,
     bgRect1,
@@ -892,6 +965,20 @@ export const Slide1Provider: React.FC<{ children: React.ReactNode }> = ({
         void clearSlideStateFromIdb(key).catch(() => {});
       });
       console.log("Cleared Slide1 saved state");
+=======
+
+    bgColor1,
+    bgImage1,
+    selectedShapePath1,
+    layout1
+  ]);
+
+  // --- 🧹 Clear localStorage ---
+  const clearSlide1LocalData = () => {
+    try {
+      localStorage.removeItem("slide1_state");
+      console.log("🧹 Cleared Slide1 saved state");
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     } catch (error) {
       console.error("Error clearing slide1_state:", error);
     }

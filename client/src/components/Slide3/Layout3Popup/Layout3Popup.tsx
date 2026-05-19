@@ -13,8 +13,11 @@ const Layout3Popup = ({ onClose, activeIndex }: Layout3PopupProps) => {
   const {
     setShowOneTextRightSideBox3,
     setMultipleTextValue3,
+<<<<<<< HEAD
     setTextAlign3,
     setVerticalAlign3,
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     selectedLayout3,
     setSelectedLayout3,
   } = useSlide3();
@@ -28,16 +31,22 @@ const Layout3Popup = ({ onClose, activeIndex }: Layout3PopupProps) => {
 
   const handleOneTextLayout = () => {
     setSelectedLayout3("oneText");
+<<<<<<< HEAD
     setTextAlign3("start");
     setVerticalAlign3("top");
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     setShowOneTextRightSideBox3(true);
     setMultipleTextValue3(false);
   };
 
   const handleMultipleTextLayout = () => {
     setSelectedLayout3("multipleText");
+<<<<<<< HEAD
     setTextAlign3("start");
     setVerticalAlign3("top");
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     setShowOneTextRightSideBox3(false);
     setMultipleTextValue3(true);
   };

@@ -61,7 +61,11 @@ const Footer = () => {
             <Typography
               sx={{
                 fontSize: { lg: "20px", md: "20px", sm: "15px", xs: "auto" },
+<<<<<<< HEAD
                 fontWeight: 600,
+=======
+                fontWeight: 800,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                 color: COLORS.seconday,
               }}
             >
@@ -103,7 +107,11 @@ const Footer = () => {
           <Typography
             sx={{
               fontSize: { lg: "20px", md: "20px", sm: "17px", xs: "auto" },
+<<<<<<< HEAD
               fontWeight: 600,
+=======
+              fontWeight: 800,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             }}
           >
             Let's get Social
@@ -132,7 +140,11 @@ const Footer = () => {
           <Typography
             sx={{
               fontSize: { lg: "20px", md: "20px", sm: "17px", xs: "auto" },
+<<<<<<< HEAD
               fontWeight: 600,
+=======
+              fontWeight: 800,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             }}
           >
             Download the App
@@ -214,7 +226,11 @@ const Footer = () => {
           <Typography
             sx={{
               fontSize: { lg: "20px", md: "20px", sm: "17px", xs: "auto" },
+<<<<<<< HEAD
               fontWeight: 600,
+=======
+              fontWeight: 700,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             }}
           >
             Shop by Region
@@ -284,7 +300,11 @@ const Footer = () => {
         </Box>
       </Box>
 
+<<<<<<< HEAD
       <Typography sx={{ display: 'flex', justifyContent: 'center', p: 2, alignItems: 'center', fontSize: 13, color: 'gray' }}>diypersonalisation@gmail.com</Typography>
+=======
+      <Typography sx={{ display: 'flex', justifyContent: 'center', p: 2, alignItems: 'center', fontSize: 13, color: 'gray' }}>8 Dodwood, Welwyn Garden City, Hertfordshire</Typography>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     </Box>
   );
 };

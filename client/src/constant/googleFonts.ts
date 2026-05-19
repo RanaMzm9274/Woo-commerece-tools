@@ -92,6 +92,7 @@ const WEIGHT_HINTS: Record<string, number[]> = {
   Kalam: [300, 400, 700],
 };
 
+<<<<<<< HEAD
 const loadedGoogleFontUrls = new Set<string>();
 const googleFontCssCache = new Map<string, Promise<string>>();
 const googleFontEmbedCssCache = new Map<string, Promise<string>>();
@@ -274,6 +275,8 @@ export async function ensureGoogleFontsLoaded(urls: string[]): Promise<void> {
   );
 }
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 /** Build a CSS URL from families with optional weights. */
 function buildUrl(families: string[]): string {
   const q = families
@@ -318,6 +321,7 @@ export function buildGoogleFontsUrls(
 
 /** Idempotently inject link tags. */
 export function loadGoogleFontsOnce(urls: string[]): void {
+<<<<<<< HEAD
   void ensureGoogleFontsLoaded(urls);
 }
 
@@ -337,6 +341,38 @@ export async function getGoogleFontEmbedCss(families: string[]): Promise<string>
   );
 
   return cssParts.filter(Boolean).join("\n");
+=======
+  if (typeof document === "undefined") return;
+
+  // Preconnect once
+  if (!document.getElementById("gf-preconnect-apis")) {
+    const a = document.createElement("link");
+    a.id = "gf-preconnect-apis";
+    a.rel = "preconnect";
+    a.href = "https://fonts.googleapis.com";
+    a.crossOrigin = "anonymous";
+    document.head.appendChild(a);
+  }
+  if (!document.getElementById("gf-preconnect-static")) {
+    const a = document.createElement("link");
+    a.id = "gf-preconnect-static";
+    a.rel = "preconnect";
+    a.href = "https://fonts.gstatic.com";
+    a.crossOrigin = "anonymous";
+    document.head.appendChild(a);
+  }
+
+  // Stylesheets
+  for (const url of urls) {
+    const id = "gf-css-" + btoa(url).slice(0, 12);
+    if (document.getElementById(id)) continue;
+    const link = document.createElement("link");
+    link.id = id;
+    link.rel = "stylesheet";
+    link.href = url;
+    document.head.appendChild(link);
+  }
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 }
 
 /** Convenience: load a large list safely. */

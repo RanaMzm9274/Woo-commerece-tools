@@ -1,7 +1,10 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
+<<<<<<< HEAD
 import { safeGetStorage, safeSetLocalStorage } from "../lib/storage";
 import { getDraftCardId } from "../lib/draftCardId";
 import { clearSlideStateFromIdb, getSlideStateKeys, loadSlideStateFromIdb, saveSlideStateToIdb } from "../lib/idbSlideState";
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
 const fontColors = [
   "#000000",
@@ -16,6 +19,7 @@ const fontColors = [
   "#FFD700",
 ];
 
+<<<<<<< HEAD
 const normalizeStoredUrl = (value: unknown): string | null => {
   if (typeof value === "string") {
     const trimmed = value.trim();
@@ -28,6 +32,8 @@ const normalizeStoredUrl = (value: unknown): string | null => {
   return null;
 };
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 interface Position {
   x: number;
   y: number;
@@ -253,7 +259,10 @@ interface Slide4ContextType {
 
   // For Sticker
   selectedStickers4: StickerItem[];
+<<<<<<< HEAD
   setSelectedStickers4: React.Dispatch<React.SetStateAction<StickerItem[]>>;
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   addSticker4: (
     sticker: Omit<StickerItem, "x" | "y" | "width" | "height" | "zIndex">
   ) => void;
@@ -435,7 +444,10 @@ export const Slide4Provider: React.FC<{ children: React.ReactNode }> = ({
   const [editingIndex4, setEditingIndex4] = useState<number | null>(null);
 
   const [images4, setImages4] = useState<{ id: number; src: string }[]>([]);
+<<<<<<< HEAD
   const [layout4, setLayout4] = useState<any>(null);
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   const [video4, setVideo4] = useState<File[] | null>(null);
   const [audio4, setAudio4] = useState<File[] | null>(null);
   const [tips4, setTips4] = useState(false);
@@ -443,12 +455,15 @@ export const Slide4Provider: React.FC<{ children: React.ReactNode }> = ({
   const [duration4, setDuration4] = useState<number | null>(null);
   const [poster4, setPoster4] = useState<string | null>(null);
 
+<<<<<<< HEAD
   // --- 💾 Persist heavy image data to IndexedDB ---
   useEffect(() => {
     const [key] = getSlideStateKeys(4, getDraftCardId());
     void saveSlideStateToIdb(key, { images4, draggableImages4 }).catch(() => {});
   }, [images4, draggableImages4]);
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   // New states for position and size
   const [textPositions4, setTextPositions4] = useState<Position[]>(
     texts4.map(() => ({ x: 0, y: 0 }))
@@ -632,6 +647,7 @@ export const Slide4Provider: React.FC<{ children: React.ReactNode }> = ({
 
     setBgColor4(null)
     setBgImage4(null)
+<<<<<<< HEAD
     setBgRect4({ x: 40, y: 40, width: 300, height: 400 });
     setBgEdit4(false);
     setBgLocked4(false);
@@ -639,6 +655,8 @@ export const Slide4Provider: React.FC<{ children: React.ReactNode }> = ({
     setCanEditImages4(true);
     setCanEditStickers4(true);
     setLayout4(null);
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     setSelectedShapeImageId4(null)
     setSelectedShapePath4(null)
 
@@ -661,6 +679,7 @@ export const Slide4Provider: React.FC<{ children: React.ReactNode }> = ({
   // Passed value to storing and state recognizing.
   useEffect(() => {
     try {
+<<<<<<< HEAD
       const saved = safeGetStorage("slide4_state");
       if (saved) {
         const parsed = JSON.parse(saved);
@@ -669,17 +688,27 @@ export const Slide4Provider: React.FC<{ children: React.ReactNode }> = ({
         if (currentDraftId) {
           if (!savedDraftId || savedDraftId !== currentDraftId) return;
         }
+=======
+      const saved = localStorage.getItem("slide4_state");
+      if (saved) {
+        const parsed = JSON.parse(saved);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
         if (parsed.textElements4) setTextElements4(parsed.textElements4);
         if (parsed.draggableImages4) setDraggableImages4(parsed.draggableImages4);
         if (parsed.images4) setImages4(parsed.images4);
         if (parsed.selectedImg4) setSelectedImage4(parsed.selectedImg4);
+<<<<<<< HEAD
         {
           const videoUrl = normalizeStoredUrl(parsed.selectedVideoUrl4);
           const audioUrl = normalizeStoredUrl(parsed.selectedAudioUrl4);
           if (videoUrl) setSelectedVideoUrl4(videoUrl);
           if (audioUrl) setSelectedAudioUrl4(audioUrl);
         }
+=======
+        if (parsed.selectedVideoUrl4) setSelectedVideoUrl4(parsed.selectedVideoUrl4);
+        if (parsed.selectedAudioUrl4) setSelectedAudioUrl4(parsed.selectedAudioUrl4);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         if (parsed.selectedLayout4) setSelectedLayout4(parsed.selectedLayout4);
         if (parsed.oneTextValue4) setOneTextValue4(parsed.oneTextValue4);
         if (parsed.showOneTextRightSideBox4) setShowOneTextRightSideBox4(parsed.showOneTextRightSideBox4);
@@ -690,14 +719,22 @@ export const Slide4Provider: React.FC<{ children: React.ReactNode }> = ({
         if (parsed.qrPosition4) setQrPosition4(parsed.qrPosition4);
         if (parsed.qrAudioPosition4) setQrAudioPosition4(parsed.qrAudioPosition4);
         if (parsed.aimage4) setAIImage4(parsed.aimage4);
+<<<<<<< HEAD
         if (typeof parsed.isAIimage4 === "boolean") setIsAIimage4(parsed.isAIimage4);
+=======
+        if (typeof parsed.isAIimage4 === "boolean") setIsAIimage4(parsed.isAIimage);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         if (parsed.selectedAIimageUrl4)
           setSelectedAIimageUrl4(parsed.selectedAIimageUrl4);
 
         if (parsed.bgColor4 !== undefined) setBgColor4(parsed.bgColor4);
         if (parsed.bgImage4 !== undefined) setBgImage4(parsed.bgImage4);
+<<<<<<< HEAD
         if (Object.prototype.hasOwnProperty.call(parsed, "selectedShapePath4")) setSelectedShapePath4(parsed.selectedShapePath4);
         if (parsed.layout4) setLayout4(parsed.layout4);
+=======
+        if (Object.prototype.hasOwnProperty.call(parsed, "selectedShapePath3")) setSelectedShapePath4(parsed.selectedShapePath4);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
         if (parsed.fontSize4) setFontSize4(parsed.fontSize4);
         if (parsed.fontWeight4) setFontWeight4(parsed.fontWeight4);
@@ -709,6 +746,7 @@ export const Slide4Provider: React.FC<{ children: React.ReactNode }> = ({
         if (parsed.lineHeight4 !== undefined) setLineHeight4(parsed.lineHeight4);
         if (parsed.rotation4 !== undefined) setRotation4(parsed.rotation4);
 
+<<<<<<< HEAD
         const hasHeavyLocal =
           (parsed.images4 && parsed.images4.length) ||
           (parsed.draggableImages4 && parsed.draggableImages4.length);
@@ -724,12 +762,15 @@ export const Slide4Provider: React.FC<{ children: React.ReactNode }> = ({
           } catch {}
         }
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       }
     } catch (error) {
       console.error("❌ Error restoring slide4_state:", error);
     }
   }, []);
 
+<<<<<<< HEAD
   // --- 🧠 Restore heavy image data from IndexedDB (if localStorage skipped it) ---
   useEffect(() => {
     if (images4.length || draggableImages4.length) return;
@@ -762,6 +803,14 @@ export const Slide4Provider: React.FC<{ children: React.ReactNode }> = ({
     const stateToSave = {
       draftId: getDraftCardId() ?? null,
       textElements4,
+=======
+  // --- 💾 Auto-save changes ---
+  useEffect(() => {
+    const stateToSave = {
+      textElements4,
+      draggableImages4,
+      images4,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       selectedImg4,
       selectedVideoUrl4,
       selectedAudioUrl4,
@@ -788,6 +837,7 @@ export const Slide4Provider: React.FC<{ children: React.ReactNode }> = ({
 
       bgColor4,
       bgImage4,
+<<<<<<< HEAD
       selectedShapePath4,
       layout4,
     };
@@ -802,6 +852,20 @@ export const Slide4Provider: React.FC<{ children: React.ReactNode }> = ({
     }
   }, [
     textElements4,
+=======
+      selectedShapePath4
+    };
+
+    try {
+      localStorage.setItem("slide4_state", JSON.stringify(stateToSave));
+    } catch (error) {
+      console.error("❌ Error saving slide4_state:", error);
+    }
+  }, [
+    textElements4,
+    draggableImages4,
+    images4,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     selectedImg4,
     selectedVideoUrl4,
     selectedAudioUrl4,
@@ -829,25 +893,38 @@ export const Slide4Provider: React.FC<{ children: React.ReactNode }> = ({
 
     bgColor4,
     bgImage4,
+<<<<<<< HEAD
     selectedShapePath4,
     layout4,
+=======
+    selectedShapePath4
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   ]);
 
   // --- 🧹 Clear localStorage ---
   const clearSlide4LocalData = () => {
     try {
       localStorage.removeItem("slide4_state");
+<<<<<<< HEAD
       sessionStorage.removeItem("slide4_state");
       const keys = getSlideStateKeys(4, getDraftCardId());
       keys.forEach((key) => {
         void clearSlideStateFromIdb(key).catch(() => {});
       });
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       console.log("🧹 Cleared Slide4 saved state");
     } catch (error) {
       console.error("Error clearing slide4_state:", error);
     }
   };
 
+<<<<<<< HEAD
+=======
+  // Layout with uploaded images for preview
+  const [layout4, setLayout4] = useState<any>(null);
+
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   return (
     <Slide4Context.Provider
       value={{
@@ -915,7 +992,10 @@ export const Slide4Provider: React.FC<{ children: React.ReactNode }> = ({
 
         addSticker4,
         selectedStickers4,
+<<<<<<< HEAD
         setSelectedStickers4,
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         updateSticker4,
         removeSticker4,
 

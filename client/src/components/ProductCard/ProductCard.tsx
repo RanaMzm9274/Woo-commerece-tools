@@ -1,6 +1,9 @@
 import { Box } from "@mui/material";
+<<<<<<< HEAD
 import SmartImage from "../SmartImage/SmartImage";
 import TemplateSvgThumbnail from "../TemplateSvgThumbnail/TemplateSvgThumbnail";
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 // import { COLORS } from "../../constant/color";
 
 type ProductTypes = {
@@ -10,6 +13,7 @@ type ProductTypes = {
   data?: any;
   layoutCard?: any;
   borderColor?: string;
+<<<<<<< HEAD
   smartCrop?: boolean;
   category?: string;
 };
@@ -35,6 +39,12 @@ const ProductCard = (props: ProductTypes) => {
       }
     : null;
   const shouldUseLiveTemplate = Boolean(templateLike?.id || templateLike?.slides || templateLike?.raw_stores);
+=======
+};
+
+const ProductCard = (props: ProductTypes) => {
+  const { poster, tabsSlider, openModal, borderColor } = props;
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   return (
     <Box
       component={"div"}
@@ -55,6 +65,7 @@ const ProductCard = (props: ProductTypes) => {
         mx: "auto",
       }}
     >
+<<<<<<< HEAD
       {shouldUseLiveTemplate ? (
         <TemplateSvgThumbnail
           template={templateLike}
@@ -87,6 +98,21 @@ const ProductCard = (props: ProductTypes) => {
           }}
         />
       )}
+=======
+      <Box
+        component={"img"}
+        src={poster}
+        alt="productImg"
+        sx={{
+          width: tabsSlider
+            ? { md: "100%", sm: "100%", xs: "100%" }
+            : { md: "175px", sm: "120px", xs: "150px" },
+          height: "100%",
+          objectFit: { md: "cover", sm: "cover", xs: 'fill' },
+          borderRadius: 2,
+        }}
+      />
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     </Box>
   );
 };

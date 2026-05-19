@@ -1,12 +1,19 @@
+<<<<<<< HEAD
 import { Box, Typography } from "@mui/material";
 import { useSlide1 } from "../../../../../context/Slide1Context";
 import QrGenerator from "../../../../../components/QR-code/Qrcode";
+=======
+// src/components/preview/Slide1.tsx
+import { Box } from "@mui/material";
+import { useSlide1 } from "../../../../../context/Slide1Context";
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
 type AnyEl = Record<string, any>;
 
 const safeClip = (cp?: string | null) => (cp && typeof cp === "string" ? cp : "none");
 const safeFilter = (f?: string | null) => (f && typeof f === "string" ? f : "none");
 const val = <T,>(v: T | undefined, d: T) => (v === undefined || v === null ? d : v);
+<<<<<<< HEAD
 const normalizeUrl = (value: any) => {
   if (typeof value === "string") return value.trim();
   if (value && typeof value === "object" && typeof value.url === "string") return value.url.trim();
@@ -60,12 +67,24 @@ const Slide1 = (props: Slide1Props) => {
   const audioUrl = normalizeUrl(selectedAudioUrl1);
   const qrVideoUrl = normalizeUrl(qrPosition1?.url) || videoUrl;
   const qrAudioUrl = normalizeUrl(qrAudioPosition1?.url) || audioUrl;
+=======
+
+type Slide1Props = {
+  ref?: any
+}
+
+const Slide1 = (props: Slide1Props) => {
+  const { layout1, bgColor1 } = useSlide1();
+
+  const { ref } = props
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
   return (
     <Box
       ref={ref}
       sx={{
         position: "relative",
+<<<<<<< HEAD
         width: "100%",
         height: "100%",
         overflow: "hidden",
@@ -81,6 +100,25 @@ const Slide1 = (props: Slide1Props) => {
           {layout1?.elements
             ?.slice()
             .sort((a: AnyEl, b: AnyEl) => val(a.zIndex, 1) - val(b.zIndex, 1))
+=======
+        width: '100%',
+        height: "100%",
+        overflow: "hidden",
+        backgroundColor: bgColor1 ?? "transparent",
+        // backgroundImage: bgImage1 ? `url(${bgImage1})` : "none",
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+        borderRadius: 2,
+      }}
+    >
+      {layout1 && (
+        <Box sx={{ width: "100%", height: "100%", position: "relative", p: 1 }}>
+          {/* IMAGES / BG ELEMENTS */}
+          {layout1?.elements
+            ?.slice()
+            .sort((a: AnyEl, b: AnyEl) => (val(a.zIndex, 1) - val(b.zIndex, 1)))
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             .map((el: AnyEl) => (
               <Box
                 key={el.id}
@@ -91,6 +129,10 @@ const Slide1 = (props: Slide1Props) => {
                   width: val(el.width, 0),
                   height: val(el.height, 0),
                   borderRadius: 1,
+<<<<<<< HEAD
+=======
+                  // must be visible so clipPath can show outside rectangular bounds if needed
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                   overflow: "visible",
                   zIndex: val(el.zIndex, 1),
                 }}
@@ -101,6 +143,7 @@ const Slide1 = (props: Slide1Props) => {
                   sx={{
                     width: "100%",
                     height: "100%",
+<<<<<<< HEAD
                     objectFit: el.id === "bg-image" ? "cover" : el.objectFit || "fill",
                     borderRadius: 1,
                     display: "block",
@@ -110,6 +153,20 @@ const Slide1 = (props: Slide1Props) => {
                     transformOrigin: "center center",
                     clipPath: safeClip(el.clipPath || el.shapePath),
                     WebkitClipPath: safeClip(el.clipPath || el.shapePath),
+=======
+                    objectFit: el.objectFit || "cover",
+                    borderRadius: 1,
+                    display: "block",
+                    pointerEvents: "none",
+                    // visual treatments
+                    filter: safeFilter(el.filter || el.cssFilter),
+                    transform: `rotate(${val(el.rotation, 0)}deg)`,
+                    transformOrigin: "center center",
+                    // shape support
+                    clipPath: safeClip(el.clipPath || el.shapePath),
+                    WebkitClipPath: safeClip(el.clipPath || el.shapePath),
+                    // optional blend mode / opacity
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                     mixBlendMode: el.blendMode || "normal",
                     opacity: el.opacity !== undefined ? el.opacity : 1,
                   }}
@@ -117,9 +174,16 @@ const Slide1 = (props: Slide1Props) => {
               </Box>
             ))}
 
+<<<<<<< HEAD
           {layout1.textElements
             ?.slice()
             .sort((a: AnyEl, b: AnyEl) => val(a.zIndex, 2) - val(b.zIndex, 2))
+=======
+          {/* TEXTS */}
+          {layout1.textElements
+            ?.slice()
+            .sort((a: AnyEl, b: AnyEl) => (val(a.zIndex, 2) - val(b.zIndex, 2)))
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             .map((te: AnyEl) => {
               const hAlign =
                 te.textAlign === "left" ? "flex-start" : te.textAlign === "right" ? "flex-end" : "center";
@@ -138,6 +202,10 @@ const Slide1 = (props: Slide1Props) => {
                     display: "flex",
                     justifyContent: hAlign,
                     alignItems: vAlign,
+<<<<<<< HEAD
+=======
+                    // typography
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                     color: te.color || "#000",
                     fontSize: val(te.fontSize, 16),
                     fontFamily: te.fontFamily || "Roboto, sans-serif",
@@ -149,6 +217,10 @@ const Slide1 = (props: Slide1Props) => {
                     textAlign: te.textAlign || "center",
                     whiteSpace: "pre-wrap",
                     wordBreak: "break-word",
+<<<<<<< HEAD
+=======
+                    // transforms
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                     transform: `rotate(${val(te.rotation, 0)}deg)`,
                     transformOrigin: "center center",
                     zIndex: val(te.zIndex, 2),
@@ -160,9 +232,16 @@ const Slide1 = (props: Slide1Props) => {
               );
             })}
 
+<<<<<<< HEAD
           {layout1.stickers
             ?.slice()
             .sort((a: AnyEl, b: AnyEl) => val(a.zIndex, 50) - val(b.zIndex, 50))
+=======
+          {/* STICKERS */}
+          {layout1.stickers
+            ?.slice()
+            .sort((a: AnyEl, b: AnyEl) => (val(a.zIndex, 50) - val(b.zIndex, 50)))
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             .map((st: AnyEl) => (
               <Box
                 key={st.id}
@@ -185,9 +264,17 @@ const Slide1 = (props: Slide1Props) => {
                     height: "100%",
                     objectFit: "contain",
                     borderRadius: 1,
+<<<<<<< HEAD
                     filter: safeFilter(st.filter || st.cssFilter),
                     transform: `rotate(${val(st.rotation, 0)}deg)`,
                     transformOrigin: "center center",
+=======
+                    // visual treatments
+                    filter: safeFilter(st.filter || st.cssFilter),
+                    transform: `rotate(${val(st.rotation, 0)}deg)`,
+                    transformOrigin: "center center",
+                    // shapes for sticker if provided
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                     clipPath: safeClip(st.clipPath || st.shapePath),
                     WebkitClipPath: safeClip(st.clipPath || st.shapePath),
                     mixBlendMode: st.blendMode || "normal",
@@ -198,6 +285,7 @@ const Slide1 = (props: Slide1Props) => {
             ))}
         </Box>
       )}
+<<<<<<< HEAD
 
       {videoUrl && (
         <Box
@@ -469,6 +557,8 @@ const Slide1 = (props: Slide1Props) => {
           }}
         />
       ))}
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     </Box>
   );
 };

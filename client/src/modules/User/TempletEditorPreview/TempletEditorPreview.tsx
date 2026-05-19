@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+=======
+import React, { useCallback, useEffect, useRef, useState } from "react";
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
@@ -6,6 +10,7 @@ import { DecalGeometry } from "three/examples/jsm/geometries/DecalGeometry.js";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Box, Typography } from "@mui/material";
 import { ArrowBackIos } from "@mui/icons-material";
+<<<<<<< HEAD
 import { toPng } from "html-to-image";
 import LandingButton from "../../../components/LandingButton/LandingButton";
 import { USER_ROUTES } from "../../../constant/route";
@@ -28,6 +33,12 @@ import {
 const MUG_URL = "/assets/modals/tea_cup.glb";
 const MUG_TEXTURE_VERTICAL_OFFSET_PX = -10;
 const MUG_TEXT_VERTICAL_OFFSET_PX = -20;
+=======
+import LandingButton from "../../../components/LandingButton/LandingButton";
+import { USER_ROUTES } from "../../../constant/route";
+
+const MUG_URL = "/assets/modals/tea_cup.glb";
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
 let container: HTMLDivElement | null;
 let camera: THREE.PerspectiveCamera;
@@ -44,6 +55,7 @@ let material:
   | null = null;
 
 let currentTextureUrl: string | null = null;
+<<<<<<< HEAD
 let currentTextureCanvas: HTMLCanvasElement | null = null;
 
 const PREVIEW_SLIDES_STORAGE_KEY = "templ_preview_slides";
@@ -68,6 +80,11 @@ const createTextureFromCanvas = (canvas: HTMLCanvasElement) => {
   texture.needsUpdate = true;
   return texture;
 };
+=======
+
+
+const SRGB = (THREE as any).sRGBEncoding ?? (THREE as any).SRGBColorSpace ?? "srgb";
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
 const onWindowResize = () => {
   if (!container || !camera || !renderer) return;
@@ -93,7 +110,11 @@ const convertImageToTexture = (image: string): THREE.Texture => {
     ctx.save();
     ctx.translate(canvas.width, 0);
     ctx.scale(-1, 1);
+<<<<<<< HEAD
     ctx.drawImage(img, 0, MUG_TEXTURE_VERTICAL_OFFSET_PX);
+=======
+    ctx.drawImage(img, 0, 40);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     ctx.restore();
 
     (tex as any).image = canvas;
@@ -115,6 +136,7 @@ const convertImageToTexture = (image: string): THREE.Texture => {
   return texture;
 };
 
+<<<<<<< HEAD
 const mirrorCanvasForMug = (source: HTMLCanvasElement) => {
   const canvas = document.createElement("canvas");
   canvas.width = source.width;
@@ -132,6 +154,8 @@ const mirrorCanvasForMug = (source: HTMLCanvasElement) => {
   return canvas;
 };
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 const init = () => {
   if (!container) return;
 
@@ -250,6 +274,7 @@ const init = () => {
           material = baseMaterial;
           mesh = obj;
 
+<<<<<<< HEAD
           const tex = currentTextureCanvas
             ? createTextureFromCanvas(currentTextureCanvas)
             : currentTextureUrl
@@ -258,6 +283,20 @@ const init = () => {
 
           if (tex) {
             tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+=======
+          if (currentTextureUrl) {
+            const tex = convertImageToTexture(currentTextureUrl);
+            tex.wrapS = THREE.RepeatWrapping;
+            tex.repeat.x = -1;
+            tex.offset.x = 1;
+            tex.flipY = true;
+            tex.generateMipmaps = true;
+            tex.minFilter = THREE.LinearMipmapLinearFilter;
+            tex.magFilter = THREE.LinearFilter;
+            tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+            tex.needsUpdate = true;
+
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             baseMaterial.map = tex;
 
             if ("color" in baseMaterial && baseMaterial.color instanceof THREE.Color) {
@@ -306,6 +345,7 @@ const init = () => {
   );
 };
 
+<<<<<<< HEAD
 // captured image 
 function captureMugPreviewJpg(): string | null {
   if (!renderer) return null;
@@ -633,10 +673,41 @@ const offsetSlideTextY = (slide: TemplateSlide, offsetPx: number): TemplateSlide
     }),
   };
 };
+=======
+async function flipImageHorizontallyToDataUrl(src: string): Promise<string> {
+  const img = await new Promise<HTMLImageElement>((resolve, reject) => {
+    const im = new Image();
+    im.crossOrigin = "anonymous"; // important if src is remote
+    im.onload = () => resolve(im);
+    im.onerror = reject;
+    im.src = src;
+  });
+
+  const canvas = document.createElement("canvas");
+  canvas.width = img.naturalWidth || img.width;
+  canvas.height = img.naturalHeight || img.height;
+
+  const ctx = canvas.getContext("2d");
+  if (!ctx) throw new Error("Canvas not supported");
+
+  // optional white background
+  ctx.fillStyle = "#fff";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // flip
+  ctx.translate(canvas.width, 0);
+  ctx.scale(-1, 1);
+  ctx.drawImage(img, 0, 0);
+
+  return canvas.toDataURL("image/png", 1);
+}
+
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
 
 const TempletEditorPreview: React.FC = () => {
   const { state } = useLocation() as {
+<<<<<<< HEAD
     state?: {
       slides?: TemplateSlide[];
       mugImage?: string;
@@ -690,6 +761,11 @@ const TempletEditorPreview: React.FC = () => {
     () => Math.max(1, Number(state?.canvasPx?.h ?? state?.config?.mmHeight ?? 88.9)),
     [state?.canvasPx?.h, state?.config?.mmHeight],
   );
+=======
+    state?: { slides?: any[]; mugImage?: string };
+  };
+  const mugImageSrc: any = state?.mugImage ?? null;
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
@@ -706,6 +782,7 @@ const TempletEditorPreview: React.FC = () => {
     }
   }, []);
 
+<<<<<<< HEAD
   const renderFlatSlide = useCallback((slide?: TemplateSlide) => {
     if (!slide) return null;
     const ordered = [...(slide.elements || [])].sort((a, b) => {
@@ -992,6 +1069,22 @@ const TempletEditorPreview: React.FC = () => {
     return () => {
       cancelled = true;
       detachResize?.();
+=======
+  useEffect(() => {
+    container = containerRef.current;
+    colorSelector = colorRef.current;
+
+    currentTextureUrl = mugImageSrc;
+
+    init();
+    animate();
+
+    const resizeHandler = () => onWindowResize();
+    window.addEventListener("resize", resizeHandler);
+
+    return () => {
+      window.removeEventListener("resize", resizeHandler);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       if (animationFrameId.current !== null)
         cancelAnimationFrame(animationFrameId.current);
       if (renderer) renderer.dispose();
@@ -1001,25 +1094,39 @@ const TempletEditorPreview: React.FC = () => {
       colorSelector = null;
       mesh = undefined;
       material = null;
+<<<<<<< HEAD
       currentTextureCanvas = null;
     };
   }, [animate, baseHeight, baseWidth, isSafariTextureCapture, mugImageSrc, previewSlides, shouldUseProvidedMugImage, textureSlide]);
+=======
+    };
+  }, [animate, mugImageSrc]);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
 
   return (
     <>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", px: 3 }}>
         <Typography sx={{ p: 2, display: "flex", alignItems: "center", color: "blue", "&:hover": { textDecoration: "underline", cursor: "pointer" } }} onClick={() => navigate(-1)}>
           <ArrowBackIos fontSize="small" /> exit
         </Typography>
 
         <Box sx={{ display: "flex", gap: 2 }}>
+<<<<<<< HEAD
+=======
+          <LandingButton title="Add to basket" variant="outlined" />
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           <LandingButton
             title="Download"
             loading={loading}
             onClick={async () => {
               setLoading(true);
               try {
+<<<<<<< HEAD
                 if (!renderer) throw new Error("Renderer not ready");
 
                 // Capture current 3D preview as JPEG
@@ -1069,6 +1176,15 @@ const TempletEditorPreview: React.FC = () => {
               } catch (err) {
                 console.error("Download failed:", err);
                 toast.error("Failed to prepare download. Try again.");
+=======
+                const flipped = await flipImageHorizontallyToDataUrl(mugImageSrc);
+                // ✅ store in "cache"
+                const slidesObj = { slide1: flipped };
+                sessionStorage.setItem("slides", JSON.stringify(slidesObj));
+                navigate(USER_ROUTES.SUBSCRIPTION);
+              } catch (e) {
+                console.error(e);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
               } finally {
                 setLoading(false);
               }
@@ -1076,6 +1192,7 @@ const TempletEditorPreview: React.FC = () => {
           />
         </Box>
       </Box>
+<<<<<<< HEAD
       <div ref={containerRef} className="templet-preview-wrapper" style={{ width: "100%", height: "90vh" }} />
       {textureSlide && (
         <Box className="templet-preview-wrapper" sx={{ position: "fixed", left: -10000, top: 0, opacity: 0, pointerEvents: "none" }}>
@@ -1087,6 +1204,9 @@ const TempletEditorPreview: React.FC = () => {
           </Box>
         </Box>
       )}
+=======
+      <div ref={containerRef} style={{ width: "100%", height: "90vh" }} />
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       {/* <input
         type="color"
         ref={colorRef}

@@ -22,6 +22,7 @@ const DashboardLayout = ({ children, title, exportBtn, addBtn, onClick, onExport
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
   return (
+<<<<<<< HEAD
     <Box
       sx={{
         height: "100vh",
@@ -29,6 +30,9 @@ const DashboardLayout = ({ children, title, exportBtn, addBtn, onClick, onExport
         overflow: "hidden",
       }}
     >
+=======
+    <Box sx={{ height: "100vh", bgcolor: "#f9f9f9", overflow: 'hidden' }}>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       <DNavbar />
       <Box display={"flex"} width={"100%"}>
         {/* Sidebar Container */}
@@ -37,22 +41,37 @@ const DashboardLayout = ({ children, title, exportBtn, addBtn, onClick, onExport
           sx={{
             width: { md: 260, sm: 260, xs: sidebarOpen ? 240 : 0 },
             transition: "width 0.3s ease",
+<<<<<<< HEAD
             background:
               "linear-gradient(180deg, rgba(18,22,46,1) 0%, rgba(12,16,38,1) 100%)",
             color: COLORS.white,
             height: "100vh",
             overflowY: "auto",
             borderRight: "1px solid rgba(255,255,255,0.06)",
+=======
+            bgcolor: COLORS.black,
+            color: COLORS.white,
+            height: "100vh",
+            overflowY: "auto",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             "&::-webkit-scrollbar": {
               height: "6px",
               width: '6px',
             },
             "&::-webkit-scrollbar-track": {
+<<<<<<< HEAD
               backgroundColor: "rgba(255,255,255,0.06)",
               borderRadius: "20px",
             },
             "&::-webkit-scrollbar-thumb": {
               backgroundColor: COLORS.primary,
+=======
+              backgroundColor: "#f1f1f1",
+              borderRadius: "20px",
+            },
+            "&::-webkit-scrollbar-thumb": {
+              backgroundColor: COLORS.seconday,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
               borderRadius: "20px",
             },
             position: { xs: "fixed", sm: "relative" },
@@ -73,6 +92,7 @@ const DashboardLayout = ({ children, title, exportBtn, addBtn, onClick, onExport
                 mt: 3,
                 textAlign: "start",
                 height: "calc(100vh)",
+<<<<<<< HEAD
                 // overflowY: "auto",
                 // "&::-webkit-scrollbar": {
                 //   height: "6px",
@@ -86,6 +106,21 @@ const DashboardLayout = ({ children, title, exportBtn, addBtn, onClick, onExport
                 //   backgroundColor: COLORS.primary,
                 //   borderRadius: "20px",
                 // },
+=======
+                overflowY: "auto",
+                "&::-webkit-scrollbar": {
+                  height: "6px",
+                  width: '4px',
+                },
+                "&::-webkit-scrollbar-track": {
+                  backgroundColor: "#f1f1f1",
+                  borderRadius: "20px",
+                },
+                "&::-webkit-scrollbar-thumb": {
+                  backgroundColor: COLORS.primary,
+                  borderRadius: "20px",
+                },
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                 p: 2,
               }}
             >
@@ -101,12 +136,20 @@ const DashboardLayout = ({ children, title, exportBtn, addBtn, onClick, onExport
             flex: 1,
             display: "flex",
             flexDirection: "column",
+<<<<<<< HEAD
             p: { md: "24px", sm: "20px", xs: "0px" },
+=======
+            p: { md: "20px", sm: "20px", xs: "0px" },
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             overflowY: "auto",
             height: "100vh",
             width: "100%",
             overflowX: "hidden",
+<<<<<<< HEAD
             msOverflowY: "scroll",
+=======
+            msOverflowY: 'scroll'
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           }}
         >
           {/* Mobile Toggle Button */}
@@ -116,7 +159,11 @@ const DashboardLayout = ({ children, title, exportBtn, addBtn, onClick, onExport
               justifyContent: "flex-start",
               alignItems: "center",
               p: 1,
+<<<<<<< HEAD
               bgcolor: "#11142d",
+=======
+              bgcolor: COLORS.black,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
               color: COLORS.white,
             }}
           >
@@ -127,6 +174,7 @@ const DashboardLayout = ({ children, title, exportBtn, addBtn, onClick, onExport
           </Box>
 
           {/* Page Content */}
+<<<<<<< HEAD
           <Box sx={{ flex: 1, mb: 10, p: { md: 0, xs: 1 } }}>
             <Box
               sx={{
@@ -147,6 +195,11 @@ const DashboardLayout = ({ children, title, exportBtn, addBtn, onClick, onExport
               />
               {children}
             </Box>
+=======
+          <Box sx={{ flex: 1, mb: 10 }}>
+            <DHeader title={title} exportBtn={exportBtn} addBtn={addBtn} onClick={onClick} onExportClick={onExportClick} />
+            {children}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           </Box>
         </Box>
       </Box>

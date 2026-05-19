@@ -19,7 +19,10 @@ import {
 import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchAllUsersFromDB } from "../../../../../source/source";
+<<<<<<< HEAD
 import { COLORS } from "../../../../../constant/color";
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
 // ----- Types -----
 type UserRow = { id: string | number; created_at: string };
@@ -118,19 +121,31 @@ const UsersChart = () => {
   return (
     <Box
       sx={{
+<<<<<<< HEAD
         background: "#ffffff",
+=======
+        background: "linear-gradient(190deg, rgba(0,0,0,0.9), rgba(1,52,61,0.9))",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         borderRadius: 3,
         p: 3,
         width: { md: "49%", sm: "100%", xs: "100%" },
         height: 400,
+<<<<<<< HEAD
         minWidth: 0,
         boxShadow: "0 14px 30px rgba(5,10,36,0.08)",
         border: "1px solid rgba(0,0,0,0.06)",
+=======
+        boxShadow: 2,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       }}
     >
       {/* Header */}
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}>
+<<<<<<< HEAD
         <Typography variant="h6" sx={{ fontWeight: 700, color: COLORS.black }}>
+=======
+        <Typography variant="h6" sx={{ fontWeight: 700, color: "orange" }}>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           Customer Growth
         </Typography>
 
@@ -142,7 +157,11 @@ const UsersChart = () => {
             fontSize: 14,
             bgcolor: "#fff",
             borderRadius: 2,
+<<<<<<< HEAD
             border: "1px solid rgba(0,0,0,0.2)",
+=======
+            border: "1px solid gray",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             "& .MuiOutlinedInput-notchedOutline": { border: "none" },
           }}
         >
@@ -155,6 +174,7 @@ const UsersChart = () => {
 
       {/* States */}
       {isLoading ? (
+<<<<<<< HEAD
         <Box sx={{ height: 320, display: "flex", alignItems: "center", justifyContent: "center" }}>
           <CircularProgress />
         </Box>
@@ -185,6 +205,36 @@ const UsersChart = () => {
             </BarChart>
           </ResponsiveContainer>
         </Box>
+=======
+        <Box sx={{ height: "90%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <CircularProgress />
+        </Box>
+      ) : isError ? (
+        <Box sx={{ height: "90%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <Typography color="error">Failed to load users</Typography>
+        </Box>
+      ) : (
+        <ResponsiveContainer width="100%" height="90%">
+          <BarChart data={data} margin={{ top: 20, right: 20, left: 0, bottom: 10 }}>
+            <CartesianGrid strokeDasharray="3 3" vertical={false} />
+            <XAxis
+              dataKey="name"
+              axisLine={false}
+              tickLine={false}
+              tick={{ fill: "#bbb", fontSize: 12, dy: 8 }}
+              interval={0}
+            />
+            <YAxis axisLine={false} tickLine={false} tick={{ fill: "#bbb", fontSize: 12 }} />
+            <Tooltip
+              cursor={{ fill: "rgba(0,0,0,0.03)" }}
+              contentStyle={{ borderRadius: 10, backgroundColor: "#fff", border: "1px solid #eee" }}
+            />
+            <Legend verticalAlign="top" align="left" iconType="circle" iconSize={10} wrapperStyle={{ top: -5, fontWeight: 500 }} />
+            <Bar dataKey="returning" name="Returning customers" fill="#d8e0edff" barSize={18} />
+            <Bar dataKey="new" name="New customers" fill="#c66beaff" barSize={18} radius={[10, 10, 0, 0]} />
+          </BarChart>
+        </ResponsiveContainer>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       )}
     </Box>
   );

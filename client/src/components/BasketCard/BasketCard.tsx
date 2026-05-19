@@ -1,11 +1,19 @@
 // File: src/components/BasketCard/BasketCard.tsx
 import { Box, Typography } from "@mui/material";
+<<<<<<< HEAD
 import type { CategoryType } from "../ProductPopup/ProductPopup";
 import { COLORS } from "../../constant/color";
+=======
+import LandingButton from "../LandingButton/LandingButton";
+import type { CategoryType } from "../ProductPopup/ProductPopup";
+import toast from "react-hot-toast";
+import { useCartStore } from "../../stores";
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
 type BasketType = {
   id?: string | number;
   title?: string;
+<<<<<<< HEAD
   poster?: string;
   category?: string;
   openModal?: (item: CategoryType) => void;
@@ -140,6 +148,97 @@ const BasketCard = ({
           {label}
         </Typography>
       </Box>
+=======
+  poster: string;
+  price?: string;
+  saleprice?: string;
+  category?: string;
+  sales?: boolean;
+  openModal?: (user: CategoryType) => void;
+};
+
+const BasketCard = (props: BasketType) => {
+  const { poster, price, sales, id, title, category, saleprice, openModal } =
+    props;
+
+  const { addToCart } = useCartStore();
+
+  // Store Card in the context API.
+  const handleAddToCart = () => {
+    addToCart({
+      id: id,
+      img: poster,
+      title: title,
+      price: price,
+      category: category ? category : "default",
+    });
+    toast.success("Product add to store");
+  };
+
+  return (
+    <Box
+      component={"div"}
+      sx={{
+        borderRadius: 2,
+        width: { md: "100%", sm: "100%", xs: "100%" },
+        height: { lg: "300px", md: "300px", sm: '220px', xs: 'auto' },
+        overflow: "hidden",
+        cursor: "pointer",
+      }}
+    >
+      <Box
+        component={"img"}
+        src={poster}
+        onClick={() =>
+          openModal?.({
+            id,
+          })
+        }
+        alt="backetImg"
+        sx={{
+          width: { md: "100%", sm: "100%", xs: "100%" },
+          height: { lg: '200px', md: "200px", sm: "200px", xs: "350px" },
+          objectFit: "fill",
+          borderRadius: 2,
+          "&:hover": { transform: "scale(1.03)" },
+          transition: "transform 0.3s ease",
+        }}
+      />
+
+      <Box
+        sx={{
+          dsiplay: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <Typography sx={{ pt: 1, pb: 1, fontSize: "23px", fontWeight: 300 }}>
+          {sales && (
+            <span
+              style={{
+                fontSize: "18px",
+                textDecoration: "line-through",
+                color: "Gray",
+                marginRight: 3,
+              }}
+            >
+              £{price}
+            </span>
+          )}
+          £{sales ? saleprice : price}
+        </Typography>
+        {/* {sales && (
+          <Rating name="half-rating" defaultValue={2.5} precision={0.5} />
+        )} */}
+      </Box>
+
+      <LandingButton
+        title="Add To Basket"
+        width="100%"
+        variant="outlined"
+        onClick={handleAddToCart}
+      />
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     </Box>
   );
 };

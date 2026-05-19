@@ -1,13 +1,20 @@
 import React, { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { supabase } from "../supabase/supabase";
+<<<<<<< HEAD
 import { useAdmin } from "./AdminContext";
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
 export type NotificationType = "user" | "topic" | "order" | "blog";
 
 export type NotificationItem = {
   id: string;                // synthetic: `${table}:${rowId}`
+<<<<<<< HEAD
   table: "Users" | "topic_messages" | "orders" | "blogs";
+=======
+  table: "Users" | "topic_messages" | "orders" | "blog";
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   type: NotificationType;
   title: string;
   body?: string | null;
@@ -36,7 +43,11 @@ function safeCreatedAt(row: any) {
   return row?.created_at ?? new Date().toISOString();
 }
 
+<<<<<<< HEAD
 function normalizeRow(table: "Users" | "topic_messages" | "orders" | "blogs", row: any): NotificationItem {
+=======
+function normalizeRow(table: "Users" | "topic_messages" | "orders" | "blog", row: any): NotificationItem {
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   switch (table) {
     case "Users":
       return {
@@ -74,7 +85,11 @@ function normalizeRow(table: "Users" | "topic_messages" | "orders" | "blogs", ro
         read: false,
         payload: row,
       };
+<<<<<<< HEAD
     case "blogs":
+=======
+    case "blog":
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       return {
         id: makeId(table, row.id),
         table,
@@ -105,7 +120,10 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
   const [notifications, setNotifications] = useState<NotificationItem[]>([]);
   const [loading, setLoading] = useState(true);
   const chanRef = useRef<ReturnType<typeof supabase.channel> | null>(null);
+<<<<<<< HEAD
   const { isAdmin, loading: adminLoading } = useAdmin();
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
   const addOrReplace = (item: NotificationItem) => {
     setNotifications((prev) => {
@@ -122,6 +140,7 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
   const loadInitial = async () => {
     try {
       setLoading(true);
+<<<<<<< HEAD
       const queries = [
         supabase.from("Users").select("id,name,email,created_at").order("created_at", { ascending: false }).limit(50),
         supabase
@@ -131,6 +150,14 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
           .limit(50),
         supabase.from("orders").select("id,status,created_at").order("created_at", { ascending: false }).limit(50),
         supabase.from("blogs").select("id,title,summary,created_at").order("created_at", { ascending: false }).limit(50),
+=======
+      // Assumes each table has created_at column; adjust select columns to your schema.
+      const queries = [
+        supabase.from("Users").select("*").order("created_at", { ascending: false }).limit(50),
+        supabase.from("topic_messages").select("*").order("created_at", { ascending: false }).limit(50),
+        supabase.from("orders").select("*").order("created_at", { ascending: false }).limit(50),
+        supabase.from("blog").select("*").order("created_at", { ascending: false }).limit(50),
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       ] as const;
 
       const [u, t, o, b] = await Promise.all(queries);
@@ -139,7 +166,11 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
       if (u.data) list.push(...u.data.map((r: any) => normalizeRow("Users", r)));
       if (t.data) list.push(...t.data.map((r: any) => normalizeRow("topic_messages", r)));
       if (o.data) list.push(...o.data.map((r: any) => normalizeRow("orders", r)));
+<<<<<<< HEAD
       if (b.data) list.push(...b.data.map((r: any) => normalizeRow("blogs", r)));
+=======
+      if (b.data) list.push(...b.data.map((r: any) => normalizeRow("blog", r)));
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
       list.sort((a, b) => b.created_at.localeCompare(a.created_at));
       setNotifications(list);
@@ -180,8 +211,13 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
     // Blog INSERT
     channel.on(
       "postgres_changes",
+<<<<<<< HEAD
       { event: "INSERT", schema: "public", table: "blogs" },
       (payload) => addOrReplace(normalizeRow("blogs", payload.new))
+=======
+      { event: "INSERT", schema: "public", table: "blog" },
+      (payload) => addOrReplace(normalizeRow("blog", payload.new))
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     );
 
     channel.subscribe((status) => {
@@ -194,6 +230,7 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
   };
 
   useEffect(() => {
+<<<<<<< HEAD
     if (adminLoading) return;
 
     if (!isAdmin) {
@@ -209,6 +246,10 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
     void loadInitial();
     setupRealtime();
 
+=======
+    loadInitial();
+    setupRealtime();
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     return () => {
       if (chanRef.current) {
         supabase.removeChannel(chanRef.current);
@@ -216,7 +257,11 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
+<<<<<<< HEAD
   }, [isAdmin, adminLoading]);
+=======
+  }, []);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
   const unreadCount = useMemo(() => notifications.filter((n) => !n.read).length, [notifications]);
 
@@ -248,4 +293,8 @@ export const useNotifications = () => {
   const ctx = useContext(NotificationContext);
   if (!ctx) throw new Error("useNotifications must be used inside NotificationProvider");
   return ctx;
+<<<<<<< HEAD
 };
+=======
+};
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0

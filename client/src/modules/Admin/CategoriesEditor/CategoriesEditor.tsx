@@ -1,7 +1,12 @@
 import {
   Box, IconButton, Typography, TextField, Select, MenuItem, Tooltip,
+<<<<<<< HEAD
   FormControl, InputLabel, Divider, Chip, Stack, Switch,
   Paper, useMediaQuery, Slider
+=======
+  FormControl, InputLabel, Divider, Chip, Stack, useTheme, useMediaQuery, Switch,
+  Paper
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 } from "@mui/material";
 import DashboardLayout from "../../../layout/DashboardLayout";
 import {
@@ -12,11 +17,15 @@ import {
   KeyboardArrowUpOutlined, KeyboardArrowDownOutlined,
   FilterFramesOutlined,
   AddOutlined,
+<<<<<<< HEAD
   ContentCopyOutlined, // ✅ NEW
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 } from "@mui/icons-material";
 import { useMemo, useRef, useState, useEffect, useCallback } from "react";
 import { Rnd } from "react-rnd";
 import { COLORS } from "../../../constant/color";
+<<<<<<< HEAD
 import { ADMINS_GOOGLE_FONTS, CATEGORY_CONFIG, SHAPES, STICKERS_DATA, type CategoryKey } from "../../../constant/data";
 import PopupWrapper from "../../../components/PopupWrapper/PopupWrapper";
 import LandingButton from "../../../components/LandingButton/LandingButton";
@@ -25,6 +34,11 @@ import ImageCropModal from "../../../components/ImageCropModal/ImageCropModal";
 import { useAlignGuides } from "../../../hooks/useAlignGuides";
 import { useQuery } from "@tanstack/react-query";
 import { fetchAllCategoriesFromDB } from "../../../source/source";
+=======
+import { ADMINS_GOOGLE_FONTS, CATEGORY_CONFIG, CATEGORY_KEYS, SHAPES, STICKERS_DATA, type CategoryKey } from "../../../constant/data";
+import PopupWrapper from "../../../components/PopupWrapper/PopupWrapper";
+import LandingButton from "../../../components/LandingButton/LandingButton";
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 import {
   useCategoriesEditorState,
   type TextElement as CtxTextEl,
@@ -32,9 +46,14 @@ import {
 } from "../../../context/CategoriesEditorContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ADMINS_DASHBOARD } from "../../../constant/route";
+<<<<<<< HEAD
 import { getCanvasMultiplier, uuid } from "../../../lib/lib";
 import { prepareTemplateRawStoresForEditor } from "../../../lib/templateEditorScale";
 import { buildGoogleFontsUrls, loadGoogleFontsOnce } from "../../../constant/googleFonts";
+=======
+import { fitCanvas, uuid } from "../../../lib/lib";
+// import WishCard from "../../../components/WishCard/WishCard";
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
 /* ----------------- Utils ----------------- */
 const readFileAsDataUrl = (file: File): Promise<string> =>
@@ -58,12 +77,16 @@ const fetchToDataUrl = async (src: string): Promise<string> => {
       fr.readAsDataURL(blob);
     });
   } catch {
+<<<<<<< HEAD
     // Keep original URL when conversion is blocked; avoids dropping visible assets.
     if (src.startsWith("http") || src.startsWith("/")) return src;
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     return "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNgYAAAAAMAASsJTYQAAAAASUVORK5CYII=";
   }
 };
 
+<<<<<<< HEAD
 const parseSnapshotSlides = (value: any): any[] => {
   if (!value) return [];
   if (Array.isArray(value)) return value;
@@ -144,6 +167,8 @@ const buildElementsFromSnapshot = (slides: any[]) => {
   return { texts, images, stickers };
 };
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 /* ------------ Mirror helpers (coordinate-based) ------------ */
 const toViewX = (mirrorOn: boolean, canvasW: number, modelX: number, elW: number) =>
   mirrorOn ? (canvasW - elW - modelX) : modelX;
@@ -153,8 +178,13 @@ const toModelX = (mirrorOn: boolean, canvasW: number, viewX: number, elW: number
 
 /* --------------- Component --------------- */
 const CategoriesEditor = () => {
+<<<<<<< HEAD
   // const theme = useTheme();
   // const isTablet = useMediaQuery(theme.breakpoints.down("md"));
+=======
+  const theme = useTheme();
+  const isTablet = useMediaQuery(theme.breakpoints.down("md"));
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   const {
     category, setCategory, config,
     slides, setSlides,
@@ -164,8 +194,11 @@ const CategoriesEditor = () => {
     textToolOn, setTextToolOn,
     textElements, setTextElements,
     imageElements, setImageElements,
+<<<<<<< HEAD
     stickerElements,
     setStickerElements,
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     mainScrollerRef,
     registerFirstSlideNode,
     loading,
@@ -173,10 +206,15 @@ const CategoriesEditor = () => {
     setSlideBg,
   } = useCategoriesEditorState();
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   const location = useLocation();
   const hydratedRef = useRef(false);
 
   useEffect(() => {
+<<<<<<< HEAD
     const st = location.state as any;
     const rs = st?.rawStores;
     if (hydratedRef.current) return;
@@ -252,10 +290,30 @@ const CategoriesEditor = () => {
     setStickerElements,
     setSlideBg,
   ]);
+=======
+    const rs = (location.state as any)?.rawStores;
+    if (!rs || hydratedRef.current) return;
+    hydratedRef.current = true;
+
+    // ✅ Restore stores
+    if (rs.category) setCategory(rs.category);
+    if (Array.isArray(rs.slides) && rs.slides.length) setSlides(rs.slides);
+    if (Array.isArray(rs.textElements)) setTextElements(rs.textElements);
+    if (Array.isArray(rs.imageElements)) setImageElements(rs.imageElements);
+    if (rs.slideBg) setSlideBg(rs.slideBg);
+
+    // ✅ start from slide1
+    setSelectedSlide(0);
+    setSelectedTextId(null);
+    setSelectedImageId(null);
+  }, [location.state, setCategory, setSlides, setTextElements, setImageElements, setSlideBg]);
+
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
   // ====== Local UI-only state ======
   const [fontSizeInput, setFontSizeInput] = useState<string>("20");
   const [showStickerPopup, setShowStickerPopup] = useState(false);
+<<<<<<< HEAD
   const [inlineEditingTextId, setInlineEditingTextId] = useState<string | null>(null);
   const isMobile = useMediaQuery("(max-width:600px)");
   const [viewport, setViewport] = useState({ w: 0, h: 0 });
@@ -268,12 +326,36 @@ const CategoriesEditor = () => {
     const onResize = () => {
       if (typeof window === "undefined") return;
       setViewport({ w: window.innerWidth, h: window.innerHeight });
+=======
+
+  // Per-slide mirror toggle
+  const [mirrorBySlide, setMirrorBySlide] = useState<Record<number, boolean>>({});
+  const thumbRef = useRef<HTMLDivElement | null>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const scrollSyncRaf = useRef<number | null>(null);
+  const lastSyncedIndex = useRef<number>(0);
+
+  // const isDraggingMain = useRef(false);
+  // const startXMain = useRef(0);
+  // const scrollLeftMain = useRef(0);
+  const isDraggingThumb = useRef(false);
+  const startXThumb = useRef(0);
+  const scrollLeftThumb = useRef(0);
+
+  // ====== Viewport-aware canvas sizing ======
+  const [viewport, setViewport] = useState({ w: 1200, h: 800 });
+  useEffect(() => {
+    const onResize = () => {
+      const headerFooterReserve = 240;
+      setViewport({ w: window.innerWidth, h: Math.max(320, window.innerHeight - headerFooterReserve) });
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     };
     onResize();
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
+<<<<<<< HEAD
   // Per-slide mirror toggle
   const [mirrorBySlide, setMirrorBySlide] = useState<Record<number, boolean>>({});
   const thumbRef = useRef<HTMLDivElement | null>(null);
@@ -406,6 +488,22 @@ const CategoriesEditor = () => {
 
     return items;
   }, [currentSlideId, textElements, imageElements, mirrorBySlide, artboardWidth, scaleSafe]);
+=======
+  const canvasSize = useMemo(
+    () => fitCanvas(
+      config.mmWidth,
+      config.mmHeight,
+      viewport.w * (isTablet ? 0.95 : 0.72),
+      viewport.h
+    ),
+    [config.mmWidth, config.mmHeight, viewport, isTablet]
+  );
+
+  const artboardWidth = canvasSize.width;
+
+  // current slide id
+  const currentSlideId = slides[selectedSlide]?.id ?? null;
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   const colorInputRef = useRef<HTMLInputElement | null>(null);
 
   const openNativeColorPicker = () => {
@@ -417,6 +515,7 @@ const CategoriesEditor = () => {
     () => (selectedTextId ? (textElements.find(e => e.id === selectedTextId) ?? null) : null),
     [selectedTextId, textElements]
   );
+<<<<<<< HEAD
   const selectedRotation = Number(selectedText?.rotation ?? 0) || 0;
   const selectedCurve = Number(selectedText?.curve ?? 0) || 0;
 
@@ -424,6 +523,8 @@ const CategoriesEditor = () => {
     if (!inlineEditingTextId) return;
     if (selectedTextId !== inlineEditingTextId) setInlineEditingTextId(null);
   }, [selectedTextId, inlineEditingTextId]);
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
   /* ---- Font size sync/control ---- */
   useEffect(() => {
@@ -443,6 +544,17 @@ const CategoriesEditor = () => {
   const handleFontSizeChange = (e: React.ChangeEvent<HTMLInputElement>) => setFontSizeInput(e.target.value);
 
   /* ---------------- Slides ---------------- */
+<<<<<<< HEAD
+=======
+  const scrollThumbToIndex = (index: number, behavior: ScrollBehavior = "smooth") => {
+    if (!thumbRef.current) return;
+    const child = thumbRef.current.children[index] as HTMLElement | undefined;
+    if (!child) return;
+    const left = child.offsetLeft - (thumbRef.current.clientWidth - child.offsetWidth) / 2;
+    thumbRef.current.scrollTo({ left: Math.max(0, left), behavior });
+  };
+
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   const scrollToSlide = (index: number) => {
     const container = mainScrollerRef.current;
     if (!container) {
@@ -455,6 +567,10 @@ const CategoriesEditor = () => {
     if (!child) return;
     const slideWidth = child.offsetWidth + 40;
     container.scrollTo({ left: slideWidth * index, behavior: "smooth" });
+<<<<<<< HEAD
+=======
+    scrollThumbToIndex(index);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     setSelectedSlide(index);
     setSelectedTextId(null);
     setSelectedImageId(null);
@@ -488,8 +604,11 @@ const CategoriesEditor = () => {
       text: "",
       bold: false, italic: false, color: "#111111",
       fontSize: 20, fontFamily: "Arial",
+<<<<<<< HEAD
       rotation: 0,
       curve: 0,
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       align: "center",
       editable: true,
     };
@@ -520,6 +639,7 @@ const CategoriesEditor = () => {
     setImageElements(prev => prev.map(e => (e.id === id ? { ...e, ...patch } : e)));
   };
 
+<<<<<<< HEAD
   const openCropForImage = useCallback((img: CtxImageEl) => {
     if (!img?.id || !img?.src || img.editable === false) return;
     setCropTarget({
@@ -529,6 +649,8 @@ const CategoriesEditor = () => {
     });
   }, []);
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   const deleteElement = (id: string) => {
     let removed = false;
     setTextElements(prev => {
@@ -540,6 +662,7 @@ const CategoriesEditor = () => {
     if (selectedImageId === id) setSelectedImageId(null);
   };
 
+<<<<<<< HEAD
   /* ✅ NEW: Duplicate / Copy element */
   const clamp = (v: number, min: number, max: number) => Math.max(min, Math.min(max, v));
 
@@ -603,6 +726,8 @@ const CategoriesEditor = () => {
     setSelectedTextId(null);
   }, [slides, selectedSlide, textElements, imageElements, getMaxZOnSlide, artboardWidth, artboardHeight, setTextElements, setImageElements]);
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   /* -------------- File input -------------- */
   const onClickPhoto = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -634,6 +759,7 @@ const CategoriesEditor = () => {
   );
 
   /* ---------- Drag scrolling ---------- */
+<<<<<<< HEAD
   const [canLeft, setCanLeft] = useState(false);
   const [canRight, setCanRight] = useState(false);
 
@@ -693,6 +819,99 @@ const CategoriesEditor = () => {
 
   const slideScrollLeft = () => scrollByOne("left");
   const slideScrollRight = () => scrollByOne("right");
+=======
+  // const onMainMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+  //   const el = mainScrollerRef.current;
+  //   if (!el) return;
+  //   isDraggingMain.current = true;
+  //   startXMain.current = e.pageX - el.offsetLeft;
+  //   scrollLeftMain.current = el.scrollLeft;
+  // };
+  // const onMainMouseUp = () => (isDraggingMain.current = false);
+  // const onMainMouseLeave = () => (isDraggingMain.current = false);
+  // const onMainMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  //   const el = mainScrollerRef.current;
+  //   if (!isDraggingMain.current || !el) return;
+  //   const x = e.pageX - el.offsetLeft;
+  //   const walk = x - startXMain.current;
+  //   el.scrollLeft = scrollLeftMain.current - walk;
+  // };
+  const onThumbMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!thumbRef.current) return;
+    isDraggingThumb.current = true;
+    startXThumb.current = e.pageX - thumbRef.current.offsetLeft;
+    scrollLeftThumb.current = thumbRef.current.scrollLeft;
+  };
+  const onThumbMouseUp = () => (isDraggingThumb.current = false);
+  const onThumbMouseLeave = () => (isDraggingThumb.current = false);
+  const onThumbMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDraggingThumb.current || !thumbRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - thumbRef.current.offsetLeft;
+    const walk = x - startXThumb.current;
+    thumbRef.current.scrollLeft = scrollLeftThumb.current - walk;
+  };
+
+  const onMainWheel = (e: React.WheelEvent<HTMLDivElement>) => {
+    const container = mainScrollerRef.current;
+    if (!container) return;
+    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+    if (container.scrollWidth <= container.clientWidth) return;
+    e.preventDefault();
+    container.scrollLeft += e.deltaY;
+  };
+
+  const onMainScroll = () => {
+    const container = mainScrollerRef.current;
+    if (!container || scrollSyncRaf.current != null) return;
+    scrollSyncRaf.current = window.requestAnimationFrame(() => {
+      scrollSyncRaf.current = null;
+      const children = Array.from(container.children) as HTMLElement[];
+      if (!children.length) return;
+      const center = container.scrollLeft + container.clientWidth / 2;
+      let bestIndex = 0;
+      let bestDist = Number.POSITIVE_INFINITY;
+      children.forEach((child, index) => {
+        const childCenter = child.offsetLeft + child.offsetWidth / 2;
+        const dist = Math.abs(childCenter - center);
+        if (dist < bestDist) {
+          bestDist = dist;
+          bestIndex = index;
+        }
+      });
+      if (bestIndex !== lastSyncedIndex.current) {
+        lastSyncedIndex.current = bestIndex;
+        setSelectedSlide(bestIndex);
+        setSelectedTextId(null);
+        setSelectedImageId(null);
+        scrollThumbToIndex(bestIndex, "auto");
+      }
+    });
+  };
+
+  const onThumbWheel = (e: React.WheelEvent<HTMLDivElement>) => {
+    if (!thumbRef.current) return;
+    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+    e.preventDefault();
+    thumbRef.current.scrollLeft += e.deltaY;
+  };
+
+  useEffect(() => {
+    scrollThumbToIndex(selectedSlide);
+  }, [selectedSlide, slides.length]);
+
+  const slideScrollLeft = () => {
+    const nextIndex = Math.max(0, selectedSlide - 1);
+    scrollToSlide(nextIndex);
+    scrollThumbToIndex(nextIndex);
+  };
+
+  const slideScrollRight = () => {
+    const nextIndex = Math.min(slides.length - 1, selectedSlide + 1);
+    scrollToSlide(nextIndex);
+    scrollThumbToIndex(nextIndex);
+  };
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
   // ====== Align helpers ======
   type TextAlignVal = "left" | "center" | "right";
@@ -743,7 +962,11 @@ const CategoriesEditor = () => {
   };
 
   const bringForward = (target: { type: "text" | "image"; id: string }) => {
+<<<<<<< HEAD
     const nodes = buildLayers().filter(n => n.type === target.type);
+=======
+    const nodes = buildLayers().filter(n => n.type === target.type); // why: within type
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     const idx = nodes.findIndex(n => n.id === target.id);
     if (idx === -1 || idx === nodes.length - 1) return;
     const swapped = nodes.slice();
@@ -751,7 +974,11 @@ const CategoriesEditor = () => {
     writeBackZ(normalizeZ(swapped));
   };
   const sendBackward = (target: { type: "text" | "image"; id: string }) => {
+<<<<<<< HEAD
     const nodes = buildLayers().filter(n => n.type === target.type);
+=======
+    const nodes = buildLayers().filter(n => n.type === target.type); // why: within type
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     const idx = nodes.findIndex(n => n.id === target.id);
     if (idx <= 0) return;
     const swapped = nodes.slice();
@@ -759,6 +986,7 @@ const CategoriesEditor = () => {
     writeBackZ(normalizeZ(swapped));
   };
 
+<<<<<<< HEAD
   const [showShapePopup, setShowShapePopup] = useState(false);
 
   // ====== Toolbar (responsive)
@@ -785,6 +1013,32 @@ const CategoriesEditor = () => {
           "&::-webkit-scrollbar": { height: 5, width: 5 },
           "&::-webkit-scrollbar-thumb": {
             backgroundColor: COLORS.primary,
+=======
+  const [showShapePopup, setShowShapePopup] = useState(false)
+
+  // ====== Toolbar (responsive)
+  const Toolbar = (
+    <Box
+      sx={{
+        position: { xs: "static", md: "absolute" },
+        left: { md: 16 }, top: 0,
+        display: "flex",
+        flexDirection: { xs: "row", md: "column" },
+        alignItems: { xs: "center", md: "stretch" },
+        gap: 0.75,
+        p: 1,
+        bgcolor: "#fff",
+        boxShadow: 3,
+        borderRadius: 2,
+        zIndex: 5,
+        height: { md: canvasSize.height, xs: "auto" },
+        overflowX: { xs: "hidden", md: "hidden" },
+        overflowY: { xs: "hidden", md: "auto" },
+        maxWidth: { xs: "100%", md: "none" },
+        "&::-webkit-scrollbar": { height: 5, width: 5 },
+        "&::-webkit-scrollbar-thumb": {
+          backgroundColor: COLORS.primary,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           borderRadius: "20px",
         },
       }}
@@ -918,6 +1172,7 @@ const CategoriesEditor = () => {
             </span>
           </Tooltip>
 
+<<<<<<< HEAD
           <Box
             sx={{
               minWidth: { xs: 140, md: 110 },
@@ -982,6 +1237,8 @@ const CategoriesEditor = () => {
             </Typography>
           </Box>
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           {/* Color */}
           <Stack direction="row" spacing={0.5} sx={{ px: 1, flexWrap: "wrap", maxWidth: 220 }}>
             <IconButton
@@ -1013,6 +1270,7 @@ const CategoriesEditor = () => {
   );
 
   const navigate = useNavigate();
+<<<<<<< HEAD
 
   const goNextWithRawStores = () => {
     const snapshotSlides = slides.map((s, idx) => {
@@ -1066,6 +1324,51 @@ const CategoriesEditor = () => {
 
     setSlides(prev => [...prev, { id: newSlideId }]);
 
+=======
+ const goNextWithRawStores = () => {
+  const configWithFit = {
+    ...config,
+    fitCanvas: {
+      width: Math.round(canvasSize.width),
+      height: Math.round(canvasSize.height),
+    },
+  };
+
+  const rawStores = {
+    category,
+    config: configWithFit,
+    slides,
+    textElements,
+    imageElements,
+    slideBg,
+  };
+
+  const navState: any = {
+    rawStores,
+  };
+
+  // ✅ if coming from edit mode
+  const st = location.state as any;
+  if (st?.mode) navState.mode = st.mode;
+  if (st?.id) navState.id = st.id;
+  if (st?.product) navState.product = st.product;
+
+  navigate(ADMINS_DASHBOARD.ADD_NEW_TEMPLETS_CARDS, { state: navState });
+};
+
+
+  const addSlide = () => {
+    const newSlideId = Date.now(); // or uuid("slide")
+
+    setSlides(prev => [
+      ...prev,
+      {
+        id: newSlideId,
+      },
+    ]);
+
+    // OPTIONAL: copy background from current slide
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     const currentId = slides[selectedSlide]?.id;
     if (currentId && slideBg[currentId]) {
       setSlideBg((prev: any) => ({
@@ -1074,17 +1377,30 @@ const CategoriesEditor = () => {
       }));
     }
 
+<<<<<<< HEAD
     setSelectedTextId(null);
     setSelectedImageId(null);
 
     const nextIndex = slides.length;
     setSelectedSlide(nextIndex);
 
+=======
+    // Reset selection
+    setSelectedTextId(null);
+    setSelectedImageId(null);
+
+    // Select the new slide
+    const nextIndex = slides.length;
+    setSelectedSlide(nextIndex);
+
+    // Scroll after DOM updates
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     requestAnimationFrame(() => {
       scrollToSlide(nextIndex);
     });
   };
 
+<<<<<<< HEAD
   const duplicateSlide = useCallback(
     (index: number) => {
       const sourceId = slides[index]?.id;
@@ -1150,12 +1466,16 @@ const CategoriesEditor = () => {
       scrollToSlide,
     ],
   );
+=======
+
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
   return (
     <DashboardLayout title="Categories Wise Editor">
       <input ref={fileInputRef} type="file" accept="image/*" style={{ display: "none" }} onChange={onFileSelected} />
 
       {/* Header */}
+<<<<<<< HEAD
         <Box
           sx={{
             width: "100%",
@@ -1184,10 +1504,28 @@ const CategoriesEditor = () => {
             >
               {categoryKeys.map((k) => (
                 <MenuItem key={k} value={k}>{CATEGORY_CONFIG[k as CategoryKey]?.label ?? k}</MenuItem>
+=======
+      <Box sx={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 2, mb: 1, px: 2, flexWrap: "wrap" }}>
+        <Stack direction="row" alignItems="center" spacing={2}>
+          <FormControl size="small" sx={{ minWidth: 260 }}>
+            <InputLabel id="cat-label">Category</InputLabel>
+            <Select
+              labelId="cat-label"
+              value={category}
+              label="Category"
+              onChange={(e) => setCategory(e.target.value as CategoryKey)}
+            >
+              {CATEGORY_KEYS.map((k) => (
+                <MenuItem key={k} value={k}>{CATEGORY_CONFIG[k].label}</MenuItem>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
               ))}
             </Select>
           </FormControl>
           <Chip label={`${config.mmWidth}×${config.mmHeight} mm`} size="small" />
+<<<<<<< HEAD
+=======
+          {/* Per-selected-slide Mirror switch */}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           {currentSlideId != null && (
             <Stack direction="row" alignItems="center" spacing={1}>
               <Typography variant="caption">Mirror</Typography>
@@ -1204,6 +1542,7 @@ const CategoriesEditor = () => {
             </Stack>
           )}
         </Stack>
+<<<<<<< HEAD
           <Stack direction={{ xs: "column", sm: "row" }} spacing={1} sx={{ width: { xs: "100%", md: "auto" } }}>
             <LandingButton personal title="Save Design" width="150px" onClick={goNextWithRawStores} loading={loading} />
           </Stack>
@@ -1226,6 +1565,48 @@ const CategoriesEditor = () => {
             justifyContent: "flex-start",
           minWidth: "100%",
           scrollSnapType: "x mandatory",
+=======
+        <Stack direction="row" spacing={1}>
+          <LandingButton personal title="Save Design" width="150px" onClick={goNextWithRawStores} loading={loading} />
+        </Stack>
+      </Box>
+
+      {/* <WishCard adminEditor={true} /> */}
+
+      {/* MAIN SLIDE SCROLLER */}
+      <Box
+        ref={mainScrollerRef}
+        onWheel={onMainWheel}
+        onScroll={onMainScroll}
+        // onMouseDown={onMainMouseDown}
+        // onMouseUp={onMainMouseUp}
+        // onMouseLeave={onMainMouseLeave}
+        // onMouseMove={onMainMouseMove}
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+
+          overflowX: "auto",
+          overflowY: "hidden",
+
+          width: "100%",
+          p: 2,
+          gap: "75px",
+
+          scrollBehavior: "smooth",
+          userSelect: "none",
+
+          /* ❌ remove centering */
+          justifyContent: "flex-start",
+
+          /* ✅ ensure unlimited horizontal growth */
+          minWidth: "100%",
+
+          /* Optional but recommended */
+          scrollSnapType: "x mandatory",
+
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           "&::-webkit-scrollbar": { height: 6, width: 6 },
           "&::-webkit-scrollbar-thumb": {
             backgroundColor: COLORS.primary,
@@ -1233,12 +1614,18 @@ const CategoriesEditor = () => {
           },
         }}
       >
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         {slides.map((slide, index) => {
           const isInactive = index !== selectedSlide;
           const mirrorOn = !!mirrorBySlide[slide.id as number];
           const elements = getSlideElements(slide.id);
 
           return (
+<<<<<<< HEAD
               <Box
                 key={slide.id}
                 ref={index === 0 ? registerFirstSlideNode : undefined}
@@ -1261,6 +1648,30 @@ const CategoriesEditor = () => {
                 <>
                   {(selectedTextId || selectedImageId) && (
                     <Paper elevation={2} sx={{ width: 100, p: 1, position: 'absolute', top: 3, left: 3, zIndex: 99999 }}>
+=======
+            <Box
+              key={slide.id}
+              ref={index === 0 ? registerFirstSlideNode : undefined}
+              sx={{
+                flex: "0 0 auto", width: canvasSize.width, height: canvasSize.height,
+                // bgcolor: isInactive ? "#b6b0b06b" : "#fff",
+                borderRadius: 2,
+                boxShadow: index === selectedSlide ? 8 : 4,
+                position: "relative",
+                outline: index === selectedSlide ? "2px solid #1976d2" : "1px solid rgba(0,0,0,0.08)",
+                transition: "box-shadow .2s ease, outline .2s ease, filter .2s ease, opacity .2s ease, background-color .2s ease",
+                opacity: isInactive ? 0.45 : 1,
+                filter: isInactive ? "grayscale(0.4)" : "none",
+                // bgcolor: slideBg[slide.id]?.color ?? "#fff",
+                ml: index === 0 ? 30 : 0,
+              }}
+              onClick={() => { setSelectedTextId(null); setSelectedImageId(null); }}
+            >
+              {
+                !isInactive && (<>
+                  {(selectedTextId || selectedImageId) && (
+                    <Paper elevation={2} sx={{ width: 100, p: 1, position: 'absolute', top: 3, left: 3, zIndex: 99 }}>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                       <Typography variant="caption">Editable</Typography>
                       <Switch
                         size="small"
@@ -1285,6 +1696,7 @@ const CategoriesEditor = () => {
                       />
                     </Paper>
                   )}
+<<<<<<< HEAD
                 </>
               )}
 
@@ -1302,6 +1714,18 @@ const CategoriesEditor = () => {
                     {Toolbar}
                   </Box>
                 )}
+=======
+
+                </>)
+              }
+
+              {/* Toolbar */}
+              {index === selectedSlide && (
+                <Box sx={{ position: { xs: "static", md: "absolute" }, left: { md: -90 }, top: 0, mb: { xs: 1, md: 0 } }}>
+                  {Toolbar}
+                </Box>
+              )}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
               {slideBg[slide.id]?.image && (
                 <Rnd
@@ -1331,14 +1755,21 @@ const CategoriesEditor = () => {
                 </Rnd>
               )}
 
+<<<<<<< HEAD
               {/* Elements */}
               <Box
                 ref={index === selectedSlide ? activeSlideRef : undefined}
+=======
+
+              {/* Elements */}
+              <Box
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                 sx={{
                   width: "100%", height: "100%",
                   pointerEvents: isInactive ? "none" : "auto",
                 }}
               >
+<<<<<<< HEAD
                 <AlignmentGuides {...alignGuides.guides} hide={isInactive || !alignGuides.isActive} />
                 {elements.map((el: any) => {
                   const isSelected = selectedTextId === el.id || selectedImageId === el.id;
@@ -1349,10 +1780,19 @@ const CategoriesEditor = () => {
                     const widthScaled = el.width * scaleSafe;
                     const heightScaled = el.height * scaleSafe;
                     const alignKey = `${el.type}:${el.id}`;
+=======
+                {elements.map((el: any) => {
+                  const isEditable = el.editable !== false;
+
+                  const isSelected = selectedTextId === el.id || selectedImageId === el.id;
+
+                  const viewX = toViewX(mirrorOn, artboardWidth, el.x, el.width);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
                   // runtime z-index: text always above images
                   const runtimeZ = (el.type === "text" ? 100000 : 0) + Number(el.zIndex ?? 1);
 
+<<<<<<< HEAD
                     const common = {
                       key: el.id,
                       position: { x: viewXScaled, y: viewYScaled },
@@ -1407,6 +1847,31 @@ const CategoriesEditor = () => {
                         if (el.type === "image") updateImage(el.id, patch);
                         alignGuides.onDragStop();
                       },
+=======
+                  const common = {
+                    key: el.id,
+                    position: { x: viewX, y: el.y },
+                    size: { width: el.width, height: el.height },
+                    bounds: "parent" as const,
+                    dragCancel: ".no-drag",
+                    disableDragging: isInactive || !isEditable,
+                    enableResizing: isInactive || !isEditable
+                      ? false
+                      : { bottomRight: true },
+                    onDragStop: (_: any, d: any) => {
+                      const modelX = toModelX(mirrorOn, artboardWidth, d.x, el.width);
+                      if (el.type === "text") updateText(el.id, { x: modelX, y: d.y });
+                      if (el.type === "image") updateImage(el.id, { x: modelX, y: d.y });
+                    },
+                    onResizeStop: (_: any, __: any, ref: any, ___: any, position: any) => {
+                      const newW = parseInt(ref.style.width, 10);
+                      const newH = parseInt(ref.style.height, 10);
+                      const modelX = toModelX(mirrorOn, artboardWidth, position.x, newW);
+                      const patch = { width: newW, height: newH, x: modelX, y: position.y };
+                      if (el.type === "text") updateText(el.id, patch);
+                      if (el.type === "image") updateImage(el.id, patch);
+                    },
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                     style: {
                       borderRadius: 4,
                       position: "absolute" as const,
@@ -1438,6 +1903,7 @@ const CategoriesEditor = () => {
                           setSelectedTextId(null);
                         }}
                       >
+<<<<<<< HEAD
                         <Box
                           sx={{ width: "100%", height: "100%", position: "relative" }}
                           onDoubleClick={(e) => {
@@ -1448,6 +1914,9 @@ const CategoriesEditor = () => {
                             openCropForImage(el as CtxImageEl);
                           }}
                         >
+=======
+                        <Box sx={{ width: "100%", height: "100%", position: "relative" }}>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                           <img
                             src={el.src} alt=""
                             style={{
@@ -1459,6 +1928,7 @@ const CategoriesEditor = () => {
                             draggable={false}
                           />
 
+<<<<<<< HEAD
                           {/* Layer + Copy controls (image-only) */}
                           {!isInactive && isSelected && (
                             <Box sx={{ position: "absolute", top: -15, left: -2, display: "flex", gap: 0.5, zIndex: 9999 }}>
@@ -1495,6 +1965,21 @@ const CategoriesEditor = () => {
                                   <ContentCopyOutlined fontSize="inherit" />
                                 </IconButton>
                               </Tooltip>
+=======
+                          {/* Layer controls (image-only) */}
+                          {!isInactive && isSelected && (
+                            <Box sx={{ position: "absolute", top: -15, left: -2, display: "flex", gap: 0.5, zIndex: 9999 }}>
+                              <Tooltip title="Backward">
+                                <IconButton sx={{ bgcolor: 'black', color: 'white', width: 18, height: 18 }} className="no-drag" size="small" onClick={(e) => { e.stopPropagation(); sendBackward({ type: "image", id: el.id }); }}>
+                                  <KeyboardArrowDownOutlined fontSize="small" />
+                                </IconButton>
+                              </Tooltip>
+                              <Tooltip title="Forward">
+                                <IconButton sx={{ bgcolor: 'black', color: 'white', width: 18, height: 18 }} className="no-drag" size="small" onClick={(e) => { e.stopPropagation(); bringForward({ type: "image", id: el.id }); }}>
+                                  <KeyboardArrowUpOutlined fontSize="small" />
+                                </IconButton>
+                              </Tooltip>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                             </Box>
                           )}
 
@@ -1512,6 +1997,7 @@ const CategoriesEditor = () => {
                     );
                   }
 
+<<<<<<< HEAD
                   const textAlignVal: TextAlignVal = (el.align ?? "left") as TextAlignVal;
                   const justify =
                     textAlignVal === "left"
@@ -1539,6 +2025,10 @@ const CategoriesEditor = () => {
                   if (mirrorOn) transformParts.push("scaleX(-1)");
                   if (rotation) transformParts.push(`rotate(${rotation}deg)`);
                   const textTransform = transformParts.length ? transformParts.join(" ") : "none";
+=======
+                  const align: TextAlignVal = (el.align ?? "left") as TextAlignVal;
+                  const justify = align === "left" ? "flex-start" : align === "center" ? "center" : "flex-end";
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
                   return (
                     <Rnd
@@ -1549,6 +2039,7 @@ const CategoriesEditor = () => {
                         setSelectedTextId(el.id);
                         setSelectedImageId(null);
                       }}
+<<<<<<< HEAD
                       onDoubleClick={(e: any) => {
                         if (isInactive) return;
                         e.stopPropagation();
@@ -1636,6 +2127,52 @@ const CategoriesEditor = () => {
                                 onClick={(e) => e.stopPropagation()}
                               />
                             </Box>
+=======
+                    >
+                      <Box sx={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: justify, p: 1, position: "relative" }}>
+                        {/* Layer controls (text-only within text stack) */}
+                        {!isInactive && isSelected && (
+                          <Box sx={{ position: "absolute", top: -15, left: -2, display: "flex", gap: 0.5, zIndex: 9999 }}>
+                            <Tooltip title="Backward">
+                              <IconButton sx={{ bgcolor: 'black', color: 'white', width: 18, height: 18 }} className="no-drag" size="small" onClick={(e) => { e.stopPropagation(); sendBackward({ type: "text", id: el.id }); }}>
+                                <KeyboardArrowDownOutlined fontSize="small" />
+                              </IconButton>
+                            </Tooltip>
+                            <Tooltip title="Forward">
+                              <IconButton sx={{ bgcolor: 'black', color: 'white', width: 18, height: 18 }} className="no-drag" size="small" onClick={(e) => { e.stopPropagation(); bringForward({ type: "text", id: el.id }); }}>
+                                <KeyboardArrowUpOutlined fontSize="small" />
+                              </IconButton>
+                            </Tooltip>
+                          </Box>
+                        )}
+
+                        {selectedTextId === el.id && !isInactive ? (
+                          <>
+                            <TextField
+                              className="no-drag"
+                              multiline
+                              value={el.text}
+                              onChange={(e) => updateText(el.id, { text: e.target.value })}
+                              variant="standard"
+                              placeholder="Add Text"
+                              autoFocus
+                              sx={{ width: "100%" }}
+                              InputProps={{ disableUnderline: true }}
+                              inputProps={{
+                                style: {
+                                  fontWeight: el.bold ? 700 : 400,
+                                  fontStyle: el.italic ? "italic" : "normal",
+                                  fontSize: el.fontSize ?? 20,
+                                  fontFamily: el.fontFamily ?? "Arial",
+                                  color: el.color ?? "#111111",
+                                  lineHeight: 1.2,
+                                  textAlign: align,
+                                  transform: mirrorOn ? "scaleX(-1)" : "none",
+                                },
+                              }}
+                              onClick={(e) => e.stopPropagation()}
+                            />
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                             <IconButton
                               className="no-drag"
                               onClick={(e) => { e.stopPropagation(); deleteElement(el.id); }}
@@ -1645,6 +2182,7 @@ const CategoriesEditor = () => {
                             </IconButton>
                           </>
                         ) : (
+<<<<<<< HEAD
                           <>
                             <Box
                               sx={{
@@ -1727,11 +2265,36 @@ const CategoriesEditor = () => {
                                     setInlineEditingTextId(el.id);
                                   }}
                                 >
+=======
+                          <Typography
+                            sx={{
+                              fontWeight: el.bold ? 700 : 400,
+                              fontStyle: el.italic ? "italic" : "normal",
+                              fontSize: el.fontSize ?? 20,
+                              fontFamily: el.fontFamily ?? "Arial",
+                              color: el.color ?? "#111111",
+                              textAlign: align,
+                              width: "100%", height: "100%",
+                              alignItems: "center", display: "flex",
+                              userSelect: "none", pointerEvents: "none",
+                              justifyContent: justify,
+                              transform: mirrorOn ? "scaleX(-1)" : "none",
+                            }}
+                          >
+                            {el.text}
+                            {!isInactive && (
+                              <Box sx={{ position: "absolute", top: -15, right: -8, pointerEvents: "auto" }}>
+                                <IconButton className="no-drag" onClick={(e) => { e.stopPropagation(); setSelectedTextId(el.id); setSelectedImageId(null); }}>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                                   <Edit color="info" />
                                 </IconButton>
                               </Box>
                             )}
+<<<<<<< HEAD
                           </>
+=======
+                          </Typography>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                         )}
                       </Box>
                     </Rnd>
@@ -1777,9 +2340,16 @@ const CategoriesEditor = () => {
                   </Box>
                 )}
 
+<<<<<<< HEAD
                 {/* Shapes */}
                 {!isInactive && (
                   <PopupWrapper
+=======
+
+                {/* Shapes */}
+                {
+                  !isInactive && <PopupWrapper
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                     title="Frames"
                     open={showShapePopup}
                     onClose={() => setShowShapePopup(false)}
@@ -1811,7 +2381,13 @@ const CategoriesEditor = () => {
                       ))}
                     </Box>
                   </PopupWrapper>
+<<<<<<< HEAD
                 )}
+=======
+                }
+
+
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
               </Box>
             </Box>
           );
@@ -1820,9 +2396,13 @@ const CategoriesEditor = () => {
         <Box
           onClick={addSlide}
           sx={{
+<<<<<<< HEAD
             flex: "0 0 auto",
             width: renderCanvas.width,
             height: renderCanvas.height,
+=======
+            flex: "0 0 auto", width: canvasSize.width, height: canvasSize.height,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             display: 'flex', justifyContent: 'center', alignItems: 'center', m: 'auto',
             borderRadius: 2,
             boxShadow: 8,
@@ -1830,7 +2410,13 @@ const CategoriesEditor = () => {
             transition: "box-shadow .2s ease, outline .2s ease, filter .2s ease, opacity .2s ease, background-color .2s ease",
             cursor: 'pointer',
             background: '#eceaeaff',
+<<<<<<< HEAD
             "&:hover": { bgcolor: '#c7c7c7ff' }
+=======
+            "&:hover": {
+              bgcolor: '#c7c7c7ff'
+            }
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           }}>
           <Tooltip title='Click to Add Slide'>
             <IconButton
@@ -1844,10 +2430,15 @@ const CategoriesEditor = () => {
               <AddOutlined sx={{ fontSize: 80 }} />
             </IconButton>
           </Tooltip>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         </Box>
       </Box>
 
       {/* Thumbnails */}
+<<<<<<< HEAD
       <Box
         sx={{
           display: "flex",
@@ -1975,6 +2566,63 @@ const CategoriesEditor = () => {
           setCropTarget(null);
         }}
       />
+=======
+      <Box sx={{ display: "flex", alignItems: "center", gap: 3, width: { xs: "96%", md: "60%" }, justifyContent: "center", m: "16px auto 0" }}>
+        <IconButton onClick={slideScrollLeft}><ArrowBackIos /></IconButton>
+        <Box
+          ref={thumbRef}
+          onWheel={onThumbWheel}
+          onMouseDown={onThumbMouseDown}
+          onMouseUp={onThumbMouseUp}
+          onMouseLeave={onThumbMouseLeave}
+          onMouseMove={onThumbMouseMove}
+          sx={{
+            display: "flex",
+            overflowX: "auto",
+            gap: 1,
+            flex: 1,
+            minWidth: 0,
+            px: 1,
+            alignItems: "center",
+            scrollBehavior: "smooth",
+            "&::-webkit-scrollbar": { display: "none" },
+            cursor: "grab",
+            justifyContent: "flex-start",
+          }}
+        >
+          {slides.map((s, index) => {
+            const mirrored = !!mirrorBySlide[s.id as number];
+            return (
+              <Box
+                key={s.id}
+                sx={{
+                  px: 1.5, height: 40, minWidth: 60,
+                  bgcolor: index === selectedSlide ? "#1976d2" : "#eceff1",
+                  color: index === selectedSlide ? "white" : "#263238",
+                  borderRadius: 2, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center",
+                  fontWeight: 600, flexShrink: 0, cursor: "pointer", transition: ".2s", position: "relative",
+                  boxShadow: index === selectedSlide ? 4 : 0,
+                }}
+                onClick={() => scrollToSlide(index)}
+              >
+                <Typography variant="body2">
+                  {config.slideLabels?.[index] ?? `Slide ${index + 1}`} {mirrored ? "⟲" : ""}
+                </Typography>
+                {slides.length > 1 && (
+                  <IconButton
+                    onClick={(e) => { e.stopPropagation(); deleteSlide(index); }}
+                    sx={{ position: "absolute", top: 0, right: -8, width: 18, height: 18, bgcolor: "#263238", color: "white", borderRadius: "50%", "&:hover": { bgcolor: "#c62828" }, zIndex: 5 }}
+                  >
+                    <Close fontSize="small" />
+                  </IconButton>
+                )}
+              </Box>
+            );
+          })}
+        </Box>
+        <IconButton onClick={slideScrollRight}><ArrowForwardIos /></IconButton>
+      </Box>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     </DashboardLayout>
   );
 };
@@ -1984,10 +2632,14 @@ export default CategoriesEditor;
 const toolBtn = {
   display: "flex",
   flexDirection: "column" as const,
+<<<<<<< HEAD
   alignItems: "center",
   fontSize: { xs: "10px", sm: "12px" },
   minWidth: { xs: 54, md: "auto" },
   px: { xs: 0.5, md: 0 },
+=======
+  fontSize: "12px",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   color: "#212121",
   "&:hover": { color: "#3a7bd5" },
 };

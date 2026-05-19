@@ -1,8 +1,15 @@
+<<<<<<< HEAD
 import { createContext, useContext, useEffect, useMemo, useRef, useState, type MouseEvent as ReactMouseEvent, type ComponentProps } from "react";
 import { Box, Chip, IconButton, Paper, Switch, TextField, Tooltip, Typography } from "@mui/material";
 import {
   Close,
   ContentCopyOutlined,
+=======
+﻿import { useEffect, useMemo, useRef, useState } from "react";
+import { Box, Chip, IconButton, Paper, Switch, TextField, Tooltip, Typography } from "@mui/material";
+import {
+  Close,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   Forward10,
   Forward30,
   KeyboardArrowDownOutlined,
@@ -17,6 +24,7 @@ import { Rnd } from "react-rnd";
 import { COLORS } from "../../constant/color";
 import { useSlide3 } from "../../context/Slide3Context";
 import { motion } from "framer-motion";
+<<<<<<< HEAD
 import { useLocation, useParams } from "react-router-dom";
 import mergePreservePdf from "../../utils/mergePreservePdf";
 import { safeGetStorage } from "../../lib/storage";
@@ -25,6 +33,10 @@ import { readDraftFull } from "../../lib/draftLocal";
 import { isIosTouchDevice } from "../../lib/platform";
 import AlignmentGuides from "../AlignmentGuides/AlignmentGuides";
 import { useAlignGuides } from "../../hooks/useAlignGuides";
+=======
+import { useLocation } from "react-router-dom";
+import mergePreservePdf from "../../utils/mergePreservePdf";
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
 /* ===================== helpers + types ===================== */
 const num = (v: any, d = 0) => (typeof v === "number" && !Number.isNaN(v) ? v : d);
@@ -82,6 +94,7 @@ type LayoutNorm = {
   textElements: TextEl[];
 };
 
+<<<<<<< HEAD
 type RndProps = ComponentProps<typeof Rnd>;
 const CanvasScaleContext = createContext(1);
 const ScaledRnd = (props: RndProps) => {
@@ -108,6 +121,8 @@ const focusEditableTextFromTarget = (target: EventTarget | null) => {
   });
 };
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 const toElement = (obj: any, i: number, editable: boolean, prefix = "bg"): ElementEl => ({
   id: idOrIdx(obj, i, prefix),
   x: num(obj?.x, 0),
@@ -156,6 +171,7 @@ const toText = (obj: any, i: number, editable: boolean, prefix = "te"): TextEl =
   };
 };
 
+<<<<<<< HEAD
 const normalizeMultiTexts = (arr: any[]) =>
   (Array.isArray(arr) ? arr : []).map((t) => ({
     ...t,
@@ -189,6 +205,8 @@ const stripLayoutTextElements = (
   return { ...layout, textElements };
 };
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 function normalizeSlide(slide: any): {
   bgColor: string | null;
   bgImage: string | null;
@@ -238,12 +256,17 @@ function normalizeSlide(slide: any): {
   out.elements.push(...(user?.images?.locked ?? []).map((o: any, i: number) => toElement(o, i, false, "uimg-locked")));
   out.elements.push(...(user?.images?.editable ?? []).map((o: any, i: number) => toElement(o, i, true, "uimg-edit")));
 
+<<<<<<< HEAD
   // stickers (layout + user)
+=======
+  // stickers (layout + user + qrVideo)
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   out.stickers.push(...(layout?.stickers?.locked ?? []).map((o: any, i: number) => toSticker(o, i, false, "st-locked")));
   out.stickers.push(...(layout?.stickers?.editable ?? []).map((o: any, i: number) => toSticker(o, i, true, "st-edit")));
   out.stickers.push(...(user?.stickers?.locked ?? []).map((o: any, i: number) => toSticker(o, i, false, "ust-locked")));
   out.stickers.push(...(user?.stickers?.editable ?? []).map((o: any, i: number) => toSticker(o, i, true, "ust-edit")));
 
+<<<<<<< HEAD
   // texts
   out.textElements.push(...(layout?.staticText ?? []).map((o: any, i: number) => toText(o, i, !!o?.editable, "te")));
   const multiRaw = Array.isArray(slide?.multipleTexts) ? slide.multipleTexts : [];
@@ -262,6 +285,30 @@ function normalizeSlide(slide: any): {
       return toText(o, i, editable, "mte");
     })
   );
+=======
+  if (slide.qrVideo?.url) {
+    out.stickers.push(
+      toSticker(
+        {
+          id: "qr-video",
+          x: num(slide.qrVideo.x, 56),
+          y: num(slide.qrVideo.y, 404),
+          width: num(slide.qrVideo.width, 70),
+          height: num(slide.qrVideo.height, 105),
+          zIndex: num(slide.qrVideo.zIndex, 1000),
+          url: slide.qrVideo.url,
+        },
+        9991,
+        false,
+        "qr",
+      ),
+    );
+  }
+
+  // texts
+  out.textElements.push(...(layout?.staticText ?? []).map((o: any, i: number) => toText(o, i, !!o?.editable, "te")));
+  out.textElements.push(...(slide.multipleTexts ?? []).map((o: any, i: number) => toText(o, i, !!o?.isEditable, "mte")));
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   if (slide.oneText && str(slide.oneText.value, "").trim().length > 0) {
     out.textElements.push(
       toText(
@@ -323,14 +370,19 @@ interface SpreadRightSideProps {
   activeIndex?: number;
   addTextRight?: number;
   rightBox?: boolean;
+<<<<<<< HEAD
   isAdminEditor?: boolean;
   canvasScale?: number;
+=======
+  isAdminEditor?: boolean
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 }
 
 const SpreadRightSide = ({
   activeIndex,
   addTextRight,
   rightBox,
+<<<<<<< HEAD
   isAdminEditor,
   canvasScale,
 }: SpreadRightSideProps) => {
@@ -360,6 +412,10 @@ const SpreadRightSide = ({
     setSelectedStickerIndex2(null);
     setSelectedBgIndex3(null);
   };
+=======
+  isAdminEditor
+}: SpreadRightSideProps) => {
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   const {
     images3,
     selectedImg3,
@@ -379,7 +435,10 @@ const SpreadRightSide = ({
     setVerticalAlign3,
     setTextAlign3,
     rotation3,
+<<<<<<< HEAD
     setRotation3,
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     setTexts3,
     setShowOneTextRightSideBox3,
     fontFamily3,
@@ -394,8 +453,11 @@ const SpreadRightSide = ({
     setFontColor3,
     setFontWeight3,
     setFontFamily3,
+<<<<<<< HEAD
     setLineHeight3,
     setLetterSpacing3,
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     selectedVideoUrl3,
     setSelectedVideoUrl3,
     draggableImages3,
@@ -410,7 +472,10 @@ const SpreadRightSide = ({
     setIsAIimage3,
     selectedAIimageUrl3,
     selectedStickers3,
+<<<<<<< HEAD
     setSelectedStickers3,
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     updateSticker3,
     removeSticker3,
     aimage3,
@@ -427,7 +492,10 @@ const SpreadRightSide = ({
     bgImage3,
     setBgColor3,
     setBgImage3,
+<<<<<<< HEAD
     setSelectedAIimageUrl3,
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     layout3,
     setLayout3,
     bgEdit3,
@@ -445,6 +513,7 @@ const SpreadRightSide = ({
   const [selectedStickerIndex2, setSelectedStickerIndex2] = useState<number | null>(null);
   const [selectedBgIndex3, setSelectedBgIndex3] = useState<number | null>(null);
 
+<<<<<<< HEAD
 
   const location = useLocation();
   const { id: routeId } = useParams<{ id?: string }>();
@@ -674,6 +743,21 @@ const SpreadRightSide = ({
 
     return items;
   }, [draggableImages3, selectedImg3, textElements3, selectedStickers3, isAIimage3, aimage3]);
+=======
+  const location = useLocation();
+  const slide3 = location.state?.layout?.slides?.slide3 ?? null;
+
+  useEffect(() => {
+    if (!slide3) return;
+    const norm = normalizeSlide(slide3);
+    setBgColor3?.(norm.bgColor);
+    setBgImage3?.(norm.bgImage);
+    setLayout3(norm.layout);
+  }, [slide3, setBgColor3, setBgImage3, setLayout3]);
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const rightBoxRef = useRef<HTMLDivElement>(null);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
 
 
@@ -685,7 +769,10 @@ const SpreadRightSide = ({
     setUploadTarget({ type, index });
     fileInputRef.current?.click();
   };
+<<<<<<< HEAD
   
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file || !uploadTarget) return;
@@ -714,6 +801,10 @@ const SpreadRightSide = ({
     setUploadTarget(null);
   };
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   /* ------------------ static text edit bindings (editable only) ------------------ */
   const handleTextChange = (newText: string, index: number) => {
     setLayout3((prev: any) => {
@@ -750,6 +841,7 @@ const SpreadRightSide = ({
 
   // Add this handler to initialize draggable state for images (omitted for brevity)
   useEffect(() => {
+<<<<<<< HEAD
     // ✅ Draft restore hua hai aur images3 abhi empty hai => wipe mat karo
     if (restoredDraftRef.current && images3.length === 0) return;
 
@@ -757,6 +849,11 @@ const SpreadRightSide = ({
       setDraggableImages3((prev: any[]) => {
         const existingIds = prev.map((img: any) => img.id);
 
+=======
+    if (images3.length > 0) {
+      setDraggableImages3((prev: any[]) => {
+        const existingIds = prev.map((img: any) => img.id);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         const newOnes = images3
           .filter((img) => !existingIds.includes(img.id))
           .map((img) => ({
@@ -777,12 +874,18 @@ const SpreadRightSide = ({
         return mergePreservePdf(prev, next);
       });
     } else {
+<<<<<<< HEAD
       // ✅ new card me jab user saari images delete kare => clear hona chahiye
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       setDraggableImages3((prev: any[]) => mergePreservePdf(prev, []));
     }
   }, [images3, setDraggableImages3]);
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   // Function to add new text element
   const addNewTextElement = () => {
     const newTextElement = createNewTextElement3({
@@ -820,7 +923,11 @@ const SpreadRightSide = ({
     }
   };
 
+<<<<<<< HEAD
   // 👇 Auto-reset multipleTextValue when all multiple texts are deleted
+=======
+  // ðŸ‘‡ Auto-reset multipleTextValue when all multiple texts are deleted
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   useEffect(() => {
     // When user re-selects the multipleTextValue layout
     if (multipleTextValue3) {
@@ -835,7 +942,11 @@ const SpreadRightSide = ({
             fontColor: "#000000",
             fontFamily: "Roboto",
             textAlign: "center",
+<<<<<<< HEAD
             verticalAlign: "top",
+=======
+            verticalAlign: "center",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             rotation: 0,
             lineHeight: 1.5,
             letterSpacing: 0
@@ -849,7 +960,11 @@ const SpreadRightSide = ({
     setTexts3((prev) => {
       const updated = prev.filter((_, i) => i !== index);
 
+<<<<<<< HEAD
       // ✅ If all boxes are deleted → reset layout
+=======
+      // âœ… If all boxes are deleted â†’ reset layout
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       if (updated.length === 0) {
         setMultipleTextValue3(false);
         setSelectedLayout3("blank");
@@ -859,7 +974,11 @@ const SpreadRightSide = ({
     });
   };
 
+<<<<<<< HEAD
   // ✅ Place this useEffect HERE (below your state definitions)
+=======
+  // âœ… Place this useEffect HERE (below your state definitions)
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   useEffect(() => {
     if (editingIndex3 !== null && editingIndex3 !== undefined) {
       setTexts3((prev) =>
@@ -868,6 +987,7 @@ const SpreadRightSide = ({
             ? {
               ...t,
               fontSize3,
+<<<<<<< HEAD
               fontSize: fontSize3,
               fontWeight3,
               fontWeight: fontWeight3,
@@ -883,6 +1003,13 @@ const SpreadRightSide = ({
               lineHeight: lineHeight3,
               letterSpacing3,
               letterSpacing: letterSpacing3,
+=======
+              fontWeight3,
+              fontColor3,
+              fontFamily3,
+              textAlign3,
+              verticalAlign3,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             }
             : t
         )
@@ -895,9 +1022,12 @@ const SpreadRightSide = ({
     fontColor3,
     textAlign3,
     verticalAlign3,
+<<<<<<< HEAD
     lineHeight3,
     letterSpacing3,
     editingIndex3,
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   ]);
 
   useEffect(() => {
@@ -1067,6 +1197,7 @@ const SpreadRightSide = ({
     return () => document.removeEventListener("mousedown", onDocClick);
   }, [bgEdit3]);
 
+<<<<<<< HEAD
 
   // duplicate   
   const duplicateLayer = (type: 'text' | 'image' | 'sticker', idOrIndex: string | number) => {
@@ -1180,13 +1311,63 @@ const SpreadRightSide = ({
           {/* BG */}
           {isAdminEditor && bgImage3 && (
             <ScaledRnd
+=======
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        width: "100%",
+        gap: "5px",
+        position: "relative",
+      }}
+    >
+      {activeIndex === 2 && rightBox && (
+        <Box
+          ref={rightBoxRef}
+          sx={{
+            flex: 1,
+            zIndex: 10,
+            p: 2,
+            position: "relative",
+            height: { md: "700px", sm: "600px", xs: "70vh" },
+            opacity: isSlideActive3 ? 1 : 0.6,
+            pointerEvents: isSlideActive3 ? "auto" : "none",
+            backgroundColor: bgColor3 ?? "transparent",
+            // backgroundImage: bgImage3 ? `url(${bgImage3})` : "none",
+            backgroundSize: "cover",
+            "&::after": !isSlideActive3
+              ? {
+                content: '""',
+                position: "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                backgroundColor: "rgba(146, 145, 145, 0.51)",
+                zIndex: 1000,
+                pointerEvents: "none",
+              }
+              : {},
+          }}
+        >
+
+          {/* BG */}
+          {isAdminEditor && bgImage3 && (
+            <Rnd
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
               size={{ width: bgRect3.width, height: bgRect3.height }}
               position={{ x: bgRect3.x, y: bgRect3.y }}
               bounds="parent"
               enableUserSelectHack={false}
+<<<<<<< HEAD
               // ✅ only draggable when unlocked AND in edit mode
               disableDragging={!bgEdit3 || bgLocked3}
               // ✅ only resizable when unlocked AND in edit mode
+=======
+              // âœ… only draggable when unlocked AND in edit mode
+              disableDragging={!bgEdit3 || bgLocked3}
+              // âœ… only resizable when unlocked AND in edit mode
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
               enableResizing={
                 bgEdit3 && !bgLocked3
                   ? {
@@ -1243,7 +1424,11 @@ const SpreadRightSide = ({
                   backgroundPosition: "center",
                   userSelect: "none",
                 }}
+<<<<<<< HEAD
                 // ✅ double-click only works when unlocked
+=======
+                // âœ… double-click only works when unlocked
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                 onDoubleClick={() => {
                   if (!bgLocked3) setBgEdit3(true);
                 }}
@@ -1284,7 +1469,11 @@ const SpreadRightSide = ({
                   </Box>
                 )}
               </Box>
+<<<<<<< HEAD
             </ScaledRnd>
+=======
+            </Rnd>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           )}
 
 
@@ -1326,7 +1515,12 @@ const SpreadRightSide = ({
                   multipleTextValue3 || showOneTextRightSideBox3 ? null : (
                     <>
                       {textElements3?.map((textElement) => {
+<<<<<<< HEAD
                         const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+=======
+                        const isMobile =
+                          typeof window !== "undefined" && window.innerWidth < 768;
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
                         const hAlign =
                           textElement.textAlign === "top"
@@ -1345,6 +1539,7 @@ const SpreadRightSide = ({
                         let lastTap = 0;
 
                         return (
+<<<<<<< HEAD
                           <ScaledRnd
                             key={textElement.id}
                             cancel={textElement.isEditing ? ".no-drag, .text-edit" : ".no-drag"}
@@ -1352,6 +1547,24 @@ const SpreadRightSide = ({
                             enableResizing={{ bottomRight: true }}
                             size={{ width: textElement.size.width, height: textElement.size.height }}
                             position={{ x: textElement.position.x, y: textElement.position.y }}
+=======
+                          <Rnd
+                            key={textElement.id}
+                            cancel=".no-drag"
+                            dragHandleClassName="drag-area"
+                            enableUserSelectHack={false}
+                            enableResizing={{
+                              bottomRight: true,
+                            }}
+                            size={{
+                              width: textElement.size.width,
+                              height: textElement.size.height,
+                            }}
+                            position={{
+                              x: textElement.position.x,
+                              y: textElement.position.y,
+                            }}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                             bounds="parent"
                             style={{
                               transform: `rotate(${textElement.rotation || 0}deg)`,
@@ -1359,6 +1572,7 @@ const SpreadRightSide = ({
                               display: "flex",
                               alignItems: vAlign,
                               justifyContent: hAlign,
+<<<<<<< HEAD
                               touchAction: textElement.isEditing ? "manipulation" : "none",
                               transition: "border 0.2s ease",
                               cursor: textElement.isEditing ? "text" : "move",
@@ -1391,10 +1605,33 @@ const SpreadRightSide = ({
                                 if (shouldEdit) {
                                   updateTextElement(textElement.id, { isEditing: true });
                                   focusEditableTextFromTarget(e.currentTarget);
+=======
+                              touchAction: "none",
+                              transition: "border 0.2s ease",
+                            }}
+                            onTouchStart={() => {
+                              touchStartTime = Date.now();
+                            }}
+                            onTouchEnd={() => {
+                              const now = Date.now();
+                              const timeSince = now - lastTap;
+                              const touchDuration = now - touchStartTime;
+
+                              if (touchDuration < 200) {
+                                if (timeSince < 300) {
+                                  // Double tap = edit
+                                  setSelectedTextId3(textElement.id);
+                                  updateTextElement(textElement.id, { isEditing: true });
+                                } else {
+                                  // Single tap = select
+                                  setSelectedTextId3(textElement.id);
+                                  updateTextElement(textElement.id, { isEditing: false });
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                                 }
                               }
                               lastTap = now;
                             }}
+<<<<<<< HEAD
                             onMouseDown={() => setSelectedTextId3(textElement.id)}
                             onDoubleClick={(e: any) => {
                               setSelectedTextId3(textElement.id);
@@ -1417,6 +1654,31 @@ const SpreadRightSide = ({
                               updateTextElement(textElement.id, {
                                 size: { width: parseInt(ref.style.width, 10), height: parseInt(ref.style.height, 10) },
                                 position: { x: position.x, y: position.y },
+=======
+                            onMouseDown={() => {
+                              // Desktop: select on click
+                              setSelectedTextId3(textElement.id);
+                            }}
+                            onClick={() => {
+                              // Desktop: edit on double-click
+                              setSelectedTextId3(textElement.id);
+                              updateTextElement(textElement.id, { isEditing: true });
+                            }}
+                            onDragStop={(_, d) => {
+                              updateTextElement(textElement.id, {
+                                position: { x: d.x, y: d.y },
+                                zIndex: 2001,
+                              });
+                            }}
+                            onResizeStop={(_, __, ref, ___, position) => {
+                              updateTextElement(textElement.id, {
+                                size: {
+                                  width: parseInt(ref.style.width, 10),
+                                  height: parseInt(ref.style.height, 10),
+                                },
+                                position: { x: position.x, y: position.y },
+                                zIndex: 2001,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                               });
                             }}
                             resizeHandleStyles={{
@@ -1434,6 +1696,7 @@ const SpreadRightSide = ({
                               },
                             }}
                           >
+<<<<<<< HEAD
                             <Box sx={{ position: "relative", width: "100%", height: "100%" }}>
                               {/* Delete */}
                               <IconButton
@@ -1450,21 +1713,76 @@ const SpreadRightSide = ({
                               </IconButton>
 
                               {/* Rotate */}
+=======
+                            <Box
+                              sx={{
+                                position: "relative",
+                                width: "100%",
+                                height: "100%",
+                              }}
+                            >
+                              {/* âœ… Close Button */}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                               <IconButton
                                 size="small"
                                 className="no-drag"
                                 onClick={(e) => {
                                   e.stopPropagation();
+<<<<<<< HEAD
                                   updateTextElement(textElement.id, { rotation: (textElement.rotation || 0) + 30 });
                                 }}
                                 sx={{
                                   position: "absolute", top: -10, left: -10, bgcolor: "#1976d2", color: "white",
                                   width: isMobile ? 26 : 20, height: isMobile ? 26 : 20, "&:hover": { bgcolor: "#f44336" },
                                   zIndex: 3000, pointerEvents: "auto", touchAction: "auto",
+=======
+                                  deleteTextElement(textElement.id);
+                                }}
+                                sx={{
+                                  position: "absolute",
+                                  top: -10,
+                                  right: -10,
+                                  bgcolor: "#1976d2",
+                                  color: "white",
+                                  width: isMobile ? 26 : 20,
+                                  height: isMobile ? 26 : 20,
+                                  "&:hover": { bgcolor: "#f44336" },
+                                  zIndex: 3000,
+                                  pointerEvents: "auto",
+                                  touchAction: "auto",
+                                }}
+                              >
+                                <Close fontSize="small" />
+                              </IconButton>
+
+                              {/* rotation Btn */}
+                              <IconButton
+                                size="small"
+                                className="no-drag"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  updateTextElement(textElement.id, {
+                                    rotation: (textElement.rotation || 0) + 30,
+                                  });
+                                }}
+                                sx={{
+                                  position: "absolute",
+                                  top: -10,
+                                  left: -10,
+                                  bgcolor: "#1976d2",
+                                  color: "white",
+                                  width: isMobile ? 26 : 20,
+                                  height: isMobile ? 26 : 20,
+                                  "&:hover": { bgcolor: "#f44336" },
+                                  zIndex: 3000,
+                                  pointerEvents: "auto",
+                                  touchAction: "auto",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                                 }}
                               >
                                 <Forward30 fontSize={isMobile ? "medium" : "small"} />
                               </IconButton>
+<<<<<<< HEAD
 
                               {/* Layer controls (use your global layerUpAny/layerDownAny) */}
                               <Tooltip title="To Back">
@@ -1517,6 +1835,10 @@ const SpreadRightSide = ({
 
                               {/* Content: drag anywhere when NOT editing; click twice to edit */}
                               <Box
+=======
+                              <Box
+                                className="drag-area"
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                                 sx={{
                                   position: "relative",
                                   width: "100%",
@@ -1524,6 +1846,7 @@ const SpreadRightSide = ({
                                   display: "flex",
                                   alignItems: vAlign,
                                   justifyContent: hAlign,
+<<<<<<< HEAD
                                   userSelect: "none",
                                   touchAction: textElement.isEditing ? "manipulation" : "none",
                                   transform: `rotate(${textElement.rotation || 0}deg)`,
@@ -1545,11 +1868,33 @@ const SpreadRightSide = ({
                                   variant="standard"
                                   value={textElement.value}
                                   className="text-edit"         // ✅ used by cancel when editing
+=======
+                                  cursor: textElement.isEditing ? "text" : "move",
+                                  userSelect: "none",
+                                  touchAction: "none",
+                                  transform: `rotate(${textElement.rotation || 0}deg)`,
+                                  border:
+                                    textElement.id === selectedTextId3
+                                      ? "2px solid #1976d2"
+                                      : "1px dashed #4a7bd5",
+                                  zIndex: textElement.zIndex
+                                }}
+                              >
+                                {/* âœ… Editable Text */}
+                                <TextField
+                                  variant="standard"
+                                  value={textElement.value}
+                                  className="no-drag"
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                                   placeholder="Add Text"
                                   multiline
                                   fullWidth
                                   tabIndex={0}
+<<<<<<< HEAD
                                   // autoFocus={textElement.id === selectedTextId1 && textElement.isEditing}
+=======
+                                  autoFocus={textElement.id === selectedTextId3 ? true : false}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                                   InputProps={{
                                     readOnly: !textElement.isEditing,
                                     disableUnderline: true,
@@ -1558,13 +1903,22 @@ const SpreadRightSide = ({
                                       fontWeight: textElement.fontWeight,
                                       color: textElement.fontColor || "#000",
                                       fontFamily: textElement.fontFamily || "Arial",
+<<<<<<< HEAD
                                       lineHeight: textElement.lineHeight || 1.4,
                                       letterSpacing: textElement.letterSpacing ? `${textElement.letterSpacing}px` : "0px",
+=======
+                                      // transform: `rotate(${textElement.rotation || 0}deg)`,
+                                      lineHeight: textElement.lineHeight || 1.4,
+                                      letterSpacing: textElement.letterSpacing
+                                        ? `${textElement.letterSpacing}px`
+                                        : "0px",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                                       padding: 0,
                                       width: "100%",
                                       display: "flex",
                                       alignItems: vAlign,
                                       justifyContent: hAlign,
+<<<<<<< HEAD
                                       // ✅ drag by default, only interact with text in edit mode
                                       pointerEvents: textElement.isEditing ? "auto" : "none",
                                     },
@@ -1583,6 +1937,35 @@ const SpreadRightSide = ({
                               </Box>
                             </Box>
                           </ScaledRnd>
+=======
+                                      cursor: textElement.isEditing ? "text" : "pointer",
+                                      transition: "all 0.2s ease",
+                                    },
+                                  }}
+                                  onChange={(e) =>
+                                    updateTextElement(textElement.id, { value: e.target.value })
+                                  }
+                                  onFocus={(e) => {
+                                    e.stopPropagation();
+                                    updateTextElement(textElement.id, { isEditing: true });
+                                  }}
+                                  onBlur={(e) => {
+                                    e.stopPropagation();
+                                    updateTextElement(textElement.id, { isEditing: false });
+                                  }}
+                                  sx={{
+                                    "& .MuiInputBase-input": {
+                                      overflowY: "auto",
+                                      textAlign: textElement.textAlign || "center",
+                                    },
+                                    pointerEvents: textElement.isEditing ? "auto" : "none",
+                                  }}
+                                />
+                              </Box>
+
+                            </Box>
+                          </Rnd>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                         );
                       })}
                     </>
@@ -1591,7 +1974,11 @@ const SpreadRightSide = ({
 
                 {/* VIDEO QR */}
                 {selectedVideoUrl3 && (
+<<<<<<< HEAD
                   <ScaledRnd
+=======
+                  <Rnd
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                     cancel=".no-drag"
                     position={{ x: qrPosition3.x, y: qrPosition3.y }}
                     onDragStop={(_, d) =>
@@ -1651,12 +2038,20 @@ const SpreadRightSide = ({
                         </IconButton>
                       </Box>
                     </motion.div>
+<<<<<<< HEAD
                   </ScaledRnd>
+=======
+                  </Rnd>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                 )}
 
                 {/* AUDIO QR */}
                 {selectedAudioUrl3 && (
+<<<<<<< HEAD
                   <ScaledRnd
+=======
+                  <Rnd
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                     cancel=".no-drag"
                     position={{ x: qrAudioPosition3.x, y: qrAudioPosition3.y }}
                     onDragStop={(_, d) =>
@@ -1705,7 +2100,11 @@ const SpreadRightSide = ({
                         </IconButton>
                       </Box>
                     </motion.div>
+<<<<<<< HEAD
                   </ScaledRnd>
+=======
+                  </Rnd>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                 )}
 
                 {/* USER IMAGES (per-item lock) */}
@@ -1717,7 +2116,11 @@ const SpreadRightSide = ({
                     const isLocked = !!locked;
 
                     return (
+<<<<<<< HEAD
                       <ScaledRnd
+=======
+                      <Rnd
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                         key={id}
                         size={{ width, height }}
                         position={{ x, y }}
@@ -1726,6 +2129,7 @@ const SpreadRightSide = ({
                         cancel=".non-draggable"
                         disableDragging={isLocked}
                         enableResizing={isLocked ? false : { bottomRight: true }}
+<<<<<<< HEAD
                         onDragStart={() => align.onDragStart()}
                         onDrag={(_, d) => {
                           if (isLocked) return;
@@ -1743,6 +2147,13 @@ const SpreadRightSide = ({
                             prev.map((img) => (img.id === id ? { ...img, x: snap.x, y: snap.y } : img))
                           );
                           align.onDragStop();
+=======
+                        onDragStop={(_, d) => {
+                          if (isLocked) return;
+                          setDraggableImages3((prev) =>
+                            prev.map((img) => (img.id === id ? { ...img, x: d.x, y: d.y } : img))
+                          );
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                         }}
                         onResizeStop={(_, __, ref, ___, position) => {
                           if (isLocked) return;
@@ -1851,6 +2262,7 @@ const SpreadRightSide = ({
                             </Box>
                           )}
 
+<<<<<<< HEAD
                            {/* layer controls */}
                         {!isLocked && (
                           <>
@@ -1954,6 +2366,66 @@ const SpreadRightSide = ({
                             </Box>
                           </Tooltip>
                         )}
+=======
+                          {/* layer controls */}
+                          {!isLocked && (
+                            <>
+                              <Tooltip title="To Back">
+                                <Box
+                                  className="non-draggable"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    layerDown(id);
+                                  }}
+                                  sx={{
+                                    position: "absolute",
+                                    top: -25,
+                                    left: 40,
+                                    bgcolor: "black",
+                                    color: "white",
+                                    borderRadius: "50%",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    p: isMobile ? "4px" : "2px",
+                                    zIndex: 9999,
+                                    cursor: "pointer",
+                                    "&:hover": { bgcolor: "#333" },
+                                  }}
+                                >
+                                  <KeyboardArrowDownOutlined fontSize={isMobile ? "medium" : "small"} />
+                                </Box>
+                              </Tooltip>
+
+                              <Tooltip title="To Front">
+                                <Box
+                                  className="non-draggable"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    layerUp(id);
+                                  }}
+                                  sx={{
+                                    position: "absolute",
+                                    top: -25,
+                                    left: 80,
+                                    bgcolor: "black",
+                                    color: "white",
+                                    borderRadius: "50%",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    p: isMobile ? "4px" : "2px",
+                                    zIndex: 9999,
+                                    cursor: "pointer",
+                                    "&:hover": { bgcolor: "#333" },
+                                  }}
+                                >
+                                  <KeyboardArrowUpOutlined fontSize={isMobile ? "medium" : "small"} />
+                                </Box>
+                              </Tooltip>
+                            </>
+                          )}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
                           {/* close */}
                           {!isLocked && (
@@ -1986,7 +2458,11 @@ const SpreadRightSide = ({
                             </Box>
                           )}
                         </Box>
+<<<<<<< HEAD
                       </ScaledRnd>
+=======
+                      </Rnd>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                     );
                   })}
 
@@ -1996,6 +2472,7 @@ const SpreadRightSide = ({
                     sx={{
                       flex: 1,
                       display: "flex",
+<<<<<<< HEAD
                       alignItems: "stretch",
                       justifyContent: "flex-start",
                       height: "100%",
@@ -2007,6 +2484,17 @@ const SpreadRightSide = ({
                       top: 0,
                       left: 0,
                       boxSizing: "border-box",
+=======
+                      alignItems: "center",
+                      justifyContent: "center",
+                      height: { md: "675px", sm: "575px", xs: "60vh" },
+                      width: { md: "470px", sm: "370px", xs: "90%" },
+                      border: "3px dashed #3a7bd5",
+                      position: "absolute",
+                      bgcolor: "#6183cc36",
+                      p: 1,
+                      top: 10,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                     }}
                   >
                     <IconButton
@@ -2061,6 +2549,7 @@ const SpreadRightSide = ({
                         InputProps={{
                           disableUnderline: true,
                           sx: {
+<<<<<<< HEAD
                             height: "100%",
                             alignItems:
                               verticalAlign3 === "top"
@@ -2069,6 +2558,9 @@ const SpreadRightSide = ({
                                   ? "center"
                                   : "flex-end",
                             "& .MuiInputBase-input, & .MuiInputBase-inputMultiline": {
+=======
+                            "& .MuiInputBase-input": {
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                               fontSize: fontSize3,
                               fontWeight: fontWeight3,
                               color: fontColor3,
@@ -2077,6 +2569,7 @@ const SpreadRightSide = ({
                               transform: `rotate(${rotation3}deg)`,
                               lineHeight: lineHeight3,
                               letterSpacing: letterSpacing3,
+<<<<<<< HEAD
                               minHeight: "unset !important",
                               height: "auto !important",
                               maxHeight: "100%",
@@ -2086,6 +2579,12 @@ const SpreadRightSide = ({
                           },
                         }}
                         sx={{ width: "100%", height: "100%" }}
+=======
+                              height: 200,
+                            },
+                          },
+                        }}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                         autoFocus
                         multiline
                         fullWidth
@@ -2099,7 +2598,11 @@ const SpreadRightSide = ({
                   <Box
                     sx={{
                       height: "98%",
+<<<<<<< HEAD
                       width: "var(--card-slide-w, 475px)",
+=======
+                      width: { md: "475px", sm: "375px", xs: "90%" },
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                       borderRadius: "6px",
                       p: 1,
                       position: "absolute",
@@ -2116,7 +2619,11 @@ const SpreadRightSide = ({
                           height: { md: "210px", sm: "180px", xs: "180px" },
                           width: "100%",
                           mb: 2,
+<<<<<<< HEAD
                           border: hideTextOutline ? "none" : "3px dashed #3a7bd5",
+=======
+                          border: "3px dashed #3a7bd5",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                           borderRadius: "6px",
                           justifyContent: "center",
                           display: "flex",
@@ -2185,10 +2692,17 @@ const SpreadRightSide = ({
                                   width: "100%",
                                   resize: "none",
                                   height: "100px",
+<<<<<<< HEAD
                                   fontSize: textObj.fontSize3 ?? textObj.fontSize1 ?? textObj.fontSize,
                                   fontWeight: textObj.fontWeight3 ?? textObj.fontWeight1 ?? textObj.fontWeight,
                                   color: textObj.fontColor3 ?? textObj.fontColor1 ?? textObj.fontColor,
                                   fontFamily: textObj.fontFamily3 ?? textObj.fontFamily1 ?? textObj.fontFamily,
+=======
+                                  fontSize: textObj.fontSize1,
+                                  fontWeight: textObj.fontWeight1,
+                                  color: textObj.fontColor1,
+                                  fontFamily: textObj.fontFamily1,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                                   textAlign: textObj.textAlign,
                                   lineHeight: textObj.lineHeight,
                                   letterSpacing: textObj.letterSpacing,
@@ -2213,10 +2727,17 @@ const SpreadRightSide = ({
                                 );
                               }
                               setEditingIndex3(index);
+<<<<<<< HEAD
                               setFontSize3(textObj.fontSize3 ?? textObj.fontSize1 ?? textObj.fontSize ?? 16);
                               setFontFamily3(textObj.fontFamily3 ?? textObj.fontFamily1 ?? textObj.fontFamily ?? "Roboto");
                               setFontWeight3(textObj.fontWeight3 ?? textObj.fontWeight1 ?? textObj.fontWeight ?? 400);
                               setFontColor3(textObj.fontColor3 ?? textObj.fontColor1 ?? textObj.fontColor ?? "#000000");
+=======
+                              setFontSize3(textObj.fontSize1);
+                              setFontFamily3(textObj.fontFamily1);
+                              setFontWeight3(textObj.fontWeight1);
+                              setFontColor3(textObj.fontColor1);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                               setTextAlign3(textObj.textAlign);
                               setVerticalAlign3(textObj.verticalAlign);
                             }}
@@ -2224,10 +2745,17 @@ const SpreadRightSide = ({
                           >
                             <Typography
                               sx={{
+<<<<<<< HEAD
                                 fontSize: textObj.fontSize3 ?? textObj.fontSize1 ?? textObj.fontSize,
                                 fontWeight: textObj.fontWeight3 ?? textObj.fontWeight1 ?? textObj.fontWeight,
                                 color: textObj.fontColor3 ?? textObj.fontColor1 ?? textObj.fontColor,
                                 fontFamily: textObj.fontFamily3 ?? textObj.fontFamily1 ?? textObj.fontFamily,
+=======
+                                fontSize: textObj.fontSize1,
+                                fontWeight: textObj.fontWeight1,
+                                color: textObj.fontColor1,
+                                fontFamily: textObj.fontFamily1,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                                 textAlign: textObj.textAlign,
                                 lineHeight: textObj.lineHeight,
                                 letterSpacing: textObj.letterSpacing,
@@ -2262,6 +2790,7 @@ const SpreadRightSide = ({
 
                 {/* AI IMAGE (kept as-is, not part of lock demo) */}
                 {isAIimage3 && (
+<<<<<<< HEAD
                   <ScaledRnd
                     bounds="parent"
                     size={{ width: aimage3.width, height: aimage3.height }}
@@ -2294,6 +2823,12 @@ const SpreadRightSide = ({
                       setAIImage3((prev) => ({ ...prev, x: snap.x, y: snap.y }));
                       align.onDragStop();
                     }}
+=======
+                  <Rnd
+                    size={{ width: aimage3.width, height: aimage3.height }}
+                    position={{ x: aimage3.x, y: aimage3.y }}
+                    onDragStop={(_, d) => setAIImage3((prev) => ({ ...prev, x: d.x, y: d.y }))}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                     onResizeStop={(_, __, ref, ___, position) =>
                       setAIImage3({
                         width: parseInt(ref.style.width),
@@ -2302,6 +2837,10 @@ const SpreadRightSide = ({
                         y: position.y,
                       })
                     }
+<<<<<<< HEAD
+=======
+                    bounds="parent"
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                     enableResizing={{ bottomRight: true }}
                     resizeHandleStyles={{
                       bottomRight: {
@@ -2332,7 +2871,11 @@ const SpreadRightSide = ({
                         <Close />
                       </IconButton>
                     </Box>
+<<<<<<< HEAD
                   </ScaledRnd>
+=======
+                  </Rnd>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                 )}
 
                 {/* STICKERS (per-item lock) */}
@@ -2342,7 +2885,11 @@ const SpreadRightSide = ({
                   const isLocked = !!sticker.locked;
 
                   return (
+<<<<<<< HEAD
                     <ScaledRnd
+=======
+                    <Rnd
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                       key={sticker.id || index}
                       size={{ width: sticker.width, height: sticker.height }}
                       position={{ x: sticker.x, y: sticker.y }}
@@ -2352,6 +2899,7 @@ const SpreadRightSide = ({
                       disableDragging={isLocked}
                       enableResizing={isLocked ? false : { bottomRight: true }}
                       onMouseDown={() => setSelectedStickerIndex2(index)}
+<<<<<<< HEAD
                       onDragStart={() => align.onDragStart()}
                       onDrag={(_, d) => {
                         if (isLocked) return;
@@ -2387,6 +2935,16 @@ const SpreadRightSide = ({
                         }
                         align.onDragStop();
                       }}
+=======
+                      onDragStop={(_, d) =>
+                        !isLocked &&
+                        updateSticker3(index, {
+                          x: d.x,
+                          y: d.y,
+                          zIndex: sticker.zIndex,
+                        })
+                      }
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                       onResizeStop={(_, __, ref, ___, position) =>
                         !isLocked &&
                         updateSticker3(index, {
@@ -2485,7 +3043,11 @@ const SpreadRightSide = ({
                           </IconButton>
                         )}
                       </Box>
+<<<<<<< HEAD
                     </ScaledRnd>
+=======
+                    </Rnd>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                   );
                 })}
               </> :
@@ -2522,7 +3084,11 @@ const SpreadRightSide = ({
                               sx={{
                                 width: "100%",
                                 height: "100%",
+<<<<<<< HEAD
                                 objectFit: "fill",
+=======
+                                objectFit: "cover",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                                 borderRadius: 1,
                                 display: "block",
                                 pointerEvents: "none",
@@ -2530,7 +3096,11 @@ const SpreadRightSide = ({
                                 WebkitClipPath: el.clipPath || "none",
                               }}
                             />
+<<<<<<< HEAD
                             {/* ✅ Only show upload icon when this frame is editable (NOT when locked) */}
+=======
+                            {/* âœ… Only show upload icon when this frame is editable (NOT when locked) */}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                             {isEditable && !isLocked && (
                               <Box
                                 sx={{
@@ -2578,11 +3148,16 @@ const SpreadRightSide = ({
                       </Box>
                     ))}
 
+<<<<<<< HEAD
                     {/* Texts (click → border + editable if isEditable) */}
+=======
+                    {/* Texts (click â†’ border + editable if isEditable) */}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                     {layout3.textElements.map((te: any, i: any) => {
                       const isActive = editingIndex3 === i;        // reuse your existing editingIndex
                       return (
                         <Box key={te.id ?? i}
+<<<<<<< HEAD
                           onClick={te.isEditable ? (e) => {
                             handleTextFocus(i, te);
                             focusEditableTextFromTarget(e.currentTarget);
@@ -2595,26 +3170,38 @@ const SpreadRightSide = ({
                             handleTextFocus(i, te);
                             focusEditableTextFromTarget(e.currentTarget);
                           } : undefined}
+=======
+                          onClick={te.isEditable ? () => setEditingIndex3(i) : undefined}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                           sx={{
                             position: "absolute", left: te.x, top: te.y, width: te.width, height: te.height,
                             zIndex: (te.zIndex ?? 1) + 1000,         // lift text above images
                             display: "flex",
                             alignItems: te.verticalAlign === "top" ? "flex-start" : te.verticalAlign === "bottom" ? "flex-end" : "center",
                             justifyContent: te.textAlign === "left" ? "flex-start" : te.textAlign === "right" ? "flex-end" : "center",
+<<<<<<< HEAD
                             outline: hideTextOutline
                               ? "none"
                               : te.isEditable && isActive
                               ? "2px solid #1976d2"
                               : "none",   // ✅ blue border on select
+=======
+                            outline: te.isEditable && isActive ? "2px solid #1976d2" : "none",   // âœ… blue border on select
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                             borderRadius: "6px",
                           }}>
                           <TextField
                             variant="standard" fullWidth multiline value={te.text || ""}
                             onFocus={te.isEditable ? () => handleTextFocus(i, te) : undefined}
                             onChange={te.isEditable ? (e) => handleTextChange(e.target.value, i) : undefined}
+<<<<<<< HEAD
                             onBlur={() => setEditingIndex3(null)}
                             InputProps={{
                               readOnly: !te.isEditable || !isActive,      // ✅ only editable when selected
+=======
+                            InputProps={{
+                              readOnly: !te.isEditable || !isActive,      // âœ… only editable when selected
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                               disableUnderline: true,
                               style: {
                                 fontSize: te.fontSize,
@@ -2627,7 +3214,10 @@ const SpreadRightSide = ({
                                 background: "transparent",
                                 lineHeight: "1.2em",
                                 cursor: te.isEditable ? (isActive ? "text" : "pointer") : "default",
+<<<<<<< HEAD
                                 pointerEvents: te.isEditable && isActive ? "auto" : "none",
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                               },
                             }}
                             sx={{
@@ -2650,6 +3240,7 @@ const SpreadRightSide = ({
                   </Box>
                 }
 
+<<<<<<< HEAD
                 {!(multipleTextValue3 || showOneTextRightSideBox3) &&
                   textElements3?.map((textElement) => {
                     const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
@@ -2915,6 +3506,216 @@ const SpreadRightSide = ({
                 {selectedVideoUrl3 && (
                   <ScaledRnd
                     bounds="parent"
+=======
+                 {!(multipleTextValue3 || showOneTextRightSideBox3) &&
+                textElements3?.map((textElement) => {
+                  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+
+                  const hAlign =
+                    textElement.textAlign === "top"
+                      ? "flex-start"
+                      : textElement.textAlign === "end"
+                        ? "flex-end"
+                        : "center";
+                  const vAlign =
+                    textElement.verticalAlign === "top"
+                      ? "flex-start"
+                      : textElement.verticalAlign === "bottom"
+                        ? "flex-end"
+                        : "center";
+
+                  let touchStartTime = 0;
+                  let lastTap = 0;
+
+                  return (
+                    <Rnd
+                      key={textElement.id}
+                      cancel={textElement.isEditing ? ".no-drag, .text-edit" : ".no-drag"}
+                      enableUserSelectHack={false}
+                      enableResizing={{ bottomRight: true }}
+                      size={{ width: textElement.size.width, height: textElement.size.height }}
+                      position={{ x: textElement.position.x, y: textElement.position.y }}
+                      bounds="parent"
+                      style={{
+                        transform: `rotate(${textElement.rotation || 0}deg)`,
+                        zIndex: textElement.zIndex,
+                        display: "flex",
+                        alignItems: vAlign,
+                        justifyContent: hAlign,
+                        touchAction: "none",
+                        transition: "border 0.2s ease",
+                        cursor: textElement.isEditing ? "text" : "move",
+                      }}
+                      onTouchStart={() => { touchStartTime = Date.now(); }}
+                      onTouchEnd={() => {
+                        const now = Date.now();
+                        const timeSince = now - lastTap;
+                        const touchDuration = now - touchStartTime;
+                        if (touchDuration < 200) {
+                          if (timeSince < 300) {
+                            setSelectedTextId3(textElement.id);
+                            updateTextElement(textElement.id, { isEditing: true });
+                          } else {
+                            setSelectedTextId3(textElement.id);
+                          }
+                        }
+                        lastTap = now;
+                      }}
+                      onMouseDown={() => setSelectedTextId3(textElement.id)}
+                      onDoubleClick={() => {
+                        setSelectedTextId3(textElement.id);
+                        updateTextElement(textElement.id, { isEditing: true });
+                      }}
+                      onDragStop={(_, d) => {
+                        updateTextElement(textElement.id, { position: { x: d.x, y: d.y } });
+                      }}
+                      onResizeStop={(_, __, ref, ___, position) => {
+                        updateTextElement(textElement.id, {
+                          size: { width: parseInt(ref.style.width, 10), height: parseInt(ref.style.height, 10) },
+                          position: { x: position.x, y: position.y },
+                        });
+                      }}
+                      resizeHandleStyles={{
+                        bottomRight: {
+                          width: isMobile ? "20px" : "12px",
+                          height: isMobile ? "20px" : "12px",
+                          background: "white",
+                          border: "2px solid #1976d2",
+                          borderRadius: "3px",
+                          right: isMobile ? "-10px" : "-6px",
+                          bottom: isMobile ? "-10px" : "-6px",
+                          cursor: "se-resize",
+                          zIndex: 999,
+                          touchAction: "none",
+                        },
+                      }}
+                    >
+                      <Box sx={{ position: "relative", width: "100%", height: "100%" }}>
+                        {/* Delete */}
+                        <IconButton
+                          size="small"
+                          className="no-drag"
+                          onClick={(e) => { e.stopPropagation(); deleteTextElement(textElement.id); }}
+                          sx={{
+                            position: "absolute", top: -10, right: -10, bgcolor: "#1976d2", color: "white",
+                            width: isMobile ? 26 : 20, height: isMobile ? 26 : 20, "&:hover": { bgcolor: "#f44336" },
+                            zIndex: 1, pointerEvents: "auto", touchAction: "auto",
+                          }}
+                        >
+                          <Close fontSize="small" />
+                        </IconButton>
+
+                        {/* Rotate */}
+                        <IconButton
+                          size="small"
+                          className="no-drag"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            updateTextElement(textElement.id, { rotation: (textElement.rotation || 0) + 30 });
+                          }}
+                          sx={{
+                            position: "absolute", top: -10, left: -10, bgcolor: "#1976d2", color: "white",
+                            width: isMobile ? 26 : 20, height: isMobile ? 26 : 20, "&:hover": { bgcolor: "#f44336" },
+                            zIndex: 3000, pointerEvents: "auto", touchAction: "auto",
+                          }}
+                        >
+                          <Forward30 fontSize={isMobile ? "medium" : "small"} />
+                        </IconButton>
+
+                        {/* Layer controls (use your global layerUpAny/layerDownAny) */}
+                        <Tooltip title="To Back">
+                          <Box
+                            className="no-drag"
+                            onClick={(e) => { e.stopPropagation(); layerDown({ type: 'text', id: textElement.id }); }}
+                            sx={{
+                              position: "absolute", top: -25, left: 40, bgcolor: "black", color: "white",
+                              borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center",
+                              p: isMobile ? "4px" : "2px", zIndex: 9999, cursor: "pointer", "&:hover": { bgcolor: "#333" },
+                            }}
+                          >
+                            <KeyboardArrowDownOutlined fontSize={isMobile ? "medium" : "small"} />
+                          </Box>
+                        </Tooltip>
+
+                        <Tooltip title="To Front">
+                          <Box
+                            className="no-drag"
+                            onClick={(e) => { e.stopPropagation(); layerUp({ type: 'text', id: textElement.id }); }}
+                            sx={{
+                              position: "absolute", top: -25, left: 80, bgcolor: "black", color: "white",
+                              borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center",
+                              p: isMobile ? "4px" : "2px", zIndex: 9999, cursor: "pointer", "&:hover": { bgcolor: "#333" },
+                            }}
+                          >
+                            <KeyboardArrowUpOutlined fontSize={isMobile ? "medium" : "small"} />
+                          </Box>
+                        </Tooltip>
+
+                        {/* Content: drag anywhere when NOT editing; click twice to edit */}
+                        <Box
+                          sx={{
+                            position: "relative",
+                            width: "100%",
+                            height: "100%",
+                            display: "flex",
+                            alignItems: vAlign,
+                            justifyContent: hAlign,
+                            userSelect: "none",
+                            touchAction: "none",
+                            transform: `rotate(${textElement.rotation || 0}deg)`,
+                            border: textElement.id === selectedTextId3 ? "2px solid #1976d2" : "1px dashed #4a7bd5",
+                            zIndex: textElement.zIndex,
+                            cursor: textElement.isEditing ? "text" : "move",
+                          }}
+                          onDoubleClick={() => {
+                            setSelectedTextId3(textElement.id);
+                            updateTextElement(textElement.id, { isEditing: true });
+                          }}
+                        >
+                          <TextField
+                            variant="standard"
+                            value={textElement.value}
+                            className="text-edit"         // âœ… used by cancel when editing
+                            placeholder="Add Text"
+                            multiline
+                            fullWidth
+                            tabIndex={0}
+                            // autoFocus={textElement.id === selectedTextId1 && textElement.isEditing}
+                            InputProps={{
+                              readOnly: !textElement.isEditing,
+                              disableUnderline: true,
+                              style: {
+                                fontSize: textElement.fontSize,
+                                fontWeight: textElement.fontWeight,
+                                color: textElement.fontColor || "#000",
+                                fontFamily: textElement.fontFamily || "Arial",
+                                lineHeight: textElement.lineHeight || 1.4,
+                                letterSpacing: textElement.letterSpacing ? `${textElement.letterSpacing}px` : "0px",
+                                padding: 0,
+                                width: "100%",
+                                display: "flex",
+                                alignItems: vAlign,
+                                justifyContent: hAlign,
+                                // âœ… drag by default, only interact with text in edit mode
+                                pointerEvents: textElement.isEditing ? "auto" : "none",
+                              },
+                            }}
+                            onChange={(e) => updateTextElement(textElement.id, { value: e.target.value })}
+                            onFocus={(e) => { e.stopPropagation(); updateTextElement(textElement.id, { isEditing: true }); }}
+                            onBlur={(e) => { e.stopPropagation(); updateTextElement(textElement.id, { isEditing: false }); }}
+                            sx={{
+                              "& .MuiInputBase-input": { overflowY: "auto", textAlign: textElement.textAlign || "center" },
+                            }}
+                          />
+                        </Box>
+                      </Box>
+                    </Rnd>
+                  );
+                })}
+
+                {selectedVideoUrl3 && (
+                  <Rnd
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                     cancel=".no-drag"
                     position={{ x: qrPosition3.x, y: qrPosition3.y }}
                     onDragStop={(_, d) =>
@@ -2935,6 +3736,10 @@ const SpreadRightSide = ({
                         zIndex: qrPosition3.zIndex,
                       }));
                     }}
+<<<<<<< HEAD
+=======
+                    bounds="parent"
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                     enableResizing={false}
                     style={{
                       padding: "10px",
@@ -2942,7 +3747,11 @@ const SpreadRightSide = ({
                     }}
                   >
                     <motion.div
+<<<<<<< HEAD
                       key={selectedVideoUrl3} // ✅ unique key triggers re-animation on change
+=======
+                      key={selectedVideoUrl3} // âœ… unique key triggers re-animation on change
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                       initial={{ opacity: 0, x: 100 }} // start off-screen (right)
                       animate={{ opacity: 1, x: 0 }} // slide in
                       exit={{ opacity: 0, x: -100 }} // slide out left
@@ -3010,7 +3819,11 @@ const SpreadRightSide = ({
                         <IconButton
                           className="no-drag"
                           onClick={(e) => {
+<<<<<<< HEAD
                             e.stopPropagation(); // ✅ Prevent parent drag/touch interception
+=======
+                            e.stopPropagation(); // âœ… Prevent parent drag/touch interception
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                             setSelectedVideoUrl3(null);
                           }}
                           sx={{
@@ -3019,9 +3832,15 @@ const SpreadRightSide = ({
                             right: 0,
                             bgcolor: COLORS.black,
                             color: COLORS.white,
+<<<<<<< HEAD
                             zIndex: 9999, // ✅ Make sure it's above other layers
                             pointerEvents: "auto", // ✅ Ensure it's clickable on touch devices
                             touchAction: "manipulation", // ✅ Allow touch tap
+=======
+                            zIndex: 9999, // âœ… Make sure it's above other layers
+                            pointerEvents: "auto", // âœ… Ensure it's clickable on touch devices
+                            touchAction: "manipulation", // âœ… Allow touch tap
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                             "&:hover": { bgcolor: "red" },
                           }}
                         >
@@ -3029,12 +3848,20 @@ const SpreadRightSide = ({
                         </IconButton>
                       </Box>
                     </motion.div>
+<<<<<<< HEAD
                   </ScaledRnd>
                 )}
 
                 {selectedAudioUrl3 && (
                   <ScaledRnd
                     bounds="parent"
+=======
+                  </Rnd>
+                )}
+
+                {selectedAudioUrl3 && (
+                  <Rnd
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                     cancel=".no-drag"
                     position={{ x: qrAudioPosition3.x, y: qrAudioPosition3.y }}
                     onDragStop={(_, d) =>
@@ -3055,6 +3882,10 @@ const SpreadRightSide = ({
                         zIndex: qrAudioPosition3.zIndex, // Bring to front on resize
                       }));
                     }}
+<<<<<<< HEAD
+=======
+                    bounds="parent"
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                     enableResizing={false}
                     style={{
                       padding: "10px",
@@ -3063,7 +3894,11 @@ const SpreadRightSide = ({
                     }}
                   >
                     <motion.div
+<<<<<<< HEAD
                       key={selectedAudioUrl3} // ✅ unique key triggers re-animation on change
+=======
+                      key={selectedAudioUrl3} // âœ… unique key triggers re-animation on change
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                       initial={{ opacity: 0, x: 100 }} // start off-screen (right)
                       animate={{ opacity: 1, x: 0 }} // slide in
                       exit={{ opacity: 0, x: -100 }} // slide out left
@@ -3147,7 +3982,11 @@ const SpreadRightSide = ({
                         </IconButton>
                       </Box>
                     </motion.div>
+<<<<<<< HEAD
                   </ScaledRnd>
+=======
+                  </Rnd>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                 )}
 
                 {draggableImages3
@@ -3158,13 +3997,18 @@ const SpreadRightSide = ({
                       typeof window !== "undefined" && window.innerWidth < 768;
 
                     return (
+<<<<<<< HEAD
                       <ScaledRnd
+=======
+                      <Rnd
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                         key={id}
                         size={{ width, height }}
                         position={{ x, y }}
                         bounds="parent"
                         enableUserSelectHack={false}
                         cancel=".non-draggable"
+<<<<<<< HEAD
                         onDragStart={() => align.onDragStart()}
                         onDrag={(_, d) => {
                           const snap = align.onDrag(d.x, d.y, width, height, alignItems, `img:${id}`);
@@ -3184,6 +4028,14 @@ const SpreadRightSide = ({
                             )
                           );
                           align.onDragStop();
+=======
+                        onDragStop={(_, d) => {
+                          setDraggableImages3((prev) =>
+                            prev.map((img) =>
+                              img.id === id ? { ...img, x: d.x, y: d.y } : img
+                            )
+                          );
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                         }}
                         onResizeStop={(_, __, ref, ___, position) => {
                           const newWidth = parseInt(ref.style.width);
@@ -3259,7 +4111,11 @@ const SpreadRightSide = ({
 
                           {/* Rotate button */}
                           <Box
+<<<<<<< HEAD
                             className="non-draggable" // ✅ ensures RND doesn’t hijack
+=======
+                            className="non-draggable" // âœ… ensures RND doesnâ€™t hijack
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                             onClick={(e) => {
                               e.stopPropagation();
                               setDraggableImages3((prev) =>
@@ -3333,7 +4189,11 @@ const SpreadRightSide = ({
                             <Close fontSize={isMobile ? "medium" : "small"} />
                           </Box>
                         </Box>
+<<<<<<< HEAD
                       </ScaledRnd>
+=======
+                      </Rnd>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                     );
                   })}
 
@@ -3342,6 +4202,7 @@ const SpreadRightSide = ({
                     sx={{
                       flex: 1,
                       display: "flex",
+<<<<<<< HEAD
                       alignItems: "stretch",
                       justifyContent: "flex-start",
                       height: "100%",
@@ -3353,6 +4214,17 @@ const SpreadRightSide = ({
                       top: 0,
                       left: 0,
                       boxSizing: "border-box",
+=======
+                      alignItems: "center",
+                      justifyContent: "center",
+                      height: { md: "675px", sm: "575px", xs: "60vh" },
+                      width: { md: "470px", sm: "370px", xs: "90%" },
+                      border: "3px dashed #3a7bd5",
+                      position: "absolute",
+                      bgcolor: "#6183cc36",
+                      p: 1,
+                      top: 10,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                     }}
                   >
                     <IconButton
@@ -3407,6 +4279,7 @@ const SpreadRightSide = ({
                         InputProps={{
                           disableUnderline: true,
                           sx: {
+<<<<<<< HEAD
                             height: "100%",
                             alignItems:
                               verticalAlign3 === "top"
@@ -3415,6 +4288,9 @@ const SpreadRightSide = ({
                                   ? "center"
                                   : "flex-end",
                             "& .MuiInputBase-input, & .MuiInputBase-inputMultiline": {
+=======
+                            "& .MuiInputBase-input": {
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                               fontSize: fontSize3,
                               fontWeight: fontWeight3,
                               color: fontColor3,
@@ -3423,6 +4299,7 @@ const SpreadRightSide = ({
                               transform: `rotate(${rotation3}deg)`,
                               lineHeight: lineHeight3,
                               letterSpacing: letterSpacing3,
+<<<<<<< HEAD
                               minHeight: "unset !important",
                               height: "auto !important",
                               maxHeight: "100%",
@@ -3432,6 +4309,12 @@ const SpreadRightSide = ({
                           },
                         }}
                         sx={{ width: "100%", height: "100%" }}
+=======
+                              height: 200,
+                            },
+                          },
+                        }}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                         autoFocus
                         multiline
                         fullWidth
@@ -3444,7 +4327,11 @@ const SpreadRightSide = ({
                   <Box
                     sx={{
                       height: "98%",
+<<<<<<< HEAD
                       width: "var(--card-slide-w, 475px)",
+=======
+                      width: { md: "475px", sm: "375px", xs: "90%" },
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                       borderRadius: "6px",
                       p: 1,
                       position: "absolute",
@@ -3461,7 +4348,11 @@ const SpreadRightSide = ({
                           height: { md: "210px", sm: "180px", xs: '180px' },
                           width: "100%",
                           mb: 2,
+<<<<<<< HEAD
                           border: hideTextOutline ? "none" : "3px dashed #3a7bd5",
+=======
+                          border: "3px dashed #3a7bd5",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                           borderRadius: "6px",
                           justifyContent: "center",
                           display: "flex",
@@ -3524,10 +4415,17 @@ const SpreadRightSide = ({
                                   width: "100%",
                                   resize: "none",
                                   height: "100px",
+<<<<<<< HEAD
                                   fontSize: textObj.fontSize3 ?? textObj.fontSize1 ?? textObj.fontSize,
                                   fontWeight: textObj.fontWeight3 ?? textObj.fontWeight1 ?? textObj.fontWeight,
                                   color: textObj.fontColor3 ?? textObj.fontColor1 ?? textObj.fontColor,
                                   fontFamily: textObj.fontFamily3 ?? textObj.fontFamily1 ?? textObj.fontFamily,
+=======
+                                  fontSize: textObj.fontSize3,
+                                  fontWeight: textObj.fontWeight3,
+                                  color: textObj.fontColor3,
+                                  fontFamily: textObj.fontFamily3,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                                   textAlign: textAlign3,
                                   lineHeight: textObj.lineHeight,
                                   letterSpacing: textObj.letterSpacing
@@ -3552,12 +4450,21 @@ const SpreadRightSide = ({
                                 );
                               }
 
+<<<<<<< HEAD
                               // ✅ Then select new box
                               setEditingIndex3(index);
                               setFontSize3(textObj.fontSize3 ?? textObj.fontSize1 ?? textObj.fontSize ?? 16);
                               setFontFamily3(textObj.fontFamily3 ?? textObj.fontFamily1 ?? textObj.fontFamily ?? "Roboto");
                               setFontWeight3(textObj.fontWeight3 ?? textObj.fontWeight1 ?? textObj.fontWeight ?? 400);
                               setFontColor3(textObj.fontColor3 ?? textObj.fontColor1 ?? textObj.fontColor ?? "#000000");
+=======
+                              // âœ… Then select new box
+                              setEditingIndex3(index);
+                              setFontSize3(textObj.fontSize3);
+                              setFontFamily3(textObj.fontFamily3);
+                              setFontWeight3(textObj.fontWeight3);
+                              setFontColor3(textObj.fontColor3);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                               setTextAlign3(textObj.textAlign);
                               setVerticalAlign3(textObj.verticalAlign);
                             }}
@@ -3569,10 +4476,17 @@ const SpreadRightSide = ({
                           >
                             <Typography
                               sx={{
+<<<<<<< HEAD
                                 fontSize: textObj.fontSize3 ?? textObj.fontSize1 ?? textObj.fontSize,
                                 fontWeight: textObj.fontWeight3 ?? textObj.fontWeight1 ?? textObj.fontWeight,
                                 color: textObj.fontColor3 ?? textObj.fontColor1 ?? textObj.fontColor,
                                 fontFamily: textObj.fontFamily3 ?? textObj.fontFamily1 ?? textObj.fontFamily,
+=======
+                                fontSize: textObj.fontSize3,
+                                fontWeight: textObj.fontWeight3,
+                                color: textObj.fontColor3,
+                                fontFamily: textObj.fontFamily3,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                                 textAlign: textObj.textAlign,
                                 lineHeight: textObj.lineHeight,
                                 letterSpacing: textObj.letterSpacing,
@@ -3608,6 +4522,7 @@ const SpreadRightSide = ({
                 )}
 
                 {isAIimage3 && (
+<<<<<<< HEAD
                   <ScaledRnd
                     bounds="parent"
                     size={{ width: aimage3.width, height: aimage3.height }}
@@ -3642,6 +4557,18 @@ const SpreadRightSide = ({
                       }));
                       align.onDragStop();
                     }}
+=======
+                  <Rnd
+                    size={{ width: aimage3.width, height: aimage3.height }}
+                    position={{ x: aimage3.x, y: aimage3.y }}
+                    onDragStop={(_, d) =>
+                      setAIImage3((prev) => ({
+                        ...prev,
+                        x: d.x,
+                        y: d.y,
+                      }))
+                    }
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                     onResizeStop={(_, __, ref, ___, position) =>
                       setAIImage3({
                         width: parseInt(ref.style.width),
@@ -3650,6 +4577,10 @@ const SpreadRightSide = ({
                         y: position.y,
                       })
                     }
+<<<<<<< HEAD
+=======
+                    bounds="parent"
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                     enableResizing={{
                       top: false,
                       right: false,
@@ -3680,7 +4611,11 @@ const SpreadRightSide = ({
                       justifyContent: "stretch",
                     }}
                   >
+<<<<<<< HEAD
                     {/* ✅ Ensure the container fills RND box */}
+=======
+                    {/* âœ… Ensure the container fills RND box */}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                     <Box
                       sx={{
                         position: "relative",
@@ -3689,7 +4624,11 @@ const SpreadRightSide = ({
                         display: "flex",
                       }}
                     >
+<<<<<<< HEAD
                       {/* ✅ Make image fill fully */}
+=======
+                      {/* âœ… Make image fill fully */}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                       <Box
                         component="img"
                         src={`${selectedAIimageUrl3}`}
@@ -3722,7 +4661,11 @@ const SpreadRightSide = ({
                         <Close />
                       </IconButton>
                     </Box>
+<<<<<<< HEAD
                   </ScaledRnd>
+=======
+                  </Rnd>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                 )}
 
                 {selectedStickers3.map((sticker, index) => {
@@ -3730,11 +4673,16 @@ const SpreadRightSide = ({
                     typeof window !== "undefined" && window.innerWidth < 768;
 
                   return (
+<<<<<<< HEAD
                     <ScaledRnd
+=======
+                    <Rnd
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                       key={sticker.id || index}
                       size={{ width: sticker.width, height: sticker.height }}
                       position={{ x: sticker.x, y: sticker.y }}
                       bounds="parent"
+<<<<<<< HEAD
                       enableUserSelectHack={false} // ✅ allows touch events
                       cancel=".non-draggable" // ✅ prevents RND drag hijack on buttons
                     onDragStart={() => align.onDragStart()}
@@ -3771,6 +4719,17 @@ const SpreadRightSide = ({
                       });
                       align.onDragStop();
                     }}
+=======
+                      enableUserSelectHack={false} // âœ… allows touch events
+                      cancel=".non-draggable" // âœ… prevents RND drag hijack on buttons
+                      onDragStop={(_, d) =>
+                        updateSticker3(index, {
+                          x: d.x,
+                          y: d.y,
+                          zIndex: sticker.zIndex,
+                        })
+                      }
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                       onResizeStop={(_, __, ref, ___, position) =>
                         updateSticker3(index, {
                           width: parseInt(ref.style.width),
@@ -3798,7 +4757,11 @@ const SpreadRightSide = ({
                       style={{
                         zIndex: sticker.zIndex,
                         position: "absolute",
+<<<<<<< HEAD
                         touchAction: "none", // ✅ allow touch drag + taps
+=======
+                        touchAction: "none", // âœ… allow touch drag + taps
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                       }}
                     >
                       <Box
@@ -3825,7 +4788,11 @@ const SpreadRightSide = ({
 
                         {/* Close Button */}
                         <IconButton
+<<<<<<< HEAD
                           className="non-draggable" // ✅ prevent drag capture
+=======
+                          className="non-draggable" // âœ… prevent drag capture
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                           size="small"
                           onClick={(e) => {
                             e.stopPropagation();
@@ -3879,16 +4846,30 @@ const SpreadRightSide = ({
                           <Forward10 fontSize={isMobile ? "medium" : "small"} />
                         </IconButton>
                       </Box>
+<<<<<<< HEAD
                     </ScaledRnd>
+=======
+                    </Rnd>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                   );
                 })}
               </>
           }
+<<<<<<< HEAD
           </Box>
         )}
       </Box>
     </CanvasScaleContext.Provider>
+=======
+        </Box>
+      )}
+    </Box>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   );
 };
 
 export default SpreadRightSide;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0

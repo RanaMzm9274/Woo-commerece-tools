@@ -448,11 +448,15 @@ export const megaMenuData = {
 
 // src/constants/googleFonts.ts
 export const GOOGLE_FONTS = [
+<<<<<<< HEAD
   // Existing (your current list)
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   "Tangerine",
   "Great Vibes",
   "Alex Brush",
   "Parisienne",
+<<<<<<< HEAD
   "Modak",
   "Long Cang",
   "Kostas Bartsokas",
@@ -471,6 +475,8 @@ export const GOOGLE_FONTS = [
   "Martel",
   "Srisakdi",
   "Codystar",
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   "Carattere",
   "Courgette",
   "Satisfy",
@@ -480,6 +486,7 @@ export const GOOGLE_FONTS = [
   "Pacifico",
   "Handlee",
   "Kaushan Script",
+<<<<<<< HEAD
   "Hachi Maru Pop",
   "Permanent Marker",
   "Share Tech Mono",
@@ -495,6 +502,10 @@ export const GOOGLE_FONTS = [
   "Iansui",
   "Allura",
   "WindSong",
+=======
+  "Allura",
+  "Windsong",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   "Yellowtail",
   "Homemade Apple",
   "Rouge Script",
@@ -519,6 +530,7 @@ export const GOOGLE_FONTS = [
   "Mystery Quest",
   "Playball",
   "Princess Sofia",
+<<<<<<< HEAD
 
   // Additional from PDF (missing ones)
   "Barrio",
@@ -870,6 +882,168 @@ export const PAYMENT_CARD = [
     href: "/",
   },
   {
+=======
+];
+
+export const STICKERS_DATA = [
+  {
+    id: 1,
+    sticker: "/assets/stickers/alert.png",
+  },
+  {
+    id: 2,
+    sticker: "/assets/stickers/balloon.png",
+  },
+  {
+    id: 3,
+    sticker: "/assets/stickers/balloons.png",
+  },
+  {
+    id: 4,
+    sticker: "/assets/stickers/bird.png",
+  },
+  {
+    id: 5,
+    sticker: "/assets/stickers/cake.png",
+  },
+  {
+    id: 6,
+    sticker: "/assets/stickers/castle-house.png",
+  },
+  {
+    id: 7,
+    sticker: "/assets/stickers/christmas-round.png",
+  },
+  {
+    id: 8,
+    sticker: "/assets/stickers/christmas.png",
+  },
+  {
+    id: 9,
+    sticker: "/assets/stickers/clown.png",
+  },
+  {
+    id: 10,
+    sticker: "/assets/stickers/coffee.png",
+  },
+  {
+    id: 11,
+    sticker: "/assets/stickers/confetti.png",
+  },
+  {
+    id: 12,
+    sticker: "/assets/stickers/greeting-card.png",
+  },
+  {
+    id: 13,
+    sticker: "/assets/stickers/happy-birthday.png",
+  },
+  {
+    id: 14,
+    sticker: "/assets/stickers/hay.png",
+  },
+  {
+    id: 15,
+    sticker: "/assets/stickers/hello.png",
+  },
+  {
+    id: 16,
+    sticker: "/assets/stickers/help-center.png",
+  },
+  {
+    id: 17,
+    sticker: "/assets/stickers/just-be-happy.png",
+  },
+  {
+    id: 18,
+    sticker: "/assets/stickers/let-your-dreams.png",
+  },
+  {
+    id: 19,
+    sticker: "/assets/stickers/look.png",
+  },
+  {
+    id: 20,
+    sticker: "/assets/stickers/love-letter.png",
+  },
+  {
+    id: 21,
+    sticker: "/assets/stickers/love-you.png",
+  },
+  {
+    id: 22,
+    sticker: "/assets/stickers/love.png",
+  },
+  {
+    id: 23,
+    sticker: "/assets/stickers/ok.png",
+  },
+  {
+    id: 24,
+    sticker: "/assets/stickers/save-the-date.png",
+  },
+  {
+    id: 25,
+    sticker: "/assets/stickers/sorry.png",
+  },
+  {
+    id: 26,
+    sticker: "/assets/stickers/unboxing.png",
+  },
+  {
+    id: 27,
+    sticker: "/assets/stickers/wedding.png",
+  },
+  {
+    id: 28,
+    sticker: "/assets/stickers/wine.png",
+  },
+  {
+    id: 29,
+    sticker: "/assets/stickers/you-got-this.png",
+  },
+  {
+    id: 30,
+    sticker: "/assets/stickers/3butterfly.png",
+  },
+  {
+    id: 31,
+    sticker: "/assets/stickers/3hearts.png",
+  },
+  {
+    id: 32,
+    sticker: "/assets/stickers/3colourful-daisy.png",
+  },
+  {
+    id: 33,
+    sticker: "/assets/stickers/happy-bunting.png",
+  },
+  {
+    id: 34,
+    sticker: "/assets/stickers/present.png",
+  },
+  {
+    id: 35,
+    sticker: "/assets/stickers/sunshine.png",
+  },
+  {
+    id: 36,
+    sticker: "/assets/stickers/pastel-rainbow.png",
+  },
+  {
+    id: 37,
+    sticker: "/assets/stickers/bright-rainbow.png",
+  },
+];
+
+// Payment card
+export const PAYMENT_CARD = [
+  {
+    icon: "/assets/icons/AmericanExprese.svg",
+    href: "/",
+  },
+  {
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     icon: "/assets/icons/mastercard.svg",
     href: "/",
   },
@@ -1013,6 +1187,10 @@ export const DUMMY_ORDERS = [
 
 // Admin Google Font
 export const ADMINS_GOOGLE_FONTS: string[] = [
+<<<<<<< HEAD
+=======
+  // Classic scripts
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   "Tangerine",
   "Great Vibes",
   "Alex Brush",
@@ -1027,7 +1205,11 @@ export const ADMINS_GOOGLE_FONTS: string[] = [
   "Handlee",
   "Kaushan Script",
   "Allura",
+<<<<<<< HEAD
   "WindSong",
+=======
+  "Windsong",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   "Yellowtail",
   "Homemade Apple",
   "Rouge Script",
@@ -1052,10 +1234,17 @@ export const ADMINS_GOOGLE_FONTS: string[] = [
   "Mystery Quest",
   "Playball",
   "Princess Sofia",
+<<<<<<< HEAD
 
   // (These were in your admin list, NOT found in PDF fonts section)
   "Pinyon Script",
   "Sacramento",
+=======
+  // New additions (high-quality, legible)
+  "Pinyon Script",
+  "Sacremento",
+  "Norican",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   "Mr Dafoe",
   "Arizonia",
   "Yesteryear",
@@ -1084,6 +1273,7 @@ export const ADMINS_GOOGLE_FONTS: string[] = [
   "Shadows Into Light Two",
   "Reenie Beanie",
   "Nanum Pen Script",
+<<<<<<< HEAD
   "Just Another Hand",
   "Allison",
   "Clicker Script",
@@ -1154,6 +1344,24 @@ export const ADMINS_GOOGLE_FONTS: string[] = [
   "Bungee Tint",
   "Press Start 2P",
   "Iansui",
+=======
+  "Covered By Your Grace",
+  "Courgette",
+  "Just Another Hand",
+  "Bad Script",
+  "Allison",
+  "Clicker Script",
+  "Great Vibes",
+  "Alex Brush",
+  "Dancing Script",
+  "Satisfy",
+  "MonteCarlo",
+  "The Nautigal",
+  "Waterfall",
+  "WindSong",
+  "Libre Baskerville", // for contrast titles (serif)
+  "Playfair Display", // stylish display serif
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 ];
 
 // Dummy Categories
@@ -1638,7 +1846,10 @@ export const CATEGORY_KEYS = [
   "Apparel",
   "Mugs",
   "Coasters",
+<<<<<<< HEAD
   "Candles",
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   "Stickers",
   "Notebooks",
   "Wall Art",
@@ -1699,6 +1910,7 @@ export const CATEGORY_CONFIG = {
     mirrorPrint: true, // ✅ mirror for transfer
     features: { text: true, photo: true, sticker: true, aiArt: false },
   },
+<<<<<<< HEAD
   Candles: {
     key: "Candles",
     label: "Candles",
@@ -1711,6 +1923,8 @@ export const CATEGORY_CONFIG = {
     mirrorPrint: false,
     features: { text: true, photo: true, sticker: true, aiArt: false },
   },
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   Stickers: {
     key: "Stickers",
     label: "Stickers",
@@ -1774,7 +1988,11 @@ export const CATEGORY_CONFIG = {
   "Business Cards": {
     key: "Business Cards",
     label: "Business Cards",
+<<<<<<< HEAD
     mmWidth: 95,
+=======
+    mmWidth: 85,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     mmHeight: 55,
     slideLabels: ["Front", "Back"],
     maxSlides: 2,
@@ -1813,6 +2031,7 @@ export const PRIMARY_CATEGORIES = [
   "Get Well Soon",
   "New Baby",
 ] as const;
+<<<<<<< HEAD
 
 export function uid() {
   return Math.random().toString(16).slice(2) + Date.now().toString(16);
@@ -1932,3 +2151,5 @@ export function defaultPricing() {
     ],
   };
 }
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0

@@ -13,7 +13,11 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { COLORS } from "../../../constant/color";
 import LOGO from "/assets/images/blackLOGO.png";
+<<<<<<< HEAD
 import { ChevronLeft, ChevronRight, Close, Drafts, Logout, Person, Search, Settings, WorkspacePremium } from "@mui/icons-material";
+=======
+import { ChevronLeft, ChevronRight, Close, Logout, Person, Search, Settings } from "@mui/icons-material";
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 import { useLocation, useNavigate } from "react-router-dom";
 import { USER_ROUTES } from "../../../constant/route";
 import MegaMenu from "../../../components/MegaMenu/MegaMenu";
@@ -22,9 +26,15 @@ import { Avatar, Badge, Link, ListItemIcon, Menu, MenuItem } from "@mui/material
 import useModal from "../../../hooks/useModal";
 import ConfirmModal from "../../../components/ConfirmModal/ConfirmModal";
 import { useAuth } from "../../../context/AuthContext";
+<<<<<<< HEAD
 import { useQuery } from "@tanstack/react-query";
 import RemindersDrawer from "../../../components/RemindersDrawer/RemindersDrawer";
 import { supabase } from "../../../supabase/supabase";
+=======
+import RemindersDrawer from "../../../components/RemindersDrawer/RemindersDrawer";
+import { fetchAllCategoriesFromDB } from "../../../source/source";
+import { useQuery } from "@tanstack/react-query";
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
 interface Props {
   window?: () => Window;
@@ -70,6 +80,7 @@ function useHScrollArrows() {
   return { listRef, canLeft, canRight, scrollByAmount };
 }
 
+<<<<<<< HEAD
 async function fetchCategoriesLight(): Promise<any[]> {
   const { data, error } = await supabase
     .from("categories")
@@ -79,6 +90,8 @@ async function fetchCategoriesLight(): Promise<any[]> {
   return data ?? [];
 };
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
 export default function Header(props: Props) {
   const { window } = props;
@@ -87,19 +100,28 @@ export default function Header(props: Props) {
   const { cart } = useCartStore();
   const location = useLocation()
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [search, setSearch] = React.useState("");
 
   const { data: navCategories = [], isLoading, isError } = useQuery<any[]>({
     queryKey: ["navCategories"],
+<<<<<<< HEAD
     queryFn: fetchCategoriesLight,
     staleTime: 1000 * 60 * 60,
+=======
+    queryFn: fetchAllCategoriesFromDB,
+    staleTime: 1000 * 60 * 60, // 1 hour
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     gcTime: 1000 * 60 * 60,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
   });
 
+<<<<<<< HEAD
   const navCategoriesWithFallback = React.useMemo(() => {
     const addMugSubs = (subs: any[]) => {
       const desired = ["Initials/Name", "Slogans"];
@@ -125,12 +147,22 @@ export default function Header(props: Props) {
   const mainCategoryNames = React.useMemo(
     () => navCategoriesWithFallback.map((c) => c.name).filter(Boolean),
     [navCategoriesWithFallback]
+=======
+  // Only strings for the top row
+  const mainCategoryNames = React.useMemo(
+    () => navCategories.map((c) => c.name).filter(Boolean),
+    [navCategories]
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   );
 
   // Build a map: main name -> MegaMenuItem
   const megaMenuMap: Record<string, any> = React.useMemo(() => {
     const map: Record<string, any> = {};
+<<<<<<< HEAD
     for (const c of navCategoriesWithFallback) {
+=======
+    for (const c of navCategories) {
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       const subs = c.subcategories ?? [];
       const subSub = c.sub_subcategories ?? {};
 
@@ -147,6 +179,18 @@ export default function Header(props: Props) {
     return map;
   }, [navCategories]);
 
+<<<<<<< HEAD
+=======
+  const categoryIdByName = React.useMemo(() => {
+    const map = new Map<string, string | number>();
+    navCategories.forEach((c: any) => {
+      const key = String(c?.name ?? "").trim().toLowerCase();
+      if (key) map.set(key, c?.id);
+    });
+    return map;
+  }, [navCategories]);
+
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
@@ -154,11 +198,35 @@ export default function Header(props: Props) {
   const [hoveredMenuItem, setHoveredMenuItem] = React.useState<string | null>(null);
   const handleMouseEnter = (item: string) => setHoveredMenuItem(item);
   const handleMouseLeave = () => setHoveredMenuItem(null);
+<<<<<<< HEAD
   // const handleSelect = () => setHoveredMenuItem(null);
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const { listRef, canLeft, canRight, scrollByAmount } = useHScrollArrows();
 
+<<<<<<< HEAD
+=======
+  const isShopAll = (label: string) => /shop all/i.test(label) || /^all\b/i.test(label);
+
+  const handleCategoryNavigate = React.useCallback(
+    (label: string, parent?: string) => {
+      const target = isShopAll(label) ? (parent || label) : label;
+      if (!target) return;
+      const key = String(target).trim().toLowerCase();
+      const categoryId = categoryIdByName.get(key);
+      const path = `${USER_ROUTES.VIEW_ALL}/${encodeURIComponent(target)}`;
+      if (categoryId != null) {
+        navigate(path, { state: { categoryId } });
+      } else {
+        navigate(path);
+      }
+      setHoveredMenuItem(null);
+    },
+    [navigate, categoryIdByName]
+  );
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
   const handleOpenMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -505,7 +573,11 @@ export default function Header(props: Props) {
                       >
                         <MenuItem
                           onClick={() => {
+<<<<<<< HEAD
                             navigate(USER_ROUTES.USER_PROFILE);
+=======
+                            // navigate(USER_ROUTES.ACCOUNT_SETTINGS);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                             handleCloseMenu();
                           }}
                           sx={{ width: 150 }}
@@ -518,11 +590,16 @@ export default function Header(props: Props) {
 
                         <MenuItem
                           onClick={() => {
+<<<<<<< HEAD
                             navigate(USER_ROUTES.USER_DRAFTS_CARDS);
+=======
+                            // navigate(USER_ROUTES.SETTINGS);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                             handleCloseMenu();
                           }}
                         >
                           <ListItemIcon>
+<<<<<<< HEAD
                             <Drafts fontSize="small" />
                           </ListItemIcon>
                           <Typography>Drafts</Typography>
@@ -537,6 +614,11 @@ export default function Header(props: Props) {
                             <WorkspacePremium fontSize="small" />
                           </ListItemIcon>
                           <Typography>Subscription</Typography>
+=======
+                            <Settings fontSize="small" />
+                          </ListItemIcon>
+                          <Typography>Settings</Typography>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                         </MenuItem>
 
                         <MenuItem onClick={handleLogout}>
@@ -617,6 +699,7 @@ export default function Header(props: Props) {
         </nav>
       </Box>
       {
+<<<<<<< HEAD
         location.pathname === USER_ROUTES.USER_PROFILE || location.pathname === USER_ROUTES.SUBSCRIPTION ? null :
           <Box
             sx={{
@@ -747,6 +830,133 @@ export default function Header(props: Props) {
               )}
             </Box>
           </Box>
+=======
+        location.pathname === USER_ROUTES.USER_PROFILE ? null :
+         <Box
+          sx={{
+            width: "100%",
+            display: { md: "flex", sm: "flex", xs: "none" },
+            m: "auto",
+            flexDirection: "column",
+            position: "relative",
+            bgcolor: COLORS.primary,
+            mt: "3px",
+          }}
+          onMouseLeave={handleMouseLeave}
+        >
+          {/* Left arrow */}
+          <IconButton
+            onClick={() => scrollByAmount("left")}
+            disabled={!canLeft}
+            sx={{
+              position: "absolute",
+              left: { lg: 100, md: 60, sm: 30, xs: 0 },
+              top: "50%",
+              transform: "translateY(-50%)",
+              zIndex: 2,
+              bgcolor: "rgba(255,255,255,0.95)",
+              border: "1px solid #e5e7eb",
+              boxShadow: 1,
+              "&:hover": { bgcolor: "#fff" },
+              opacity: canLeft ? 1 : 0.5,
+              pointerEvents: canLeft ? "auto" : "none",
+            }}
+          >
+            <ChevronLeft />
+          </IconButton>
+
+          {/* Right arrow */}
+          <IconButton
+            onClick={() => scrollByAmount("right")}
+            disabled={!canRight}
+            sx={{
+              position: "absolute",
+              right: { lg: 100, md: 60, sm: 30, xs: 0 },
+              top: "50%",
+              transform: "translateY(-50%)",
+              zIndex: 2,
+              bgcolor: "rgba(255,255,255,0.95)",
+              border: "1px solid #e5e7eb",
+              boxShadow: 1,
+              "&:hover": { bgcolor: "#fff" },
+              opacity: canRight ? 1 : 0.5,
+              pointerEvents: canRight ? "auto" : "none",
+            }}
+          >
+            <ChevronRight />
+          </IconButton>
+
+          <List
+            ref={listRef}
+            disablePadding
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 5,
+              p: 3,
+              m: "auto",
+              flexWrap: "nowrap",
+              overflowX: "auto",
+              scrollBehavior: "smooth",
+              width: { lg: 1440, md: '1024px', sm: '700px', xs: "100%" },
+              // Hide scrollbar
+              scrollbarWidth: "none",
+              "&::-webkit-scrollbar": { display: "none" },
+              position: "relative",
+              maskImage:
+                "linear-gradient(to right, transparent 0, black 24px, black calc(100% - 24px), transparent 100%)",
+            }}
+          >
+            {isLoading && <Box sx={{ pt: 2, textAlign: "center", justifyContent: 'center', display: 'flex', m: 'auto' }}>Loading...</Box>}
+
+            {mainCategoryNames.map((name) => (
+              <ListItem
+                key={name}
+                disableGutters
+                disablePadding
+                onMouseEnter={() => handleMouseEnter(name)}
+                sx={{ flex: "0 0 auto", width: "auto" }}
+              >
+                <Link
+                  component="button"
+                  onClick={() => handleCategoryNavigate(name)}
+                  sx={{
+                    m: 0,
+                    p: 0,
+                    cursor: "pointer",
+                    fontWeight: "bold",
+                    fontSize: 16,
+                    color: COLORS.black,
+                    textDecoration: "none",
+                    whiteSpace: "nowrap",
+                    "&:hover": { color: "rgba(46, 46, 46, 1)" },
+                    background: "none",
+                    border: "none",
+                  }}
+                >
+                  {name}
+                </Link>
+              </ListItem>
+            ))}
+          </List>
+
+          <Box
+            sx={{
+              width: { lg: "1340px", md: "100%", sm: "", xs: "auto" },
+              display: "flex",
+              m: "auto",
+              justifyContent: "center",
+            }}
+          >
+            {hoveredMenuItem && megaMenuMap[hoveredMenuItem] && (
+              <MegaMenu
+                data={megaMenuMap[hoveredMenuItem]}
+                onSelect={({ parent, label }) => handleCategoryNavigate(label, parent)}
+              />
+            )}
+          </Box>
+        </Box>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       }
 
 

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { Box, Typography } from "@mui/material";
 import { COLORS } from "../../constant/color";
 import toast from "react-hot-toast";
@@ -156,6 +157,34 @@ const handleJoinWaitlist = async (e:any) => {
           />
         </Box>
       </Box>
+=======
+import { Box } from "@mui/material";
+
+const VIPFunky = () => {
+  return (
+    <Box
+      sx={{
+        mt: 8,
+        width: "100%",
+        height: { md: "400px", sm: "300px", xs: "auto" },
+        borderRadius: 4,
+        display: { md: "flex", sm: "flex", xs: "block" },
+        alignItems: "center",
+        justifyContent: "space-around",
+        m: "auto",
+      }}
+    >
+      <Box
+        component={"img"}
+        src="/assets/images/banner2.jpg"
+        sx={{
+          width: { md: "100%", sm: '100%', xs: "100%" },
+          height: { md: 400, sm: 300, xs: '100%' },
+          borderRadius: 3,
+          objectFit: "cover",
+        }}
+      />
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     </Box>
   );
 };

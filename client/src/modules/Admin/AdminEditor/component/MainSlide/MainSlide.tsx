@@ -8,7 +8,10 @@ import SharedToolbar from "../SharedToolbar/SharedToolbar";
 
 const MainSlide: React.FC = () => {
   const {
+<<<<<<< HEAD
     formData,
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     midLeftElements,
     setMidLeftElements,
     midLeftTextElements,
@@ -31,8 +34,11 @@ const MainSlide: React.FC = () => {
 
   const isLeftActive = activeMid === "left";
   const isRightActive = activeMid === "right";
+<<<<<<< HEAD
   const isCandleCategory = /candle/i.test(String(formData?.cardCategory ?? ""));
   const canvasScale = isCandleCategory ? 1.5 : 1;
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
   return (
     <Box>
@@ -68,7 +74,10 @@ const MainSlide: React.FC = () => {
             setStickerElements={setMidLeftStickerElements}
             onFocus={() => setActiveMid("left")}
             disabled={!isLeftActive}
+<<<<<<< HEAD
             canvasScale={canvasScale}
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           />
         </Box>
 
@@ -97,7 +106,10 @@ const MainSlide: React.FC = () => {
             setStickerElements={setMidRightStickerElements}
             onFocus={() => setActiveMid("right")}
             disabled={!isRightActive}
+<<<<<<< HEAD
             canvasScale={canvasScale}
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           />
         </Box>
       </Box>
@@ -105,4 +117,8 @@ const MainSlide: React.FC = () => {
   );
 };
 
+<<<<<<< HEAD
 export default MainSlide;
+=======
+export default MainSlide;
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0

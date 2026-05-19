@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { createContext, useContext, useEffect, useRef, useState, useMemo, type MouseEvent as ReactMouseEvent, type ComponentProps } from "react";
+=======
+﻿import { useEffect, useRef, useState, useMemo } from "react";
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 import {
   Box,
   IconButton,
@@ -20,15 +24,22 @@ import {
   UploadFileRounded,
   LockOutlined,
   LockOpenOutlined,
+<<<<<<< HEAD
   ContentCopyOutlined,
 } from "@mui/icons-material";
 import { useSlide1 } from "../../context/Slide1Context";
 import { useLocation, useParams } from "react-router-dom";
+=======
+} from "@mui/icons-material";
+import { useSlide1 } from "../../context/Slide1Context";
+import { useLocation } from "react-router-dom";
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 import { Rnd } from "react-rnd";
 import { motion } from "framer-motion";
 import QrGenerator from "../QR-code/Qrcode";
 import { COLORS } from "../../constant/color";
 import mergePreservePdf from "../../utils/mergePreservePdf";
+<<<<<<< HEAD
 import { safeGetStorage } from "../../lib/storage";
 import { getDraftCardId, isUuid } from "../../lib/draftCardId";
 import { readDraftFull } from "../../lib/draftLocal";
@@ -37,6 +48,8 @@ import { isIosTouchDevice } from "../../lib/platform";
 import { fetchCardById, fetchDraftByCardId } from "../../source/source";
 import AlignmentGuides from "../AlignmentGuides/AlignmentGuides";
 import { useAlignGuides } from "../../hooks/useAlignGuides";
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
 /* ===================== helpers + types ===================== */
 const num = (v: any, d = 0) => (typeof v === "number" && !Number.isNaN(v) ? v : d);
@@ -93,6 +106,7 @@ type LayoutNorm = {
   textElements: TextEl[];
 };
 
+<<<<<<< HEAD
 type RndProps = ComponentProps<typeof Rnd>;
 const CanvasScaleContext = createContext(1);
 const ScaledRnd = (props: RndProps) => {
@@ -100,6 +114,8 @@ const ScaledRnd = (props: RndProps) => {
   return <Rnd {...props} scale={props.scale ?? scale} />;
 };
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 export const toElement = (obj: any, i: number, editable: boolean, prefix = "bg"): ElementEl => ({
   id: idOrIdx(obj, i, prefix),
   x: num(obj?.x, 0),
@@ -148,6 +164,7 @@ export const toText = (obj: any, i: number, editable: boolean, prefix = "te"): T
   };
 };
 
+<<<<<<< HEAD
 const normalizeMultiTexts = (arr: any[]) =>
   (Array.isArray(arr) ? arr : []).map((t) => ({
     ...t,
@@ -177,6 +194,8 @@ const stripLayoutTextElements = (
   return { ...layout, textElements };
 };
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 export function normalizeSlide(slide: any): {
   bgColor: string | null;
   bgImage: string | null;
@@ -253,6 +272,7 @@ export function normalizeSlide(slide: any): {
 
   // texts
   // out.textElements.push(...(layout?.staticText ?? []).map((o: any, i: number) => toText(o, i, !!o?.editable, "te")));
+<<<<<<< HEAD
   const multiRaw = Array.isArray(slide?.multipleTexts) ? slide.multipleTexts : [];
   const hasMultiContent = multiRaw.some(
     (o: any) => str(o?.text ?? o?.value, "").trim().length > 0
@@ -271,6 +291,9 @@ export function normalizeSlide(slide: any): {
       return toText(o, i, editable, "mte");
     })
   );
+=======
+  out.textElements.push(...(slide.multipleTexts ?? []).map((o: any, i: number) => toText(o, i, !!o?.isEditable, "mte")));
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   if (slide.oneText && str(slide.oneText.value, "").trim().length > 0) {
     out.textElements.push(
       toText(
@@ -318,7 +341,10 @@ interface SlideCoverProps {
   rightBox?: boolean;
   isCaptureMode?: boolean;
   isAdminEditor?: boolean;
+<<<<<<< HEAD
   canvasScale?: number;
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 }
 
 const createNewTextElement1 = (defaults: any) => ({
@@ -337,6 +363,7 @@ const createNewTextElement1 = (defaults: any) => ({
   locked: false,
 });
 
+<<<<<<< HEAD
 const focusEditableTextFromTarget = (target: EventTarget | null) => {
   const root = target instanceof HTMLElement ? target : null;
   if (!root) return;
@@ -356,10 +383,13 @@ const focusEditableTextFromTarget = (target: EventTarget | null) => {
   });
 };
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 const SlideCover = ({
   activeIndex,
   // togglePopup,
   rightBox,
+<<<<<<< HEAD
   isCaptureMode,
   isAdminEditor,
   addTextRight,
@@ -392,6 +422,13 @@ const SlideCover = ({
     setSelectedStickerIndex(null);
     setSelectedBgIndex(null);
   };
+=======
+  // isCaptureMode,
+  isAdminEditor,
+  addTextRight,
+}: SlideCoverProps) => {
+  const coverRef = useRef<HTMLDivElement>(null);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
   const {
     images1,
@@ -412,7 +449,10 @@ const SlideCover = ({
     setVerticalAlign1,
     setTextAlign1,
     rotation1,
+<<<<<<< HEAD
     setRotation1,
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     setTexts1,
     setShowOneTextRightSideBox1,
     fontFamily1,
@@ -428,8 +468,11 @@ const SlideCover = ({
     setFontColor1,
     setFontWeight1,
     setFontFamily1,
+<<<<<<< HEAD
     setLineHeight1,
     setLetterSpacing1,
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
     // media
     selectedVideoUrl1,
@@ -484,6 +527,7 @@ const SlideCover = ({
   /* ------------------ pull slide1 from route ------------------ */
 
   const location = useLocation();
+<<<<<<< HEAD
   const { id: routeId } = useParams<{ id?: string }>();
   const draftId = useMemo(() => (routeId && isUuid(routeId) ? routeId : getDraftCardId() ?? ""), [routeId]);
   const localDraftFull = useMemo(
@@ -567,10 +611,19 @@ const SlideCover = ({
       }
       return;
     }
+=======
+  const slide1 = location.state?.layout?.slides?.slide1 ?? null;
+
+  console.log(layout1, '---')
+
+  /* ------------------ normalize slide1 -> user view state ------------------ */
+  useEffect(() => {
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     if (!slide1) return;
     const norm = normalizeSlide(slide1);
     setBgColor1?.(norm.bgColor);
     setBgImage1?.(norm.bgImage);
+<<<<<<< HEAD
     setLayout1?.(applyTemplateLayout1(slide1, norm));
     if (slide1?.bg?.rect) setBgRect1?.(slide1.bg.rect);
     return;
@@ -728,10 +781,15 @@ const SlideCover = ({
       cancelled = true;
     };
   }, [draftFull, slide1, routeId, draftId, setBgColor1, setBgImage1, setLayout1, setBgRect1]);
+=======
+    setLayout1?.(norm.layout);
+  }, [slide1, setBgColor1, setBgImage1, setLayout1]);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
   /* ------------------ local UI state ------------------ */
   const fileInputRef = useRef<HTMLInputElement>(null);
   const rightBoxRef = useRef<HTMLDivElement>(null);
+<<<<<<< HEAD
   const align = useAlignGuides(rightBoxRef, { scale: rndScale });
   const alignItems = useMemo(() => {
     const items: { id: string; x: number; y: number; w: number; h: number }[] = [];
@@ -767,6 +825,8 @@ const SlideCover = ({
 
     return items;
   }, [draggableImages1, selectedImg1, textElements1, selectedStickers1, isAIimage1, aimage1]);
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [selectedBgIndex, setSelectedBgIndex] = useState<number | null>(null);
   const [selectedStickerIndex, setSelectedStickerIndex] = useState<number | null>(null);
@@ -843,7 +903,11 @@ const SlideCover = ({
 
       updated[editingIndex] = {
         ...te,
+<<<<<<< HEAD
         // only overwrite when a value exists; otherwise keep element’s own value
+=======
+        // only overwrite when a value exists; otherwise keep elementâ€™s own value
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         fontSize: fontSize1 ?? te.fontSize,
         fontFamily: fontFamily1 ?? te.fontFamily,
         color: fontColor1 ?? te.color,
@@ -854,7 +918,11 @@ const SlideCover = ({
       return { ...prev, textElements: updated };
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
+<<<<<<< HEAD
   }, [fontSize1, fontFamily1, fontColor1, fontWeight1]); // ← removed editingIndex
+=======
+  }, [fontSize1, fontFamily1, fontColor1, fontWeight1]); // â† removed editingIndex
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
   /* ------------------ init draggable state for user images (unchanged) ------------------ */
   useEffect(() => {
@@ -894,7 +962,11 @@ const SlideCover = ({
         fontColor: "#000000",
         fontFamily: "Roboto",
         textAlign: "center",
+<<<<<<< HEAD
         verticalAlign: "top",
+=======
+        verticalAlign: "center",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         rotation: 0,
         lineHeight: 1.5,
         letterSpacing: 0,
@@ -1139,6 +1211,7 @@ const SlideCover = ({
     return () => document.removeEventListener("mousedown", onDocClick);
   }, [bgEdit1]);
 
+<<<<<<< HEAD
 
 
   // duplicate   
@@ -1254,13 +1327,50 @@ const SlideCover = ({
           />
           {isAdminEditor && bgImage1 && (
             <ScaledRnd
+=======
+  /* ------------------ UI ------------------ */
+  return (
+    <Box ref={coverRef} id="slide-cover-capture" sx={{ display: "flex", width: "100%", gap: "5px", position: "relative" }}>
+      {activeIndex === 0 && rightBox && (
+        <Box
+          ref={rightBoxRef}
+          sx={{
+            zIndex: 10,
+            p: 2,
+            position: "relative",
+            height: { md: "700px", sm: "600px", xs: "70vh" },
+            width: "100%",
+            opacity: isSlideActive1 ? 1 : 0.6,
+            pointerEvents: isSlideActive1 ? "auto" : "none",
+            backgroundColor: bgColor1 ?? "transparent",
+            "&::after": !isSlideActive1
+              ? {
+                content: '""',
+                position: "absolute",
+                inset: 0,
+                backgroundColor: "rgba(105,105,105,0.51)",
+                zIndex: 1000,
+                pointerEvents: "none",
+              }
+              : {},
+          }}
+        >
+          {isAdminEditor && bgImage1 && (
+            <Rnd
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
               size={{ width: bgRect1.width, height: bgRect1.height }}
               position={{ x: bgRect1.x, y: bgRect1.y }}
               bounds="parent"
               enableUserSelectHack={false}
+<<<<<<< HEAD
               // ✅ only draggable when unlocked AND in edit mode
               disableDragging={!bgEdit1 || bgLocked1}
               // ✅ only resizable when unlocked AND in edit mode
+=======
+              // âœ… only draggable when unlocked AND in edit mode
+              disableDragging={!bgEdit1 || bgLocked1}
+              // âœ… only resizable when unlocked AND in edit mode
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
               enableResizing={
                 bgEdit1 && !bgLocked1
                   ? {
@@ -1317,7 +1427,11 @@ const SlideCover = ({
                   backgroundPosition: "center",
                   userSelect: "none",
                 }}
+<<<<<<< HEAD
                 // ✅ double-click only works when unlocked
+=======
+                // âœ… double-click only works when unlocked
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                 onDoubleClick={() => {
                   if (!bgLocked1) setBgEdit1(true);
                 }}
@@ -1358,7 +1472,11 @@ const SlideCover = ({
                   </Box>
                 )}
               </Box>
+<<<<<<< HEAD
             </ScaledRnd>
+=======
+            </Rnd>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           )}
 
 
@@ -1425,7 +1543,11 @@ const SlideCover = ({
                           sx={{
                             width: "100%",
                             height: "100%",
+<<<<<<< HEAD
                             objectFit: el.id === "bg-image" ? "cover" : "fill",
+=======
+                            objectFit: "cover",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                             borderRadius: 1,
                             display: "block",
                             pointerEvents: "none",
@@ -1433,7 +1555,11 @@ const SlideCover = ({
                             WebkitClipPath: el.clipPath || "none",
                           }}
                         />
+<<<<<<< HEAD
                         {/* ✅ Only show upload icon when this frame is editable (NOT when locked) */}
+=======
+                        {/* âœ… Only show upload icon when this frame is editable (NOT when locked) */}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                         {isEditable && !isLocked && (
                           <Box
                             sx={{
@@ -1532,6 +1658,7 @@ const SlideCover = ({
                         height: 'auto',
                         zIndex: (te.zIndex ?? 1) + 1000,
 
+<<<<<<< HEAD
                         // ✅ easiest way to center the block itself
                         display: "grid",
                         placeItems: "center",
@@ -1543,11 +1670,23 @@ const SlideCover = ({
                         border: hideTextOutline
                           ? "none"
                           : isEditable
+=======
+                        // âœ… easiest way to center the block itself
+                        display: "grid",
+                        placeItems: "center",
+
+                        // âœ… cursor
+                        cursor: !isEditable ? "not-allowed" : (isActive ? "text" : "pointer"),
+
+                        // âœ… border
+                        border: isEditable
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                           ? (isActive ? "1px dashed #1976d2" : "1px dashed rgba(25,118,210,.35)")
                           : "none",
                         borderRadius: "6px",
                         transition: "border .15s ease",
                       }}
+<<<<<<< HEAD
                       onClick={isEditable ? (e) => {
                         handleTextFocus(index, te);
                         focusEditableTextFromTarget(e.currentTarget);
@@ -1560,6 +1699,10 @@ const SlideCover = ({
                         handleTextFocus(index, te);
                         focusEditableTextFromTarget(e.currentTarget);
                       } : undefined}
+=======
+                      onClick={isEditable ? () => setEditingIndex(index) : undefined}
+                      onDoubleClick={isEditable ? () => setEditingIndex(index) : undefined}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                     >
                       <TextField
                         variant="standard"
@@ -1593,7 +1736,11 @@ const SlideCover = ({
                           width: "100%",
                           height: "100%",
 
+<<<<<<< HEAD
                           // ✅ make sure both single & multiline inputs are centered
+=======
+                          // âœ… make sure both single & multiline inputs are centered
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                           "& .MuiInputBase-input, & .MuiInputBase-inputMultiline": {
                             textAlign: "center",
                             textAlignLast: "center",
@@ -1637,7 +1784,11 @@ const SlideCover = ({
                   let lastTap = 0;
 
                   return (
+<<<<<<< HEAD
                     <ScaledRnd
+=======
+                    <Rnd
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                       key={textElement.id}
                       cancel={textElement.isEditing ? ".no-drag, .text-edit" : ".no-drag"}
                       enableUserSelectHack={false}
@@ -1651,20 +1802,29 @@ const SlideCover = ({
                         display: "flex",
                         alignItems: vAlign,
                         justifyContent: hAlign,
+<<<<<<< HEAD
                         touchAction: textElement.isEditing ? "manipulation" : "none",
+=======
+                        touchAction: "none",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                         transition: "border 0.2s ease",
                         cursor: textElement.isEditing ? "text" : "move",
                       }}
                       onTouchStart={() => { touchStartTime = Date.now(); }}
+<<<<<<< HEAD
                       onPointerDown={(e: any) => {
                         if (e?.pointerType !== "touch") return;
                         touchStartTime = Date.now();
                       }}
                       onTouchEnd={(e: any) => {
+=======
+                      onTouchEnd={() => {
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                         const now = Date.now();
                         const timeSince = now - lastTap;
                         const touchDuration = now - touchStartTime;
                         if (touchDuration < 200) {
+<<<<<<< HEAD
                           const shouldEdit = isIos || timeSince < 300;
                           setSelectedTextId1(textElement.id);
                           if (shouldEdit) {
@@ -1685,11 +1845,19 @@ const SlideCover = ({
                           if (shouldEdit) {
                             updateTextElement1(textElement.id, { isEditing: true });
                             focusEditableTextFromTarget(e.currentTarget);
+=======
+                          if (timeSince < 300) {
+                            setSelectedTextId1(textElement.id);
+                            updateTextElement1(textElement.id, { isEditing: true });
+                          } else {
+                            setSelectedTextId1(textElement.id);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                           }
                         }
                         lastTap = now;
                       }}
                       onMouseDown={() => setSelectedTextId1(textElement.id)}
+<<<<<<< HEAD
                       onDoubleClick={(e: any) => {
                         setSelectedTextId1(textElement.id);
                         updateTextElement1(textElement.id, { isEditing: true });
@@ -1723,6 +1891,14 @@ const SlideCover = ({
                         );
                         updateTextElement1(textElement.id, { position: { x: snap.x, y: snap.y } });
                         align.onDragStop();
+=======
+                      onDoubleClick={() => {
+                        setSelectedTextId1(textElement.id);
+                        updateTextElement1(textElement.id, { isEditing: true });
+                      }}
+                      onDragStop={(_, d) => {
+                        updateTextElement1(textElement.id, { position: { x: d.x, y: d.y } });
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                       }}
                       onResizeStop={(_, __, ref, ___, position) => {
                         updateTextElement1(textElement.id, {
@@ -1783,7 +1959,11 @@ const SlideCover = ({
                             className="no-drag"
                             onClick={(e) => { e.stopPropagation(); layerDownAny({ type: 'text', id: textElement.id }); }}
                             sx={{
+<<<<<<< HEAD
                               position: "absolute", top: -25, left: 20, bgcolor: "black", color: "white",
+=======
+                              position: "absolute", top: -25, left: 40, bgcolor: "black", color: "white",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                               borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center",
                               p: isMobile ? "4px" : "2px", zIndex: 9999, cursor: "pointer", "&:hover": { bgcolor: "#333" },
                             }}
@@ -1797,7 +1977,11 @@ const SlideCover = ({
                             className="no-drag"
                             onClick={(e) => { e.stopPropagation(); layerUpAny({ type: 'text', id: textElement.id }); }}
                             sx={{
+<<<<<<< HEAD
                               position: "absolute", top: -25, left: 45, bgcolor: "black", color: "white",
+=======
+                              position: "absolute", top: -25, left: 80, bgcolor: "black", color: "white",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                               borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center",
                               p: isMobile ? "4px" : "2px", zIndex: 9999, cursor: "pointer", "&:hover": { bgcolor: "#333" },
                             }}
@@ -1806,6 +1990,7 @@ const SlideCover = ({
                           </Box>
                         </Tooltip>
 
+<<<<<<< HEAD
                         {/* Duplicate */}
                         <Tooltip title="Duplicate text">
                           <IconButton
@@ -1825,6 +2010,8 @@ const SlideCover = ({
                           </IconButton>
                         </Tooltip>
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                         {/* Content: drag anywhere when NOT editing; click twice to edit */}
                         <Box
                           sx={{
@@ -1835,6 +2022,7 @@ const SlideCover = ({
                             alignItems: vAlign,
                             justifyContent: hAlign,
                             userSelect: "none",
+<<<<<<< HEAD
                             touchAction: textElement.isEditing ? "manipulation" : "none",
                             transform: `rotate(${textElement.rotation || 0}deg)`,
                             border: hideTextOutline
@@ -1849,12 +2037,27 @@ const SlideCover = ({
                             setSelectedTextId1(textElement.id);
                             updateTextElement1(textElement.id, { isEditing: true });
                             focusEditableTextFromTarget(e.currentTarget);
+=======
+                            touchAction: "none",
+                            transform: `rotate(${textElement.rotation || 0}deg)`,
+                            border: textElement.id === selectedTextId1 ? "2px solid #1976d2" : "1px dashed #4a7bd5",
+                            zIndex: textElement.zIndex,
+                            cursor: textElement.isEditing ? "text" : "move", // âœ… keep move cursor
+                          }}
+                          onDoubleClick={() => {
+                            setSelectedTextId1(textElement.id);
+                            updateTextElement1(textElement.id, { isEditing: true });
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                           }}
                         >
                           <TextField
                             variant="standard"
                             value={textElement.value}
+<<<<<<< HEAD
                             className="text-edit"         // ✅ used by cancel when editing
+=======
+                            className="text-edit"         // âœ… used by cancel when editing
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                             placeholder="Add Text"
                             multiline
                             fullWidth
@@ -1875,16 +2078,24 @@ const SlideCover = ({
                                 display: "flex",
                                 alignItems: vAlign,
                                 justifyContent: hAlign,
+<<<<<<< HEAD
                                 // ✅ drag by default, only interact with text in edit mode
+=======
+                                // âœ… drag by default, only interact with text in edit mode
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                                 pointerEvents: textElement.isEditing ? "auto" : "none",
                               },
                             }}
                             onChange={(e) => updateTextElement1(textElement.id, { value: e.target.value })}
+<<<<<<< HEAD
                             onFocus={(e) => {
                               e.stopPropagation();
                               setSelectedTextId1(textElement.id);
                               updateTextElement1(textElement.id, { isEditing: true });
                             }}
+=======
+                            onFocus={(e) => { e.stopPropagation(); updateTextElement1(textElement.id, { isEditing: true }); }}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                             onBlur={(e) => { e.stopPropagation(); updateTextElement1(textElement.id, { isEditing: false }); }}
                             sx={{
                               "& .MuiInputBase-input": { overflowY: "auto", textAlign: textElement.textAlign || "center" },
@@ -1892,6 +2103,7 @@ const SlideCover = ({
                           />
                         </Box>
                       </Box>
+<<<<<<< HEAD
                     </ScaledRnd>
                   );
                 })}
@@ -1899,6 +2111,16 @@ const SlideCover = ({
               {/* VIDEO QR */}
               {selectedVideoUrl1 && (
                 <ScaledRnd
+=======
+                    </Rnd>
+                  );
+                })}
+
+
+              {/* VIDEO QR */}
+              {selectedVideoUrl1 && (
+                <Rnd
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                   cancel=".no-drag"
                   position={{ x: qrPosition1.x, y: qrPosition1.y }}
                   onDragStop={(_, d) =>
@@ -1958,12 +2180,20 @@ const SlideCover = ({
                       </IconButton>
                     </Box>
                   </motion.div>
+<<<<<<< HEAD
                 </ScaledRnd>
+=======
+                </Rnd>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
               )}
 
               {/* AUDIO QR */}
               {selectedAudioUrl1 && (
+<<<<<<< HEAD
                 <ScaledRnd
+=======
+                <Rnd
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                   cancel=".no-drag"
                   position={{ x: qrAudioPosition1.x, y: qrAudioPosition1.y }}
                   onDragStop={(_, d) =>
@@ -2012,7 +2242,11 @@ const SlideCover = ({
                       </IconButton>
                     </Box>
                   </motion.div>
+<<<<<<< HEAD
                 </ScaledRnd>
+=======
+                </Rnd>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
               )}
 
               {/* USER IMAGES */}
@@ -2024,7 +2258,11 @@ const SlideCover = ({
                   const isLocked = !!locked;
 
                   return (
+<<<<<<< HEAD
                     <ScaledRnd
+=======
+                    <Rnd
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                       key={id}
                       size={{ width, height }}
                       position={{ x, y }}
@@ -2033,6 +2271,7 @@ const SlideCover = ({
                       cancel=".non-draggable"
                       disableDragging={isLocked}
                       enableResizing={isLocked ? false : { bottomRight: true }}
+<<<<<<< HEAD
                       onDragStart={() => align.onDragStart()}
                       onDrag={(_, d) => {
                         if (isLocked) return;
@@ -2050,6 +2289,13 @@ const SlideCover = ({
                           prev.map((img) => (img.id === id ? { ...img, x: snap.x, y: snap.y } : img))
                         );
                         align.onDragStop();
+=======
+                      onDragStop={(_, d) => {
+                        if (isLocked) return;
+                        setDraggableImages1((prev) =>
+                          prev.map((img) => (img.id === id ? { ...img, x: d.x, y: d.y } : img))
+                        );
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                       }}
                       onResizeStop={(_, __, ref, ___, position) => {
                         if (isLocked) return;
@@ -2108,6 +2354,7 @@ const SlideCover = ({
                             cursor: isLocked ? "default" : "move",
                           }}
                           onMouseDown={() => setSelectedShapeImageId1(id)}
+<<<<<<< HEAD
                           onTouchStart={(e) => {
                             e.stopPropagation();
                             setSelectedShapeImageId1(id);
@@ -2117,6 +2364,8 @@ const SlideCover = ({
                             e.stopPropagation();
                             setSelectedShapeImageId1(id);
                           }}
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                         >
                           <img
                             src={src}
@@ -2129,7 +2378,11 @@ const SlideCover = ({
                               objectFit: "fill",
                               filter: filter || "none",
                               zIndex: zIndex,
+<<<<<<< HEAD
                               clipPath: (() => {
+=======
+                              clipPath: ((): string => {
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                                 const me = draggableImages1.find((img) => img.id === id);
                                 return me?.shapePath || "none";
                               })(),
@@ -2175,12 +2428,20 @@ const SlideCover = ({
                                 className="non-draggable"
                                 onClick={(e) => {
                                   e.stopPropagation();
+<<<<<<< HEAD
                                   layerDownAny({ type: 'image', id });
+=======
+                                  layerDownAny(id);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                                 }}
                                 sx={{
                                   position: "absolute",
                                   top: -25,
+<<<<<<< HEAD
                                   left: 20,
+=======
+                                  left: 40,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                                   bgcolor: "black",
                                   color: "white",
                                   borderRadius: "50%",
@@ -2202,12 +2463,20 @@ const SlideCover = ({
                                 className="non-draggable"
                                 onClick={(e) => {
                                   e.stopPropagation();
+<<<<<<< HEAD
                                   layerUpAny({ type: 'image', id });
+=======
+                                  layerUpAny(id);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                                 }}
                                 sx={{
                                   position: "absolute",
                                   top: -25,
+<<<<<<< HEAD
                                   left: 45,
+=======
+                                  left: 80,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                                   bgcolor: "black",
                                   color: "white",
                                   borderRadius: "50%",
@@ -2226,6 +2495,7 @@ const SlideCover = ({
                           </>
                         )}
 
+<<<<<<< HEAD
                         {/* Duplicate Image Button */}
                         {isAdminEditor && !isLocked && (
                           <Tooltip title="Duplicate">
@@ -2271,6 +2541,8 @@ const SlideCover = ({
                           </Tooltip>
                         )}
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                         {/* close */}
                         {!isLocked && (
                           <Box
@@ -2302,7 +2574,11 @@ const SlideCover = ({
                           </Box>
                         )}
                       </Box>
+<<<<<<< HEAD
                     </ScaledRnd>
+=======
+                    </Rnd>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                   );
                 })}
 
@@ -2312,6 +2588,7 @@ const SlideCover = ({
                   sx={{
                     flex: 1,
                     display: "flex",
+<<<<<<< HEAD
                     alignItems: "stretch",
                     justifyContent: "flex-start",
                     height: "100%",
@@ -2323,6 +2600,17 @@ const SlideCover = ({
                     top: 0,
                     left: 0,
                     boxSizing: "border-box",
+=======
+                    alignItems: "center",
+                    justifyContent: "center",
+                    height: { md: "675px", sm: "575px", xs: "60vh" },
+                    width: { md: "470px", sm: "370px", xs: "90%" },
+                    border: "3px dashed #3a7bd5",
+                    position: "absolute",
+                    bgcolor: "#6183cc36",
+                    p: 1,
+                    top: 10,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                   }}
                 >
                   <IconButton
@@ -2377,6 +2665,7 @@ const SlideCover = ({
                       InputProps={{
                         disableUnderline: true,
                         sx: {
+<<<<<<< HEAD
                           height: "100%",
                           alignItems:
                             verticalAlign1 === "top"
@@ -2385,6 +2674,9 @@ const SlideCover = ({
                                 ? "center"
                                 : "flex-end",
                           "& .MuiInputBase-input, & .MuiInputBase-inputMultiline": {
+=======
+                          "& .MuiInputBase-input": {
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                             fontSize: fontSize1,
                             fontWeight: fontWeight1,
                             color: fontColor1,
@@ -2393,6 +2685,7 @@ const SlideCover = ({
                             transform: `rotate(${rotation1}deg)`,
                             lineHeight: lineHeight1,
                             letterSpacing: letterSpacing1,
+<<<<<<< HEAD
                             minHeight: "unset !important",
                             height: "auto !important",
                             maxHeight: "100%",
@@ -2402,6 +2695,12 @@ const SlideCover = ({
                         },
                       }}
                       sx={{ width: "100%", height: "100%" }}
+=======
+                            height: 200,
+                          },
+                        },
+                      }}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                       autoFocus
                       multiline
                       fullWidth
@@ -2415,7 +2714,11 @@ const SlideCover = ({
                 <Box
                   sx={{
                     height: "98%",
+<<<<<<< HEAD
                     width: "var(--card-slide-w, 475px)",
+=======
+                    width: { md: "475px", sm: "375px", xs: "90%" },
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                     borderRadius: "6px",
                     p: 1,
                     position: "absolute",
@@ -2432,7 +2735,11 @@ const SlideCover = ({
                         height: { md: "210px", sm: "180px", xs: "180px" },
                         width: "100%",
                         mb: 2,
+<<<<<<< HEAD
                         border: hideTextOutline ? "none" : "3px dashed #3a7bd5",
+=======
+                        border: "3px dashed #3a7bd5",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                         borderRadius: "6px",
                         justifyContent: "center",
                         display: "flex",
@@ -2501,10 +2808,17 @@ const SlideCover = ({
                                 width: "100%",
                                 resize: "none",
                                 height: "100px",
+<<<<<<< HEAD
                                 fontSize: textObj.fontSize1 ?? textObj.fontSize,
                                 fontWeight: textObj.fontWeight1 ?? textObj.fontWeight,
                                 color: textObj.fontColor1 ?? textObj.fontColor,
                                 fontFamily: textObj.fontFamily1 ?? textObj.fontFamily,
+=======
+                                fontSize: textObj.fontSize1,
+                                fontWeight: textObj.fontWeight1,
+                                color: textObj.fontColor1,
+                                fontFamily: textObj.fontFamily1,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                                 textAlign: textObj.textAlign,
                                 lineHeight: textObj.lineHeight,
                                 letterSpacing: textObj.letterSpacing,
@@ -2525,10 +2839,17 @@ const SlideCover = ({
                               );
                             }
                             setEditingIndex1(index);
+<<<<<<< HEAD
                             setFontSize1(textObj.fontSize1 ?? textObj.fontSize ?? 16);
                             setFontFamily1(textObj.fontFamily1 ?? textObj.fontFamily ?? "Roboto");
                             setFontWeight1(textObj.fontWeight1 ?? textObj.fontWeight ?? 400);
                             setFontColor1(textObj.fontColor1 ?? textObj.fontColor ?? "#000000");
+=======
+                            setFontSize1(textObj.fontSize1);
+                            setFontFamily1(textObj.fontFamily1);
+                            setFontWeight1(textObj.fontWeight1);
+                            setFontColor1(textObj.fontColor1);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                             setTextAlign1(textObj.textAlign);
                             setVerticalAlign1(textObj.verticalAlign);
                           }}
@@ -2536,10 +2857,17 @@ const SlideCover = ({
                         >
                           <Typography
                             sx={{
+<<<<<<< HEAD
                               fontSize: textObj.fontSize1 ?? textObj.fontSize,
                               fontWeight: textObj.fontWeight1 ?? textObj.fontWeight,
                               color: textObj.fontColor1 ?? textObj.fontColor,
                               fontFamily: textObj.fontFamily1 ?? textObj.fontFamily,
+=======
+                              fontSize: textObj.fontSize1,
+                              fontWeight: textObj.fontWeight1,
+                              color: textObj.fontColor1,
+                              fontFamily: textObj.fontFamily1,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                               textAlign: textObj.textAlign,
                               lineHeight: textObj.lineHeight,
                               letterSpacing: textObj.letterSpacing,
@@ -2574,6 +2902,7 @@ const SlideCover = ({
 
               {/* AI IMAGE */}
               {isAIimage1 && (
+<<<<<<< HEAD
                 <ScaledRnd
                   bounds="parent"
                   size={{ width: aimage1.width, height: aimage1.height }}
@@ -2606,6 +2935,12 @@ const SlideCover = ({
                     setAIImage1((prev: any) => ({ ...prev, x: snap.x, y: snap.y }));
                     align.onDragStop();
                   }}
+=======
+                <Rnd
+                  size={{ width: aimage1.width, height: aimage1.height }}
+                  position={{ x: aimage1.x, y: aimage1.y }}
+                  onDragStop={(_, d) => setAIImage1((prev: any) => ({ ...prev, x: d.x, y: d.y }))}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                   onResizeStop={(_, __, ref, ___, position) =>
                     setAIImage1({
                       width: parseInt(ref.style.width),
@@ -2614,6 +2949,10 @@ const SlideCover = ({
                       y: position.y,
                     })
                   }
+<<<<<<< HEAD
+=======
+                  bounds="parent"
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                   enableResizing={{ bottomRight: true }}
                   resizeHandleStyles={{
                     bottomRight: {
@@ -2644,7 +2983,11 @@ const SlideCover = ({
                       <Close />
                     </IconButton>
                   </Box>
+<<<<<<< HEAD
                 </ScaledRnd>
+=======
+                </Rnd>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
               )}
 
               {/* STICKERS (admin drag/resize) */}
@@ -2654,7 +2997,11 @@ const SlideCover = ({
                 const isLocked = !!sticker.locked;
 
                 return (
+<<<<<<< HEAD
                   <ScaledRnd
+=======
+                  <Rnd
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                     key={sticker.id || index}
                     size={{ width: sticker.width, height: sticker.height }}
                     position={{ x: sticker.x, y: sticker.y }}
@@ -2664,6 +3011,7 @@ const SlideCover = ({
                     disableDragging={isLocked}
                     enableResizing={isLocked ? false : { bottomRight: true }}
                     onMouseDown={() => setSelectedStickerIndex(index)}
+<<<<<<< HEAD
                     onDragStart={() => align.onDragStart()}
                     onDrag={(_, d) => {
                       if (isLocked) return;
@@ -2699,6 +3047,16 @@ const SlideCover = ({
                       }
                       align.onDragStop();
                     }}
+=======
+                    onDragStop={(_, d) =>
+                      !isLocked &&
+                      updateSticker1(index, {
+                        x: d.x,
+                        y: d.y,
+                        zIndex: sticker.zIndex,
+                      })
+                    }
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                     onResizeStop={(_, __, ref, ___, position) =>
                       !isLocked &&
                       updateSticker1(index, {
@@ -2795,16 +3153,27 @@ const SlideCover = ({
                         </IconButton>
                       )}
                     </Box>
+<<<<<<< HEAD
                   </ScaledRnd>
+=======
+                  </Rnd>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                 );
               })}
             </>
           )}
+<<<<<<< HEAD
           </Box>
         )}
       </Box>
     </CanvasScaleContext.Provider>
+=======
+        </Box>
+      )}
+    </Box>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   );
 };
 
 export default SlideCover;
+

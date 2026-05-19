@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { Box, Button, IconButton, InputBase, Typography } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -11,10 +12,19 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import PopupWrapper from "../../PopupWrapper/PopupWrapper";
 import { useSlide2 } from "../../../context/Slide2Context";
 import { GoogleGenAI } from '@google/genai';
+=======
+import { Box, IconButton, InputBase, Typography } from "@mui/material";
+import { useState, useRef } from "react";
+import { Check, Download, Send } from "@mui/icons-material";
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import PopupWrapper from "../../PopupWrapper/PopupWrapper";
+import { useSlide2 } from "../../../context/Slide2Context";
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
 interface GeneAIType {
   onClose: () => void;
   activeIndex?: number;
+<<<<<<< HEAD
   photoArt?: boolean;
 }
 
@@ -81,6 +91,12 @@ const isQuotaError = (err: unknown) => {
 
 const GeneAI2Popup = (props: GeneAIType) => {
   const { onClose, photoArt } = props;
+=======
+}
+
+const GeneAI2Popup = (props: GeneAIType) => {
+  const { onClose } = props;
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
   const {
     isAIimage2,
@@ -91,6 +107,7 @@ const GeneAI2Popup = (props: GeneAIType) => {
 
   const [prompt, setPrompt] = useState("");
   const [loading, setLoading] = useState(false);
+<<<<<<< HEAD
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -150,6 +167,10 @@ const GeneAI2Popup = (props: GeneAIType) => {
 
   // ---------------- Card Design (your existing flow) ----------------
 
+=======
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   const createCardDesign = (design: any) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -160,24 +181,44 @@ const GeneAI2Popup = (props: GeneAIType) => {
     canvas.width = 600;
     canvas.height = 800;
 
+<<<<<<< HEAD
+=======
+    // Parse colors from design or use defaults
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     const bgColor = design.backgroundColor || "#FFE5E5";
     const textColor = design.textColor || "#333333";
     const accentColor = design.accentColor || "#FF69B4";
 
+<<<<<<< HEAD
+=======
+    // Create gradient background
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
     gradient.addColorStop(0, bgColor);
     gradient.addColorStop(1, adjustColorBrightness(bgColor, -20));
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+<<<<<<< HEAD
+=======
+    // Add decorative border
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     ctx.strokeStyle = accentColor;
     ctx.lineWidth = 10;
     ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
 
+<<<<<<< HEAD
+=======
+    // Add inner border
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     ctx.strokeStyle = adjustColorBrightness(accentColor, 30);
     ctx.lineWidth = 3;
     ctx.strokeRect(35, 35, canvas.width - 70, canvas.height - 70);
 
+<<<<<<< HEAD
+=======
+    // Add decorative elements (hearts, stars, etc.)
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     if (design.theme?.includes("love") || design.theme?.includes("valentine")) {
       drawHearts(ctx, accentColor);
     } else if (design.theme?.includes("birthday")) {
@@ -186,15 +227,27 @@ const GeneAI2Popup = (props: GeneAIType) => {
       drawFlowers(ctx, accentColor);
     }
 
+<<<<<<< HEAD
+=======
+    // Add main text
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     ctx.fillStyle = textColor.slice(0, 8);
     ctx.font = "bold 48px Arial";
     ctx.textAlign = "center";
     ctx.fillText(design.title || "Greeting Card", canvas.width / 2, 150);
 
+<<<<<<< HEAD
+=======
+    // Add message
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     ctx.font = "28px Georgia, serif";
     const message = design.message || "Best Wishes!";
     wrapText(ctx, message, canvas.width / 2, 400, canvas.width - 120, 40);
 
+<<<<<<< HEAD
+=======
+    // Add decorative footer
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     ctx.font = "italic 20px Georgia";
     ctx.fillText(
       design.footer || "With Love",
@@ -202,6 +255,10 @@ const GeneAI2Popup = (props: GeneAIType) => {
       canvas.height - 100
     );
 
+<<<<<<< HEAD
+=======
+    // Convert to image
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     const dataUrl = canvas.toDataURL("image/png");
     setSelectedAIimageUrl2(dataUrl);
   };
@@ -233,7 +290,13 @@ const GeneAI2Popup = (props: GeneAIType) => {
       { x: 80, y: 600 },
       { x: 520, y: 650 },
     ];
+<<<<<<< HEAD
     positions.forEach((pos) => drawHeart(ctx, pos.x, pos.y, 30));
+=======
+    positions.forEach((pos) => {
+      drawHeart(ctx, pos.x, pos.y, 30);
+    });
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   };
 
   const drawHeart = (
@@ -274,7 +337,13 @@ const GeneAI2Popup = (props: GeneAIType) => {
       { x: 520, y: 620 },
       { x: 300, y: 200 },
     ];
+<<<<<<< HEAD
     positions.forEach((pos) => drawStar(ctx, pos.x, pos.y, 25, 5));
+=======
+    positions.forEach((pos) => {
+      drawStar(ctx, pos.x, pos.y, 25, 5);
+    });
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   };
 
   const drawStar = (
@@ -306,7 +375,13 @@ const GeneAI2Popup = (props: GeneAIType) => {
       { x: 90, y: 650 },
       { x: 510, y: 630 },
     ];
+<<<<<<< HEAD
     positions.forEach((pos) => drawFlower(ctx, pos.x, pos.y, 20));
+=======
+    positions.forEach((pos) => {
+      drawFlower(ctx, pos.x, pos.y, 20);
+    });
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   };
 
   const drawFlower = (
@@ -323,6 +398,10 @@ const GeneAI2Popup = (props: GeneAIType) => {
       ctx.arc(petalX, petalY, size / 2, 0, Math.PI * 2);
       ctx.fill();
     }
+<<<<<<< HEAD
+=======
+    // Center
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     ctx.fillStyle = "#FFD700";
     ctx.beginPath();
     ctx.arc(x, y, size / 3, 0, Math.PI * 2);
@@ -366,13 +445,25 @@ const GeneAI2Popup = (props: GeneAIType) => {
       theme: prompt.toLowerCase(),
     };
 
+<<<<<<< HEAD
+=======
+    // Parse colors from Gemini response
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     const colorMatch = text.match(/#[0-9A-Fa-f]{6}|rgb\(\d+,\s*\d+,\s*\d+\)/gi);
     if (colorMatch && colorMatch.length > 0) {
       design.backgroundColor = colorMatch[0];
       if (colorMatch.length > 1) design.accentColor = colorMatch[1];
     }
 
+<<<<<<< HEAD
     if (text.toLowerCase().includes("love") || text.toLowerCase().includes("valentine")) {
+=======
+    // Try to extract theme
+    if (
+      text.toLowerCase().includes("love") ||
+      text.toLowerCase().includes("valentine")
+    ) {
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       design.theme = "love";
     } else if (text.toLowerCase().includes("birthday")) {
       design.theme = "birthday";
@@ -383,6 +474,7 @@ const GeneAI2Popup = (props: GeneAIType) => {
 
   const handleGenerateDesign = async () => {
     if (!prompt.trim()) return;
+<<<<<<< HEAD
     if (!API_KEY) {
       alert("API key missing. .env me VITE_GEMINI_API_KEY set karein.");
       return;
@@ -408,10 +500,32 @@ Provide:
 3) Suggested text/message
 4) Decorative elements
 Keep it concise and creative!`
+=======
+    setLoading(true);
+    setSelectedAIimageUrl2("");
+
+    try {
+      const genAI = new GoogleGenerativeAI(
+        "AIzaSyArFGzwFPWF2uAiQs8BkjrEL4EGGJtht-w"
+      );
+
+      const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
+
+      const result = await model.generateContent(
+        `Create a greeting card design concept for: "${prompt}".
+        Provide:
+        1. Color palette (suggest 2-3 hex color codes)
+        2. Design theme and style
+        3. Suggested text/message
+        4. Decorative elements
+        
+        Keep it concise and creative!`
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       );
 
       const response = await result.response;
       const text = response.text();
+<<<<<<< HEAD
       const designData = parseGeminiResponse(text);
       setTimeout(() => createCardDesign(designData), 600);
     } catch (err) {
@@ -495,30 +609,60 @@ Keep it concise and creative!`
   return (
     <PopupWrapper
       title={photoArt ? "Photo Art" : "Gemini AI Designer"}
+=======
+
+      // Parse response and create visual design
+      const designData = parseGeminiResponse(text);
+      setTimeout(() => createCardDesign(designData), 1000);
+    } catch (err: any) {
+      console.error("❌ Error generating Gemini design:", err);
+    } finally {
+      setLoading(false);
+      setPrompt("");
+    }
+  };
+
+  return (
+    <PopupWrapper
+      title="Gemini AI Designer"
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       onClose={onClose}
       sx={{
         width: { md: 300, sm: 300, xs: "95%" },
         height: { md: 600, sm: 600, xs: 450 },
         left: { md: "17%", sm: "0%", xs: 0 },
+<<<<<<< HEAD
         overflowY: "hidden",
+=======
+        overflowY: 'hidden'
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       }}
     >
       <canvas ref={canvasRef} style={{ display: "none" }} />
 
       <Box
         sx={{
+<<<<<<< HEAD
           display: { md: "flex", sm: "flex", xs: "none" },
+=======
+          display: { md: "flex", sm: "flex", xs: 'none' },
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           flexDirection: "column",
           alignItems: "center",
         }}
       >
+<<<<<<< HEAD
         <Typography>
           🎨 Powered by Gemini {photoArt ? "Photo Art AI" : "AI + Canvas"}
         </Typography>
+=======
+        <Typography>🎨 Powered by Gemini AI + Canvas</Typography>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       </Box>
 
       <Box
         sx={{
+<<<<<<< HEAD
           height: { md: 350, sm: 420, xs: 250 },
           border: "2px solid #acc9c9ff",
           borderRadius: 2,
@@ -756,6 +900,94 @@ Keep it concise and creative!`
               </Box>
             )}
           </>
+=======
+          height: { md: 420, sm: 420, xs: 250 },
+          border: "2px solid #acc9c9ff",
+          borderRadius: 2,
+          width: "100%",
+          p: { md: 1, sm: 1, xs: 0 },
+        }}
+      >
+        {selectedAIimageUrl2 && (
+          <Box
+            sx={{
+              mb: 2,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              position: "relative",
+            }}
+          >
+            <Box
+              component={"img"}
+              src={`${selectedAIimageUrl2}`}
+              alt="Generated design"
+              onClick={() => {
+                if (setIsAIimage2) {
+                  setIsAIimage2(true);
+                }
+              }}
+              sx={{
+                width: "100%",
+                height: { md: '100%', sm: '100%', xs: '250px' },
+                objectFit: "fill",
+                boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+              }}
+            />
+            <Box
+              component={"div"}
+              sx={{
+                position: "absolute",
+                top: 0,
+                right: 0,
+                borderRadius: 50,
+                width: 30,
+                height: 30,
+                zIndex: 2,
+                cursor: "pointer",
+                border: "1px solid gray",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+              onClick={() => {
+                const a = document.createElement("a");
+                a.href = `${selectedAIimageUrl2}`;
+                a.download = `card_design_${Date.now()}.png`;
+                a.click();
+              }}
+            >
+              <Download />
+            </Box>
+
+            {isAIimage2 && (
+              <Box
+                component={"div"}
+                sx={{
+                  position: "absolute",
+                  bottom: 3,
+                  right: 3,
+                  borderRadius: 50,
+                  width: 20,
+                  height: 20,
+                  zIndex: 2,
+                  cursor: "pointer",
+                  bgcolor: isAIimage2 ? "black" : "transparent",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  color: "blueviolet",
+                  p: 1,
+                }}
+              >
+                <Check
+                  fontSize="small"
+                  sx={{ color: isAIimage2 ? "white" : "black" }}
+                />
+              </Box>
+            )}
+          </Box>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         )}
 
         {loading && (
@@ -773,6 +1005,7 @@ Keep it concise and creative!`
           bgcolor: "#ebf7f7ff",
           position: "relative",
           mt: 1,
+<<<<<<< HEAD
           maxHeight: 90,
           overflowY: "auto",
           p: 1,
@@ -807,6 +1040,34 @@ Keep it concise and creative!`
       >
         <Send />
       </Button>
+=======
+        }}
+      >
+        <InputBase
+          placeholder="e.g., Birthday card"
+          value={prompt}
+          onChange={(e) => setPrompt(e.target.value)}
+          sx={{ p: 1, width: "90%" }}
+          onKeyDown={(e) => e.key === "Enter" && handleGenerateDesign()}
+          multiline
+          disabled={loading}
+        />
+        <IconButton
+          sx={{
+            position: "absolute",
+            right: 5,
+            border: "1px solid #212121",
+            bgcolor: "#212121",
+            color: "white",
+            "&:hover": { bgcolor: "#333" },
+          }}
+          onClick={handleGenerateDesign}
+          disabled={loading}
+        >
+          <Send />
+        </IconButton>
+      </Box>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     </PopupWrapper>
   );
 };

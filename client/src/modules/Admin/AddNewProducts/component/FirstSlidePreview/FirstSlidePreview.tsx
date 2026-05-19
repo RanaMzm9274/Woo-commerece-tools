@@ -70,6 +70,12 @@ export default function Slide1PreviewBox({
         });
       });
 
+<<<<<<< HEAD
+=======
+    console.log(images.filter((e) => selectedIds.has(e.id)).map((i) => i), '----aldjfad')
+
+
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     const stickers: any[] = Array.isArray(selectedStickers1) ? selectedStickers1 : [];
     stickers.forEach((st, idx) => {
       out.push({

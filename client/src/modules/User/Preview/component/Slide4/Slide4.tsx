@@ -6,6 +6,7 @@ type AnyEl = Record<string, any>;
 const safeClip = (cp?: string | null) => (cp && typeof cp === "string" ? cp : "none");
 const safeFilter = (f?: string | null) => (f && typeof f === "string" ? f : "none");
 const val = <T,>(v: T | undefined, d: T) => (v === undefined || v === null ? d : v);
+<<<<<<< HEAD
 const normalizeUrl = (value: any) => {
   if (typeof value === "string") return value.trim();
   if (value && typeof value === "object" && typeof value.url === "string") return value.url.trim();
@@ -19,6 +20,8 @@ const safeQrSize = (box: any, fallback = 70) => {
   if (Number.isFinite(h) && h > 0) return h;
   return fallback;
 };
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
 type Slide4Props = {
   ref?: any
@@ -40,7 +43,10 @@ const Slide4 = (props: Slide4Props) => {
     qrPosition4,
     textAlign4,
     selectedLayout4,
+<<<<<<< HEAD
     showOneTextRightSideBox4,
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     selectedAudioUrl4,
     qrAudioPosition4,
     textElements4,
@@ -54,12 +60,16 @@ const Slide4 = (props: Slide4Props) => {
     layout4,
     bgColor4,
   } = useSlide4();
+<<<<<<< HEAD
   const isOneTextActive = selectedLayout4 === "oneText" || showOneTextRightSideBox4;
   const { ref } = props
   const videoUrl = normalizeUrl(selectedVideoUrl4);
   const audioUrl = normalizeUrl(selectedAudioUrl4);
   const qrVideoUrl = normalizeUrl(qrPosition4?.url) || videoUrl;
   const qrAudioUrl = normalizeUrl(qrAudioPosition4?.url) || audioUrl;
+=======
+  const { ref } = props
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   return (
     <Box
       ref={ref}
@@ -76,7 +86,11 @@ const Slide4 = (props: Slide4Props) => {
       }}
     >
       {layout4 && (
+<<<<<<< HEAD
         <Box sx={{ width: "100%", height: "100%", position: "relative" }}>
+=======
+        <Box sx={{ width: "100%", height: "100%", position: "relative", p: 1 }}>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           {/* IMAGES / BG ELEMENTS */}
           {layout4?.elements
             ?.slice()
@@ -102,7 +116,11 @@ const Slide4 = (props: Slide4Props) => {
                   sx={{
                     width: "100%",
                     height: "100%",
+<<<<<<< HEAD
                     objectFit: el.id === "bg-image" ? "cover" : (el.objectFit || "fill"),
+=======
+                    objectFit: el.objectFit || "cover",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                     borderRadius: 1,
                     display: "block",
                     pointerEvents: "none",
@@ -209,7 +227,11 @@ const Slide4 = (props: Slide4Props) => {
         </Box>
       )}
 
+<<<<<<< HEAD
       {videoUrl && (
+=======
+      {selectedVideoUrl4 && (
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         <Box
           sx={{
             position: "absolute",
@@ -247,12 +269,23 @@ const Slide4 = (props: Slide4Props) => {
               borderRadius: 2,
             }}
           >
+<<<<<<< HEAD
             <QrGenerator url={qrVideoUrl} size={safeQrSize(qrPosition4, 70)} />
+=======
+            <QrGenerator
+              url={qrPosition4.url || selectedVideoUrl4}
+              size={Math.min(qrPosition4.width, qrPosition4.height)}
+            />
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           </Box>
 
           {/* Clickable Link */}
           <a
+<<<<<<< HEAD
             href={videoUrl}
+=======
+            href={`${selectedVideoUrl4}`}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -269,13 +302,21 @@ const Slide4 = (props: Slide4Props) => {
                 "&:hover": { textDecoration: "underline" },
               }}
             >
+<<<<<<< HEAD
               {`${videoUrl.slice(0, 20)}.....`}
+=======
+              {`${selectedVideoUrl4.slice(0, 20)}.....`}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             </Typography>
           </a>
         </Box>
       )}
 
+<<<<<<< HEAD
       {audioUrl && (
+=======
+      {selectedAudioUrl4 && (
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         <Box
           sx={{
             position: "absolute", // use absolute like Rnd
@@ -313,12 +354,23 @@ const Slide4 = (props: Slide4Props) => {
               borderRadius: 2,
             }}
           >
+<<<<<<< HEAD
             <QrGenerator url={qrAudioUrl} size={safeQrSize(qrAudioPosition4, 70)} />
+=======
+            <QrGenerator
+              url={qrAudioPosition4.url || selectedAudioUrl4}
+              size={Math.min(qrAudioPosition4.width, qrAudioPosition4.height)}
+            />
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           </Box>
 
           {/* Clickable Link */}
           <a
+<<<<<<< HEAD
             href={audioUrl}
+=======
+            href={`${selectedAudioUrl4}`}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -335,7 +387,11 @@ const Slide4 = (props: Slide4Props) => {
                 "&:hover": { textDecoration: "underline" },
               }}
             >
+<<<<<<< HEAD
               {`${audioUrl.slice(0, 20)}.....`}
+=======
+              {`${selectedAudioUrl4.slice(0, 20)}.....`}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             </Typography>
           </a>
         </Box>
@@ -422,11 +478,18 @@ const Slide4 = (props: Slide4Props) => {
         ))}
 
       {/* 📝 Single Text Layout */}
+<<<<<<< HEAD
       {isOneTextActive && (
         <Box
           sx={{
             position: "absolute",
             inset: 0,
+=======
+      {selectedLayout4 === "oneText" && (
+        <Box
+          sx={{
+            // position: "absolute",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             display: "flex",
             alignItems:
               verticalAlign4 === "top"
@@ -450,8 +513,12 @@ const Slide4 = (props: Slide4Props) => {
             letterSpacing: letterSpacing4,
             whiteSpace: "pre-wrap",
             width: "100%",
+<<<<<<< HEAD
             p: 1,
             zIndex: 9998,
+=======
+            p: 1
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           }}
         >
           {oneTextValue4}
@@ -459,7 +526,11 @@ const Slide4 = (props: Slide4Props) => {
       )}
 
       {
+<<<<<<< HEAD
         multipleTextValue4 || isOneTextActive ? null : (
+=======
+        multipleTextValue4 || selectedLayout4 === "oneText" ? null : (
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           <>
             {textElements4 &&
               textElements4.map((e) => (

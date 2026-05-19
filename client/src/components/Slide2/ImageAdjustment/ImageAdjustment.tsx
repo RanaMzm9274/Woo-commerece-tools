@@ -1,5 +1,9 @@
 import { Adjust, Check, Delete, DrawOutlined, Flare, KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
+<<<<<<< HEAD
 import { Box, IconButton, useMediaQuery } from "@mui/material";
+=======
+import { Box, IconButton } from "@mui/material";
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 import { COLORS } from "../../../constant/color";
 import { useSlide2 } from "../../../context/Slide2Context";
 import { convertToRealisticSketch } from "../../../source/SketchEffect";
@@ -13,7 +17,10 @@ interface ImageAdjustmentProps {
 
 const ImageAdjustment = (props: ImageAdjustmentProps) => {
     const { onClose, isAdminEditor } = props
+<<<<<<< HEAD
     const isMobile = useMediaQuery("(max-width:600px)");
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
     const { setImageFilter, imageFilter, setDraggableImages, selectedImg, setImages, setSelectedImage, setActiveFilterImageId, draggableImages } = useSlide2()
 
@@ -52,7 +59,11 @@ const ImageAdjustment = (props: ImageAdjustmentProps) => {
         setDraggableImages(prev => {
             return prev.map(img =>
                 selectedImg.includes(img.id)
+<<<<<<< HEAD
                     ? { ...img, zIndex: Math.max((img.zIndex || 0) - 1, 0) }
+=======
+                    ? { ...img, zIndex: Math.max((img.zIndex || 0) - 1, 0) } // don't go below 0
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                     : img
             );
         });
@@ -77,6 +88,7 @@ const ImageAdjustment = (props: ImageAdjustmentProps) => {
 
 
     return (
+<<<<<<< HEAD
         <Box
             sx={{
                 position: isMobile ? "fixed" : "absolute",
@@ -105,11 +117,22 @@ const ImageAdjustment = (props: ImageAdjustmentProps) => {
                     alignItems: isMobile ? "center" : "stretch",
                     justifyContent: isMobile ? "flex-start" : "center",
                     gap: isMobile ? 1 : 0,
+=======
+        <Box sx={{ position: 'absolute', left: '33%', zIndex: 99, height: 600, bgcolor: 'white', mt: 1, borderRadius: 1 }}>
+            <Box
+                sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    height: "600px",
+                    width: "auto",
+                    justifyContent: 'center'
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                 }}
             >
                 {/* Scrollable Icon Section */}
                 <Box
                     sx={{
+<<<<<<< HEAD
                         flex: isMobile ? "1 1 auto" : 1,
                         overflowY: isMobile ? "hidden" : "auto",
                         overflowX: isMobile ? "auto" : "hidden",
@@ -122,6 +145,16 @@ const ImageAdjustment = (props: ImageAdjustmentProps) => {
                         "&::-webkit-scrollbar": {
                             width: isMobile ? "0px" : "6px",
                             height: isMobile ? "6px" : "0px",
+=======
+                        flex: 1,
+                        overflowY: "auto",
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "10px",
+
+                        "&::-webkit-scrollbar": {
+                            width: "6px",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                         },
                         "&::-webkit-scrollbar-thumb": {
                             backgroundColor: "#ccc",
@@ -180,11 +213,17 @@ const ImageAdjustment = (props: ImageAdjustmentProps) => {
                 {/* Fixed Check Button at Bottom */}
                 <Box
                     sx={{
+<<<<<<< HEAD
                         p: isMobile ? 0 : 1,
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
                         flexShrink: 0,
+=======
+                        p: 1,
+                        display: "flex",
+                        justifyContent: "center",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                     }}
                 >
                     <IconButton
@@ -213,10 +252,17 @@ const editingButtonStyle = {
     flexDirection: "column",
     alignItems: "center",
     fontSize: "13px",
+<<<<<<< HEAD
     minWidth: "56px",
     flexShrink: 0,
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     color: "#212121",
     "&:hover": {
         color: "#3a7bd5",
     },
+<<<<<<< HEAD
 };
+=======
+};
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0

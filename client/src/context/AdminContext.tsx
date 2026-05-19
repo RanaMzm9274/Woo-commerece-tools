@@ -1,7 +1,11 @@
 // context/AdminContext.tsx
 import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
+<<<<<<< HEAD
 import { supabase, supabaseAdmin } from "../supabase/supabase";
 import type { User } from "@supabase/supabase-js";
+=======
+import { supabase } from "../supabase/supabase";
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 import toast from "react-hot-toast";
 
 export type Admin = {
@@ -10,7 +14,11 @@ export type Admin = {
   first_name: string;
   last_name: string;
   email: string;
+<<<<<<< HEAD
   password?: string; // NOTE: storing plain passwords is unsafe in real apps
+=======
+  password: string; // NOTE: storing plain passwords is unsafe in real apps
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   profile_image?: string | null;
 };
 
@@ -27,6 +35,7 @@ type AdminContextType = {
 const AdminContext = createContext<AdminContextType | null>(null);
 
 const ADMIN_STORAGE_KEY = "adminData";
+<<<<<<< HEAD
 const ADMIN_ALLOWED_ROLES = new Set(["admin", "superadmin"]);
 
 const normalizeRole = (role?: string | null) =>
@@ -40,6 +49,8 @@ const getAuthRole = (user: User | null) => {
   const userMeta: any = user?.user_metadata ?? {};
   return meta?.role ?? userMeta?.role ?? null;
 };
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
 function readLocalAdmin(): Admin | null {
   try {
@@ -51,6 +62,7 @@ function readLocalAdmin(): Admin | null {
 }
 
 function writeLocalAdmin(admin: Admin | null) {
+<<<<<<< HEAD
   if (!admin) {
     localStorage.removeItem(ADMIN_STORAGE_KEY);
     return;
@@ -117,10 +129,17 @@ const ensureAdminProfile = async (user: User, role: string): Promise<Admin> => {
   };
 };
 
+=======
+  if (!admin) localStorage.removeItem(ADMIN_STORAGE_KEY);
+  else localStorage.setItem(ADMIN_STORAGE_KEY, JSON.stringify(admin));
+}
+
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
   // initialize from localStorage synchronously to avoid flicker
   const initialAdmin = useMemo(() => (typeof window !== "undefined" ? readLocalAdmin() : null), []);
   const [admin, setAdmin] = useState<Admin | null>(initialAdmin);
+<<<<<<< HEAD
   const [isAdmin, setIsAdmin] = useState<boolean>(isAllowedRole(initialAdmin?.role));
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -225,6 +244,69 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
       setAdmin(next);
       setIsAdmin(true);
       writeLocalAdmin(next);
+=======
+  const [isAdmin, setIsAdmin] = useState<boolean>(!!initialAdmin);
+  const [loading, setLoading] = useState<boolean>(false);
+  console.log(setLoading,)
+
+  // Optional: sanity-refresh admin row on mount if you want
+  useEffect(() => {
+    let mounted = true;
+    const refresh = async () => {
+      if (!initialAdmin?.id) return;
+      try {
+        const { data } = await supabase
+          .from("admins")
+          .select("id, role, first_name, last_name, email, password, profile_image")
+          .eq("id", initialAdmin.id)
+          .single();
+        if (mounted && data) {
+          setAdmin(data as Admin);
+          setIsAdmin(true);
+          writeLocalAdmin(data as Admin);
+        }
+      } catch {
+        /* ignore */
+      }
+    };
+    refresh();
+    return () => {
+      mounted = false;
+    };
+  }, [initialAdmin?.id]);
+
+  const login = async (email: string, password: string): Promise<boolean> => {
+    try {
+      // Dev backdoor
+      if (email === "depersonalisation@gmail.com" && password === "Admin123@") {
+        const fake: Admin = {
+          id: "local-admin",
+          role: "superadmin",
+          first_name: "Admin",
+          last_name: "User",
+          email,
+          password,
+          profile_image: null,
+        };
+        setAdmin(fake);
+        setIsAdmin(true);
+        writeLocalAdmin(fake);
+        return true;
+      }
+
+      const { data, error } = await supabase
+        .from("admins")
+        .select("id, role, first_name, last_name, email, password, profile_image")
+        .eq("email", email)
+        .eq("password", password)
+        .single();
+
+      if (error || !data) return false;
+
+      setAdmin(data as Admin);
+      setIsAdmin(true);
+      writeLocalAdmin(data as Admin);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       return true;
     } catch (err) {
       console.error("Login error:", err);
@@ -237,11 +319,15 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
     setAdmin(null);
     writeLocalAdmin(null);
     // DO NOT call supabase.auth.signOut() if you don't sign in via supabase.auth
+<<<<<<< HEAD
     void supabase.auth.signOut();
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     toast.success("Admin logged out");
   };
 
   const refreshFromDb = async (id: string): Promise<Admin | null> => {
+<<<<<<< HEAD
     const { data, error } = await supabaseAdmin
       .from("admins")
       .select("id, role, first_name, last_name, email, profile_image")
@@ -253,16 +339,32 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
     setIsAdmin(isAllowedRole(next.role));
     writeLocalAdmin(next);
     return next;
+=======
+    const { data, error } = await supabase
+      .from("admins")
+      .select("id, role, first_name, last_name, email, password, profile_image")
+      .eq("id", id)
+      .single();
+    if (error || !data) return null;
+    setAdmin(data as Admin);
+    setIsAdmin(true);
+    writeLocalAdmin(data as Admin);
+    return data as Admin;
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   };
 
   const updateAdmin = async (patch: Partial<Omit<Admin, "id">>): Promise<Admin | null> => {
     if (!admin?.id) return null;
     const payload: Record<string, unknown> = {};
+<<<<<<< HEAD
     let nextPassword: string | null = null;
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     Object.entries(patch).forEach(([k, v]) => {
       if (typeof v !== "undefined") payload[k] = v;
     });
 
+<<<<<<< HEAD
     if (typeof payload.password === "string" && payload.password.length > 0) {
       nextPassword = payload.password;
       delete payload.password;
@@ -286,6 +388,13 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
 
     const { data, error } = await updateReq
       .select("id, role, first_name, last_name, email, profile_image")
+=======
+    const { data, error } = await supabase
+      .from("admins")
+      .update(payload)
+      .eq("id", admin.id)
+      .select("id, role, first_name, last_name, email, password, profile_image")
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       .maybeSingle();
 
     if (error || !data) {
@@ -293,11 +402,17 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
       return null;
     }
 
+<<<<<<< HEAD
     const next = data as Admin;
     setAdmin(next);
     setIsAdmin(isAllowedRole(next.role));
     writeLocalAdmin(next);
     return next;
+=======
+    setAdmin(data as Admin);
+    writeLocalAdmin(data as Admin);
+    return data as Admin;
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   };
 
   return (

@@ -1,10 +1,17 @@
 // Sticker3Popup.tsx
+<<<<<<< HEAD
 import { Box, TextField } from "@mui/material";
+=======
+import { Box } from "@mui/material";
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 import PopupWrapper from "../../PopupWrapper/PopupWrapper";
 import { STICKERS_DATA } from "../../../constant/data";
 import { COLORS } from "../../../constant/color";
 import { useSlide3 } from "../../../context/Slide3Context";
+<<<<<<< HEAD
 import { useMemo, useState } from "react";
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
 interface Sticker3PopupProps {
   onClose: () => void;
@@ -14,6 +21,7 @@ interface Sticker3PopupProps {
 const Sticker3Popup = ({ onClose }: Sticker3PopupProps) => {
   const { addSticker3 } = useSlide3();
 
+<<<<<<< HEAD
   const [search, setSearch] = useState('')
 
   const filteredStickers = useMemo(() => {
@@ -27,6 +35,8 @@ const Sticker3Popup = ({ onClose }: Sticker3PopupProps) => {
     });
   }, [search]);
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   const handleSelectSticker = (stick: any) => {
     addSticker3(stick);
   };
@@ -48,8 +58,11 @@ const Sticker3Popup = ({ onClose }: Sticker3PopupProps) => {
           mt: 2,
           display: "flex",
           flexWrap: "wrap",
+<<<<<<< HEAD
           justifyContent: "flex-start",
           alignContent: "flex-start",
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           gap: 1,
           overflowY: "auto",
           "&::-webkit-scrollbar": {
@@ -57,7 +70,11 @@ const Sticker3Popup = ({ onClose }: Sticker3PopupProps) => {
             width: "5px",
           },
           "&::-webkit-scrollbar-track": {
+<<<<<<< HEAD
             backgroundColor: "#f1f1f1",
+=======
+            backgroundColor: "#f3f3f3",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             borderRadius: "20px",
           },
           "&::-webkit-scrollbar-thumb": {
@@ -67,6 +84,7 @@ const Sticker3Popup = ({ onClose }: Sticker3PopupProps) => {
           height: 500,
         }}
       >
+<<<<<<< HEAD
         <TextField variant="outlined" type="search" placeholder="search Icon ╰(*°▽°*)╯" value={search} fullWidth onChange={(e) => setSearch(e.target.value)} />
         {filteredStickers.map((stick) => (
           <Box
@@ -77,6 +95,17 @@ const Sticker3Popup = ({ onClose }: Sticker3PopupProps) => {
               height: "90px",
               borderRadius: 2,
               bgcolor: "rgba(233, 232, 232, 1)",
+=======
+        {STICKERS_DATA.map((stick) => (
+          <Box
+            key={stick.id}
+            onClick={() => handleSelectSticker(stick)} // ✅ handle click
+            sx={{
+              width: { md: "80px", sm: "80px", xs: '70px' },
+              height: "90px",
+              borderRadius: 2,
+              bgcolor: "rgba(233, 232, 232, 3)",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
               display: "flex",
               justifyContent: "center",
               alignItems: "center",

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useMemo, useState } from "react";
+=======
+import { useState } from "react";
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 import {
   Box,
   CircularProgress,
@@ -8,11 +12,15 @@ import {
   Menu,
   MenuItem,
 } from "@mui/material";
+<<<<<<< HEAD
 import {
   ArrowBackIos,
   ArrowDropDown,
   ArrowForwardIos,
 } from "@mui/icons-material";
+=======
+import { ArrowBackIos, ArrowDropDown, ArrowForwardIos } from "@mui/icons-material";
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
@@ -26,10 +34,14 @@ import useModal from "../../hooks/useModal";
 import ProductPopup, { type CategoryType } from "../ProductPopup/ProductPopup";
 import { useNavigate } from "react-router-dom";
 import { USER_ROUTES } from "../../constant/route";
+<<<<<<< HEAD
 import {
   fetchAllCardsFromDB,
   fetchAllCategoriesFromDB,
 } from "../../source/source";
+=======
+import { fetchAllCardsFromDB, fetchAllCategoriesFromDB } from "../../source/source";
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
 type BirthdayTypes = {
   title?: string;
@@ -37,6 +49,7 @@ type BirthdayTypes = {
   brandSlider?: boolean;
 };
 
+<<<<<<< HEAD
 // normalize helper: remove spaces/symbols for better matching
 const normalize = (v: any) =>
   String(v ?? "")
@@ -45,15 +58,20 @@ const normalize = (v: any) =>
     .replace(/\s+/g, " ")
     .replace(/[^a-z0-9 ]/g, "");
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 const BirthdaySlider = ({ title, description, brandSlider }: BirthdayTypes) => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(0);
   const [selectedCate, setSelectedCate] = useState<CategoryType | undefined>();
 
+<<<<<<< HEAD
   // Search text for cardname / cardcategory
   const [search, setSearch] = useState("");
   console.log(setSearch,)
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   // Others menu state
   const [othersEl, setOthersEl] = useState<null | HTMLElement>(null);
   const [othersLabel, setOthersLabel] = useState<string>("Others");
@@ -73,19 +91,36 @@ const BirthdaySlider = ({ title, description, brandSlider }: BirthdayTypes) => {
     staleTime: 1000 * 60 * 60,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
+<<<<<<< HEAD
     refetchOnMount: false,
+=======
+        refetchOnMount: false,
+
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   });
 
   // Only "Cards" category subcategories
   const cardsCategory = tabsCategories.find((cat) => cat.name === "Cards");
+<<<<<<< HEAD
   const cardsSubCategories: string[] = cardsCategory?.subcategories || [];
 
   const currentSubCat: string | undefined = cardsSubCategories[activeTab];
+=======
+  const cardsSubCategories = cardsCategory?.subcategories || [];
+
+  const currentSubCat = cardsSubCategories[activeTab];
+
+  // Filter cards by selected subcategory
+  const filteredCards = birthdayCards.filter(
+    (card: any) => String(card.subcategoryId) === String(currentSubCat?.id)
+  );
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
   const { open: isOpenDetailModal, openModal, closeModal } = useModal();
   const openDetailModal = (cate: CategoryType) => {
     setSelectedCate(cate);
     openModal();
+<<<<<<< HEAD
   };
 
   // Others
@@ -152,7 +187,34 @@ const BirthdaySlider = ({ title, description, brandSlider }: BirthdayTypes) => {
     navigate(`${USER_ROUTES.VIEW_ALL}/${encodeURIComponent(currentSubCat)}`, {
       state: { categoryName: currentSubCat },
     });
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   };
+
+  const handleShopAll = () => {
+    if (!currentSubCat) return;
+    navigate(`${USER_ROUTES.VIEW_ALL}/${encodeURIComponent(currentSubCat.name)}`, {
+      state: { categoryId: currentSubCat.id ?? null },
+    });
+  };
+
+  // Others button handlers
+  const openOthers = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (cardsSubCategories.length <= 5) return; // safety
+    setOthersEl(e.currentTarget);
+  };
+  const closeOthers = () => setOthersEl(null);
+  const selectOther = (cat: any) => {
+    const idx = cardsSubCategories.findIndex((c: any) => String(c.id) === String(cat.id));
+    if (idx >= 0) {
+      setActiveTab(idx);
+      setOthersLabel(cat.name || "Others");
+    }
+    closeOthers();
+  };
+
+  const othersDisabled = cardsSubCategories.length <= 5;
+  const othersList = cardsSubCategories.slice(5);
 
   return (
     <Box
@@ -165,6 +227,7 @@ const BirthdaySlider = ({ title, description, brandSlider }: BirthdayTypes) => {
       }}
     >
       {/* Header */}
+<<<<<<< HEAD
       <Box
         sx={{
           display: "flex",
@@ -182,6 +245,13 @@ const BirthdaySlider = ({ title, description, brandSlider }: BirthdayTypes) => {
         >
           {title}
         </Typography>
+=======
+      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <Typography sx={{ fontSize: { md: "25px", sm: "20px", xs: "16px" }, fontWeight: 800 }}>
+          {title}
+        </Typography>
+
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         {!brandSlider && (
           <Box sx={{ display: { md: "flex", sm: "flex", xs: "none" } }}>
             <LandingButton title="Shop All" width="150px" onClick={handleShopAll} />
@@ -190,6 +260,7 @@ const BirthdaySlider = ({ title, description, brandSlider }: BirthdayTypes) => {
       </Box>
 
       {/* Tabs + Others */}
+<<<<<<< HEAD
       <Box
         sx={{
           display: "flex",
@@ -206,6 +277,13 @@ const BirthdaySlider = ({ title, description, brandSlider }: BirthdayTypes) => {
               setActiveTab(index);
               setOthersLabel("Others");
             }}
+=======
+      <Box sx={{ display: "flex", gap: "10px", alignItems: "center", flexWrap: "wrap", mt: 2 }}>
+        {cardsSubCategories.slice(0, 5).map((tab: any, index: number) => (
+          <Box
+            key={tab.id ?? index}
+            onClick={() => setActiveTab(index)}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             sx={{
               px: { md: 3, sm: 1, xs: 1 },
               py: { md: 1, sm: 0.5, xs: 0.5 },
@@ -214,9 +292,13 @@ const BirthdaySlider = ({ title, description, brandSlider }: BirthdayTypes) => {
               cursor: "pointer",
               transition: "all 0.3s ease-in-out",
               backgroundColor: activeTab === index ? COLORS.primary : "transparent",
+<<<<<<< HEAD
               "&:hover": {
                 backgroundColor: activeTab === index ? COLORS.seconday : "#f0f0f0",
               },
+=======
+              "&:hover": { backgroundColor: activeTab === index ? COLORS.seconday : "#f0f0f0" },
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             }}
           >
             <Typography
@@ -258,8 +340,13 @@ const BirthdaySlider = ({ title, description, brandSlider }: BirthdayTypes) => {
           anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
           transformOrigin={{ vertical: "top", horizontal: "left" }}
         >
+<<<<<<< HEAD
           {othersList.map((cat: string, i: number) => (
             <MenuItem key={`${cat}-${i}`} onClick={() => selectOther(cat)}>
+=======
+          {othersList.map((cat: any) => (
+            <MenuItem key={cat.id} onClick={() => selectOther(cat)}>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
               {cat}
             </MenuItem>
           ))}
@@ -269,6 +356,7 @@ const BirthdaySlider = ({ title, description, brandSlider }: BirthdayTypes) => {
       {/* Slider */}
       <Box sx={{ mt: 3, position: "relative" }}>
         {isLoading ? (
+<<<<<<< HEAD
           <Box
             sx={{
               width: "100%",
@@ -278,6 +366,9 @@ const BirthdaySlider = ({ title, description, brandSlider }: BirthdayTypes) => {
               alignItems: "center",
             }}
           >
+=======
+          <Box sx={{ width: "100%", height: "300px", display: "flex", justifyContent: "center", alignItems: "center" }}>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             <CircularProgress sx={{ color: COLORS.seconday }} />
           </Box>
         ) : (
@@ -295,7 +386,11 @@ const BirthdaySlider = ({ title, description, brandSlider }: BirthdayTypes) => {
             }}
           >
             {filteredCards.map((card: any, idx: number) => (
+<<<<<<< HEAD
               <SwiperSlide key={card?.id ?? idx}>
+=======
+              <SwiperSlide key={card.id ?? idx}>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                 <Box px={{ lg: 1, md: "2px", sm: 1, xs: 1 }}>
                   <ProductCard
                     poster={card?.imageurl || card?.lastpageimageurl}

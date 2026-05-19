@@ -1,9 +1,17 @@
+<<<<<<< HEAD
 // SlideLogo.tsx
 import { createContext, useContext, useEffect, useMemo, useRef, useState, type MouseEvent as ReactMouseEvent, type ComponentProps } from "react";
 import { Box, Chip, IconButton, Paper, Switch, TextField, Tooltip, Typography } from "@mui/material";
 import {
   Close,
   ContentCopyOutlined,
+=======
+﻿// SlideLogo.tsx
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Box, Chip, IconButton, Paper, Switch, TextField, Tooltip, Typography } from "@mui/material";
+import {
+  Close,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   Forward10,
   Forward30,
   KeyboardArrowDownOutlined,
@@ -11,13 +19,17 @@ import {
   LockOpenOutlined,
   LockOutlined,
   TitleOutlined,
+<<<<<<< HEAD
   UploadFileRounded,
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 } from "@mui/icons-material";
 import QrGenerator from "../QR-code/Qrcode";
 import { Rnd } from "react-rnd";
 import { COLORS } from "../../constant/color";
 import { motion } from "framer-motion";
 import { useSlide4 } from "../../context/Slide4Context";
+<<<<<<< HEAD
 import { useLocation, useParams } from "react-router-dom";
 import mergePreservePdf from "../../utils/mergePreservePdf";
 import { safeGetStorage } from "../../lib/storage";
@@ -63,6 +75,13 @@ const numLike = (v: any, d = 0) => {
   }
   return d;
 };
+=======
+import { useLocation } from "react-router-dom";
+import mergePreservePdf from "../../utils/mergePreservePdf";
+
+/* ===================== helpers + types ===================== */
+const num = (v: any, d = 0) => (typeof v === "number" && !Number.isNaN(v) ? v : d);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 const str = (v: any, d = "") => (typeof v === "string" ? v : d);
 const bool = (v: any, d = false) => (typeof v === "boolean" ? v : d);
 const idOrIdx = (obj: any, idx: number, prefix: string) => str(obj?.id, `${prefix}-${idx}`);
@@ -165,6 +184,7 @@ const toText = (obj: any, i: number, editable: boolean, prefix = "te"): TextEl =
   };
 };
 
+<<<<<<< HEAD
 const normalizeMultiTexts = (arr: any[]) =>
   (Array.isArray(arr) ? arr : []).map((t) => ({
     ...t,
@@ -194,6 +214,8 @@ const stripLayoutTextElements = (
   return { ...layout, textElements };
 };
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 function normalizeSlide(slide: any): {
   bgColor: string | null;
   bgImage: string | null;
@@ -243,12 +265,17 @@ function normalizeSlide(slide: any): {
   out.elements.push(...(user?.images?.locked ?? []).map((o: any, i: number) => toElement(o, i, false, "uimg-locked")));
   out.elements.push(...(user?.images?.editable ?? []).map((o: any, i: number) => toElement(o, i, true, "uimg-edit")));
 
+<<<<<<< HEAD
   // stickers (layout + user)
+=======
+  // stickers (layout + user + qrVideo)
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   out.stickers.push(...(layout?.stickers?.locked ?? []).map((o: any, i: number) => toSticker(o, i, false, "st-locked")));
   out.stickers.push(...(layout?.stickers?.editable ?? []).map((o: any, i: number) => toSticker(o, i, true, "st-edit")));
   out.stickers.push(...(user?.stickers?.locked ?? []).map((o: any, i: number) => toSticker(o, i, false, "ust-locked")));
   out.stickers.push(...(user?.stickers?.editable ?? []).map((o: any, i: number) => toSticker(o, i, true, "ust-edit")));
 
+<<<<<<< HEAD
   // texts
   out.textElements.push(
     ...(layout?.staticText ?? []).map((o: any, i: number) => {
@@ -278,6 +305,30 @@ function normalizeSlide(slide: any): {
       return toText(o, i, editable, "mte");
     })
   );
+=======
+  if (slide.qrVideo?.url) {
+    out.stickers.push(
+      toSticker(
+        {
+          id: "qr-video",
+          x: num(slide.qrVideo.x, 56),
+          y: num(slide.qrVideo.y, 404),
+          width: num(slide.qrVideo.width, 70),
+          height: num(slide.qrVideo.height, 105),
+          zIndex: num(slide.qrVideo.zIndex, 1000),
+          url: slide.qrVideo.url,
+        },
+        9991,
+        false,
+        "qr",
+      ),
+    );
+  }
+
+  // texts
+  out.textElements.push(...(layout?.staticText ?? []).map((o: any, i: number) => toText(o, i, !!o?.editable, "te")));
+  out.textElements.push(...(slide.multipleTexts ?? []).map((o: any, i: number) => toText(o, i, !!o?.isEditable, "mte")));
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   if (slide.oneText && str(slide.oneText.value, "").trim().length > 0) {
     out.textElements.push(
       toText(
@@ -336,10 +387,16 @@ interface SlideLogoProps {
   togglePopup?: (name: string | null) => void;
   activePopup?: string | null;
   activeIndex?: number;
+<<<<<<< HEAD
   addTextRight?: number; // ⬅ comes from your popup counter
   rightBox?: boolean;
   isAdminEditor?: boolean;
   canvasScale?: number;
+=======
+  addTextRight?: number; // â¬… comes from your popup counter
+  rightBox?: boolean;
+  isAdminEditor?: boolean;
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 }
 
 /* -------------------- main wrapper -------------------- */
@@ -347,6 +404,7 @@ const SlideLogo = ({
   activeIndex,
   rightBox,
   isAdminEditor,
+<<<<<<< HEAD
   addTextRight, // ⬅ receive it here
   canvasScale,
 }: SlideLogoProps) => {
@@ -933,10 +991,27 @@ export const UserSlide4Preview = () => {
           </Typography>
         </Box>
       )}
+=======
+  addTextRight, // â¬… receive it here
+}: SlideLogoProps) => {
+
+
+
+  return (
+    <Box sx={{ display: "flex", width: "100%", gap: "5px", position: "relative" }}>
+      {activeIndex === 3 && rightBox ? (
+        isAdminEditor ? (
+          <AdminSlide4Canvas addTextRight={addTextRight} />
+        ) : (
+          <UserSlide4Preview />
+        )
+      ) : null}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     </Box>
   );
 };
 
+<<<<<<< HEAD
 /* -------------------- ADMIN EDITOR -------------------- */
 const AdminSlide4Canvas = ({
   addTextRight,
@@ -945,6 +1020,202 @@ const AdminSlide4Canvas = ({
   addTextRight?: number;
   isAdminEditor?: boolean;
 }) => {
+=======
+/* -------------------- USER VIEW-ONLY -------------------- */
+const UserSlide4Preview = () => {
+  const {
+    isSlideActive4,
+    bgColor4,
+    bgImage4,
+    // selectedVideoUrl4,
+    // selectedAudioUrl4,
+    // qrPosition4,
+    // qrAudioPosition4,
+    setBgColor4,
+    setBgImage4,
+    setLayout4,
+    layout4
+  } = useSlide4();
+
+  /* ------------------ pull slide1 from route ------------------ */
+
+  const location = useLocation();
+  const slide4 = location.state?.layout?.slides?.slide4 ?? null;
+
+  /* ------------------ normalize slide1 -> user view state ------------------ */
+  useEffect(() => {
+    if (!slide4) return;
+    const norm = normalizeSlide(slide4);
+    setBgColor4?.(norm.bgColor);
+    setBgImage4?.(norm.bgImage);
+    setLayout4?.(norm.layout);
+  }, [slide4, setBgColor4, setBgImage4, setLayout4]);
+
+  return (
+    <Box
+      sx={{
+        flex: 1,
+        zIndex: 10,
+        p: 2,
+        position: "relative",
+        height: "100vh",
+        opacity: isSlideActive4 ? 1 : 0.6,
+        pointerEvents: isSlideActive4 ? "auto" : "none",
+        backgroundColor: bgImage4 ? "transparent" : bgColor4 ?? "transparent",
+        // backgroundImage: bgImage4 ? `url(${bgImage4})` : "none",
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+        "&::after": !isSlideActive4
+          ? {
+            content: '""',
+            position: "absolute",
+            inset: 0,
+            backgroundColor: "rgba(146, 145, 145, 0.51)",
+            zIndex: 1000,
+            pointerEvents: "none",
+          }
+          : {},
+      }}
+    >
+      {layout4 && (
+        <Box sx={{ width: "100%", height: "100%" }}>
+          {/* BG frames */}
+          {layout4.elements
+            ?.slice()
+            .sort((a: any, b: any) => (a.zIndex ?? 0) - (b.zIndex ?? 0)) // keep BG at the back (zIndex 0)
+            .map((el: any, index: number) => {
+              // const isEditable = !!el.isEditable;
+              return (
+                <Box
+                  key={el.id ?? index}
+                  sx={{
+                    position: "absolute",
+                    left: el.x,
+                    top: el.y,
+                    width: el.width,
+                    height: el.height,
+                    borderRadius: 1,
+                    overflow: "visible",
+                    // cursor: isEditable ? "pointer" : "default",
+                  }}
+                >
+                  <Box
+                    component="img"
+                    src={el.src || undefined}
+                    sx={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "fill",
+                      borderRadius: 1,
+                      display: "block",
+                      pointerEvents: "none",
+                      clipPath: el.clipPath || "none",
+                      WebkitClipPath: el.clipPath || "none",
+                    }}
+                  />
+                </Box>
+              );
+            })}
+
+          {/* Stickers */}
+          {layout4.stickers?.map((st: any, index: number) => {
+            // const isEditable = !!st.isEditable;
+            return (
+              <Box
+                key={st.id ?? index}
+                sx={{
+                  position: "absolute",
+                  left: st.x,
+                  top: st.y,
+                  zIndex: st.zIndex,
+                  borderRadius: 1,
+                  overflow: "hidden",
+                }}
+              >
+                <Box
+                  component="img"
+                  src={st.sticker || undefined}
+                  sx={{
+                    width: st.width,
+                    height: st.height,
+                    objectFit: "contain",
+                    borderRadius: 1,
+                    display: "block",
+                    pointerEvents: "none",
+                  }}
+                />
+              </Box>
+            );
+          })}
+
+          {/* Static text */}
+          {layout4.textElements?.map((te: any, index: number) => {
+            return (
+              <Box
+                key={te.id ?? index}
+                sx={{
+                  position: "absolute",
+                  left: te.x,
+                  top: te.y,
+                  width: te.width,
+                  height: te.height,
+                  zIndex: (te.zIndex ?? 1) + 1000,
+                  display: "flex",
+                  alignItems:
+                    te.verticalAlign === "top" ? "flex-start" :
+                      te.verticalAlign === "bottom" ? "flex-end" : "center",
+                  justifyContent:
+                    te.textAlign === "left" ? "flex-start" :
+                      te.textAlign === "right" ? "flex-end" : "center",
+                  borderRadius: "6px",
+                  transition: "border .15s ease",
+                }}
+
+              >
+                <TextField
+                  variant="standard"
+                  fullWidth
+                  multiline
+                  value={te.text || ""}
+                  InputProps={{
+
+                    disableUnderline: true,
+                    style: {
+                      fontSize: te.fontSize,
+                      fontFamily: te.fontFamily,
+                      color: te.color,
+                      fontWeight: te.fontWeight,
+                      fontStyle: te.italic ? "italic" : "normal",
+                      textAlign: te.textAlign,
+                      padding: 0,
+                      background: "transparent",
+                      lineHeight: "1.2em",
+                    },
+                  }}
+                  sx={{
+                    width: "100%",
+                    height: "100%",
+                    "& .MuiInputBase-input": {
+                      textOverflow: "ellipsis",
+                      overflow: "hidden",
+                      whiteSpace: "pre-wrap",
+                    },
+                  }}
+                />
+              </Box>
+            );
+          })}
+
+        </Box>
+      )}
+    </Box>
+  );
+};
+
+/* -------------------- ADMIN EDITOR -------------------- */
+const AdminSlide4Canvas = ({ addTextRight }: { addTextRight?: number }) => {
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   const {
     images4,
     selectedImg4,
@@ -962,7 +1233,10 @@ const AdminSlide4Canvas = ({
     textAlign4,
     verticalAlign4,
     rotation4,
+<<<<<<< HEAD
     setRotation4,
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     setTexts4,
     setShowOneTextRightSideBox4,
     fontFamily4,
@@ -978,8 +1252,11 @@ const AdminSlide4Canvas = ({
     setFontFamily4,
     setTextAlign4,
     setVerticalAlign4,
+<<<<<<< HEAD
     setLineHeight4,
     setLetterSpacing4,
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     selectedVideoUrl4,
     setSelectedVideoUrl4,
     selectedAudioUrl4,
@@ -992,24 +1269,36 @@ const AdminSlide4Canvas = ({
     setQrAudioPosition4,
     isAIimage4,
     setIsAIimage4,
+<<<<<<< HEAD
     setSelectedAIimageUrl4,
     selectedAIimageUrl4,
     selectedStickers4,
     setSelectedStickers4,
+=======
+    selectedAIimageUrl4,
+    selectedStickers4,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     updateSticker4,
     removeSticker4,
     aimage4,
     setAIImage4,
     setSelectedLayout4,
+<<<<<<< HEAD
     setLayout4,
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     setImageFilter4,
     setActiveFilterImageId4,
     lineHeight4,
     letterSpacing4,
     bgColor4,
+<<<<<<< HEAD
     setBgColor4,
     bgImage4,
     setBgImage4,
+=======
+    bgImage4,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     bgEdit4,
     setBgEdit4,
     bgLocked4,
@@ -1021,6 +1310,7 @@ const AdminSlide4Canvas = ({
   } = useSlide4();
 
   const [selectedStickerIndex2, setSelectedStickerIndex2] = useState<number | null>(null);
+<<<<<<< HEAD
   const isMugsCategory = useMemo(() => {
     const direct = safeGetStorage("selectedCategory");
     if (direct && /mug/i.test(String(direct))) return true;
@@ -1226,6 +1516,9 @@ const AdminSlide4Canvas = ({
 
     return items;
   }, [draggableImages4, selectedImg4, textElements4, selectedStickers4, isAIimage4, aimage4]);
+=======
+  const rightBoxRef = useRef<HTMLDivElement>(null);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
   /* init draggable images */
   useEffect(() => {
@@ -1269,6 +1562,7 @@ const AdminSlide4Canvas = ({
     setTextElements4((prev: any[] = []) => [...prev, newTextElement]);
     setSelectedTextId4(newTextElement.id);
   };
+<<<<<<< HEAD
   const lastAddTick = useRef<number>(typeof addTextRight === "number" ? addTextRight : 0);
   useEffect(() => {
     if (typeof addTextRight !== "number") return;
@@ -1277,6 +1571,13 @@ const AdminSlide4Canvas = ({
     }
     lastAddTick.current = addTextRight;
   }, [addTextRight]);
+=======
+  useEffect(() => {
+    if (addTextRight) {
+      addNewTextElement();
+    }
+  }, [addTextRight, addTextRight]);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
   const updateTextElement = (id: string, updates: Partial<any>) => {
     setTextElements4((prev: any[] = []) => prev.map((text) => (text.id === id ? { ...text, ...updates } : text)));
@@ -1297,7 +1598,11 @@ const AdminSlide4Canvas = ({
           fontColor: "#000000",
           fontFamily: "Roboto",
           textAlign: "center",
+<<<<<<< HEAD
           verticalAlign: "top",
+=======
+          verticalAlign: "center",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           rotation: 0,
           lineHeight: 1.5,
           letterSpacing: 0,
@@ -1337,7 +1642,11 @@ const AdminSlide4Canvas = ({
     if (!currentSelection) return false;
     if (currentSelection.type === "text") {
       const t: any = (textElements4 || []).find((x: any) => x.id === currentSelection.id);
+<<<<<<< HEAD
       return !!t?.locked; // ✅ include text
+=======
+      return !!t?.locked; // âœ… include text
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     }
     if (currentSelection.type === "image") {
       const i: any = draggableImages4.find((x) => x.id === currentSelection.id);
@@ -1444,6 +1753,7 @@ const AdminSlide4Canvas = ({
     return () => document.removeEventListener("mousedown", onDocClick);
   }, [bgEdit4]);
 
+<<<<<<< HEAD
 
   // duplicate   
   const duplicateLayer = (type: 'text' | 'image' | 'sticker', idOrIndex: string | number) => {
@@ -1515,6 +1825,20 @@ const AdminSlide4Canvas = ({
         opacity: isSlideActive4 ? 1 : 0.6,
         pointerEvents: isSlideActive4 ? "auto" : "none",
         backgroundColor: bgColor4 ?? "transparent",
+=======
+  return (
+    <Box
+      ref={rightBoxRef}
+      sx={{
+        flex: 1,
+        zIndex: 10,
+        p: 2,
+        position: "relative",
+        height: { md: "700px", sm: "600px", xs: "70vh" },
+        opacity: isSlideActive4 ? 1 : 0.6,
+        pointerEvents: isSlideActive4 ? "auto" : "none",
+        backgroundColor:bgColor4 ?? "transparent",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         // backgroundImage: bgImage4 ? `url(${bgImage4})` : "none",
         backgroundSize: "cover",
         "&::after": !isSlideActive4
@@ -1523,12 +1847,17 @@ const AdminSlide4Canvas = ({
             position: "absolute",
             inset: 0,
             backgroundColor: "rgba(146, 145, 145, 0.51)",
+<<<<<<< HEAD
             zIndex: 30000,
+=======
+            zIndex: 1000,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             pointerEvents: "none",
           }
           : {},
       }}
     >
+<<<<<<< HEAD
       <AlignmentGuides
         {...align.guides}
         hide={!isSlideActive4 || !align.isActive}
@@ -1537,13 +1866,25 @@ const AdminSlide4Canvas = ({
       {/* BG */}
       {bgImage4 && (
         <ScaledRnd
+=======
+
+      {/* BG */}
+      {bgImage4 && (
+        <Rnd
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           size={{ width: bgRect4.width, height: bgRect4.height }}
           position={{ x: bgRect4.x, y: bgRect4.y }}
           bounds="parent"
           enableUserSelectHack={false}
+<<<<<<< HEAD
           // ✅ only draggable when unlocked AND in edit mode
           disableDragging={!bgEdit4 || bgLocked4}
           // ✅ only resizable when unlocked AND in edit mode
+=======
+          // âœ… only draggable when unlocked AND in edit mode
+          disableDragging={!bgEdit4 || bgLocked4}
+          // âœ… only resizable when unlocked AND in edit mode
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           enableResizing={
             bgEdit4 && !bgLocked4
               ? {
@@ -1600,7 +1941,11 @@ const AdminSlide4Canvas = ({
               backgroundPosition: "center",
               userSelect: "none",
             }}
+<<<<<<< HEAD
             // ✅ double-click only works when unlocked
+=======
+            // âœ… double-click only works when unlocked
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             onDoubleClick={() => {
               if (!bgLocked4) setBgEdit4(true);
             }}
@@ -1641,7 +1986,11 @@ const AdminSlide4Canvas = ({
               </Box>
             )}
           </Box>
+<<<<<<< HEAD
         </ScaledRnd>
+=======
+        </Rnd>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       )}
       {/* selection switch */}
       <Paper
@@ -1664,6 +2013,7 @@ const AdminSlide4Canvas = ({
       </Paper>
 
       {/* ====== Free Texts ====== */}
+<<<<<<< HEAD
       {!(multipleTextValue4 || showOneTextRightSideBox4) &&
         textElements4?.map((textElement) => {
           const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
@@ -1927,6 +2277,217 @@ const AdminSlide4Canvas = ({
       {/* ====== Video QR ====== */}
       {selectedVideoUrl4 && (
         <ScaledRnd
+=======
+       {!(multipleTextValue4 || showOneTextRightSideBox4) &&
+                textElements4?.map((textElement) => {
+                  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+
+                  const hAlign =
+                    textElement.textAlign === "top"
+                      ? "flex-start"
+                      : textElement.textAlign === "end"
+                        ? "flex-end"
+                        : "center";
+                  const vAlign =
+                    textElement.verticalAlign === "top"
+                      ? "flex-start"
+                      : textElement.verticalAlign === "bottom"
+                        ? "flex-end"
+                        : "center";
+
+                  let touchStartTime = 0;
+                  let lastTap = 0;
+
+                  return (
+                    <Rnd
+                      key={textElement.id}
+                      cancel={textElement.isEditing ? ".no-drag, .text-edit" : ".no-drag"}
+                      enableUserSelectHack={false}
+                      enableResizing={{ bottomRight: true }}
+                      size={{ width: textElement.size.width, height: textElement.size.height }}
+                      position={{ x: textElement.position.x, y: textElement.position.y }}
+                      bounds="parent"
+                      style={{
+                        transform: `rotate(${textElement.rotation || 0}deg)`,
+                        zIndex: textElement.zIndex,
+                        display: "flex",
+                        alignItems: vAlign,
+                        justifyContent: hAlign,
+                        touchAction: "none",
+                        transition: "border 0.2s ease",
+                        cursor: textElement.isEditing ? "text" : "move",
+                      }}
+                      onTouchStart={() => { touchStartTime = Date.now(); }}
+                      onTouchEnd={() => {
+                        const now = Date.now();
+                        const timeSince = now - lastTap;
+                        const touchDuration = now - touchStartTime;
+                        if (touchDuration < 200) {
+                          if (timeSince < 300) {
+                            setSelectedTextId4(textElement.id);
+                            updateTextElement(textElement.id, { isEditing: true });
+                          } else {
+                            setSelectedTextId4(textElement.id);
+                          }
+                        }
+                        lastTap = now;
+                      }}
+                      onMouseDown={() => setSelectedTextId4(textElement.id)}
+                      onDoubleClick={() => {
+                        setSelectedTextId4(textElement.id);
+                        updateTextElement(textElement.id, { isEditing: true });
+                      }}
+                      onDragStop={(_, d) => {
+                        updateTextElement(textElement.id, { position: { x: d.x, y: d.y } });
+                      }}
+                      onResizeStop={(_, __, ref, ___, position) => {
+                        updateTextElement(textElement.id, {
+                          size: { width: parseInt(ref.style.width, 10), height: parseInt(ref.style.height, 10) },
+                          position: { x: position.x, y: position.y },
+                        });
+                      }}
+                      resizeHandleStyles={{
+                        bottomRight: {
+                          width: isMobile ? "20px" : "12px",
+                          height: isMobile ? "20px" : "12px",
+                          background: "white",
+                          border: "2px solid #1976d2",
+                          borderRadius: "3px",
+                          right: isMobile ? "-10px" : "-6px",
+                          bottom: isMobile ? "-10px" : "-6px",
+                          cursor: "se-resize",
+                          zIndex: 999,
+                          touchAction: "none",
+                        },
+                      }}
+                    >
+                      <Box sx={{ position: "relative", width: "100%", height: "100%" }}>
+                        {/* Delete */}
+                        <IconButton
+                          size="small"
+                          className="no-drag"
+                          onClick={(e) => { e.stopPropagation(); deleteTextElement(textElement.id); }}
+                          sx={{
+                            position: "absolute", top: -10, right: -10, bgcolor: "#1976d2", color: "white",
+                            width: isMobile ? 26 : 20, height: isMobile ? 26 : 20, "&:hover": { bgcolor: "#f44336" },
+                            zIndex: 1, pointerEvents: "auto", touchAction: "auto",
+                          }}
+                        >
+                          <Close fontSize="small" />
+                        </IconButton>
+
+                        {/* Rotate */}
+                        <IconButton
+                          size="small"
+                          className="no-drag"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            updateTextElement(textElement.id, { rotation: (textElement.rotation || 0) + 30 });
+                          }}
+                          sx={{
+                            position: "absolute", top: -10, left: -10, bgcolor: "#1976d2", color: "white",
+                            width: isMobile ? 26 : 20, height: isMobile ? 26 : 20, "&:hover": { bgcolor: "#f44336" },
+                            zIndex: 3000, pointerEvents: "auto", touchAction: "auto",
+                          }}
+                        >
+                          <Forward30 fontSize={isMobile ? "medium" : "small"} />
+                        </IconButton>
+
+                        {/* Layer controls (use your global layerUpAny/layerDownAny) */}
+                        <Tooltip title="To Back">
+                          <Box
+                            className="no-drag"
+                            onClick={(e) => { e.stopPropagation(); layerDown({ type: 'text', id: textElement.id }); }}
+                            sx={{
+                              position: "absolute", top: -25, left: 40, bgcolor: "black", color: "white",
+                              borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center",
+                              p: isMobile ? "4px" : "2px", zIndex: 9999, cursor: "pointer", "&:hover": { bgcolor: "#333" },
+                            }}
+                          >
+                            <KeyboardArrowDownOutlined fontSize={isMobile ? "medium" : "small"} />
+                          </Box>
+                        </Tooltip>
+
+                        <Tooltip title="To Front">
+                          <Box
+                            className="no-drag"
+                            onClick={(e) => { e.stopPropagation(); layerUp({ type: 'text', id: textElement.id }); }}
+                            sx={{
+                              position: "absolute", top: -25, left: 80, bgcolor: "black", color: "white",
+                              borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center",
+                              p: isMobile ? "4px" : "2px", zIndex: 9999, cursor: "pointer", "&:hover": { bgcolor: "#333" },
+                            }}
+                          >
+                            <KeyboardArrowUpOutlined fontSize={isMobile ? "medium" : "small"} />
+                          </Box>
+                        </Tooltip>
+
+                        {/* Content: drag anywhere when NOT editing; click twice to edit */}
+                        <Box
+                          sx={{
+                            position: "relative",
+                            width: "100%",
+                            height: "100%",
+                            display: "flex",
+                            alignItems: vAlign,
+                            justifyContent: hAlign,
+                            userSelect: "none",
+                            touchAction: "none",
+                            transform: `rotate(${textElement.rotation || 0}deg)`,
+                            border: textElement.id === selectedTextId4 ? "2px solid #1976d2" : "1px dashed #4a7bd5",
+                            zIndex: textElement.zIndex,
+                            cursor: textElement.isEditing ? "text" : "move", // âœ… keep move cursor
+                          }}
+                          onDoubleClick={() => {
+                            setSelectedTextId4(textElement.id);
+                            updateTextElement(textElement.id, { isEditing: true });
+                          }}
+                        >
+                          <TextField
+                            variant="standard"
+                            value={textElement.value}
+                            className="text-edit"         // âœ… used by cancel when editing
+                            placeholder="Add Text"
+                            multiline
+                            fullWidth
+                            tabIndex={0}
+                            // autoFocus={textElement.id === selectedTextId1 && textElement.isEditing}
+                            InputProps={{
+                              readOnly: !textElement.isEditing,
+                              disableUnderline: true,
+                              style: {
+                                fontSize: textElement.fontSize,
+                                fontWeight: textElement.fontWeight,
+                                color: textElement.fontColor || "#000",
+                                fontFamily: textElement.fontFamily || "Arial",
+                                lineHeight: textElement.lineHeight || 1.4,
+                                letterSpacing: textElement.letterSpacing ? `${textElement.letterSpacing}px` : "0px",
+                                padding: 0,
+                                width: "100%",
+                                display: "flex",
+                                alignItems: vAlign,
+                                justifyContent: hAlign,
+                                // âœ… drag by default, only interact with text in edit mode
+                                pointerEvents: textElement.isEditing ? "auto" : "none",
+                              },
+                            }}
+                            onChange={(e) => updateTextElement(textElement.id, { value: e.target.value })}
+                            onFocus={(e) => { e.stopPropagation(); updateTextElement(textElement.id, { isEditing: true }); }}
+                            onBlur={(e) => { e.stopPropagation(); updateTextElement(textElement.id, { isEditing: false }); }}
+                            sx={{
+                              "& .MuiInputBase-input": { overflowY: "auto", textAlign: textElement.textAlign || "center" },
+                            }}
+                          />
+                        </Box>
+                      </Box>
+                    </Rnd>
+                  );
+                })}
+
+      {/* ====== Video QR ====== */}
+      {selectedVideoUrl4 && (
+        <Rnd
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           cancel=".no-drag"
           position={{ x: qrPosition4.x, y: qrPosition4.y }}
           onDragStop={(_, d) => setQrPosition4((prev) => ({ ...prev, x: d.x, y: d.y, zIndex: qrPosition4.zIndex }))}
@@ -1957,12 +2518,20 @@ const AdminSlide4Canvas = ({
               </IconButton>
             </Box>
           </motion.div>
+<<<<<<< HEAD
         </ScaledRnd>
+=======
+        </Rnd>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       )}
 
       {/* ====== Audio QR ====== */}
       {selectedAudioUrl4 && (
+<<<<<<< HEAD
         <ScaledRnd
+=======
+        <Rnd
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           cancel=".no-drag"
           position={{ x: qrAudioPosition4.x, y: qrAudioPosition4.y }}
           onDragStop={(_, d) => setQrAudioPosition4((prev) => ({ ...prev, x: d.x, y: d.y, zIndex: qrAudioPosition4.zIndex }))}
@@ -1986,7 +2555,11 @@ const AdminSlide4Canvas = ({
               </IconButton>
             </Box>
           </motion.div>
+<<<<<<< HEAD
         </ScaledRnd>
+=======
+        </Rnd>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       )}
 
       {/* ====== User Images (with lock, z-index, rotate, delete) ====== */}
@@ -1998,7 +2571,11 @@ const AdminSlide4Canvas = ({
           const isLocked = !!locked;
 
           return (
+<<<<<<< HEAD
             <ScaledRnd
+=======
+            <Rnd
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
               key={id}
               size={{ width, height }}
               position={{ x, y }}
@@ -2007,6 +2584,7 @@ const AdminSlide4Canvas = ({
               cancel=".non-draggable"
               disableDragging={isLocked}
               enableResizing={isLocked ? false : { bottomRight: true }}
+<<<<<<< HEAD
               onDragStart={() => align.onDragStart()}
               onDrag={(_, d) => {
                 if (isLocked) return;
@@ -2024,6 +2602,11 @@ const AdminSlide4Canvas = ({
                   prev.map((img) => (img.id === id ? { ...img, x: snap.x, y: snap.y } : img))
                 );
                 align.onDragStop();
+=======
+              onDragStop={(_, d) => {
+                if (isLocked) return;
+                setDraggableImages4((prev) => prev.map((img) => (img.id === id ? { ...img, x: d.x, y: d.y } : img)));
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
               }}
               onResizeStop={(_, __, ref, ___, position) => {
                 if (isLocked) return;
@@ -2127,7 +2710,11 @@ const AdminSlide4Canvas = ({
                         sx={{
                           position: "absolute",
                           top: -25,
+<<<<<<< HEAD
                           left: 20,
+=======
+                          left: 40,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                           bgcolor: "black",
                           color: "white",
                           borderRadius: "50%",
@@ -2154,7 +2741,11 @@ const AdminSlide4Canvas = ({
                         sx={{
                           position: "absolute",
                           top: -25,
+<<<<<<< HEAD
                           left: 45,
+=======
+                          left: 80,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                           bgcolor: "black",
                           color: "white",
                           borderRadius: "50%",
@@ -2173,6 +2764,7 @@ const AdminSlide4Canvas = ({
                   </>
                 )}
 
+<<<<<<< HEAD
                 {/* Duplicate Image Button */}
                 {!isLocked && (
                   <Tooltip title="Duplicate">
@@ -2219,6 +2811,8 @@ const AdminSlide4Canvas = ({
                 )}
 
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                 {!isLocked && (
                   <Box
                     className="non-draggable"
@@ -2249,7 +2843,11 @@ const AdminSlide4Canvas = ({
                   </Box>
                 )}
               </Box>
+<<<<<<< HEAD
             </ScaledRnd>
+=======
+            </Rnd>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           );
         })}
 
@@ -2259,6 +2857,7 @@ const AdminSlide4Canvas = ({
           sx={{
             flex: 1,
             display: "flex",
+<<<<<<< HEAD
             alignItems: "stretch",
             justifyContent: "flex-start",
             height: "100%",
@@ -2270,6 +2869,17 @@ const AdminSlide4Canvas = ({
             top: 0,
             left: 0,
             boxSizing: "border-box",
+=======
+            alignItems: "center",
+            justifyContent: "center",
+            height: { md: "675px", sm: "575px", xs: "60vh" },
+            width: { md: "470px", sm: "370px", xs: "90%" },
+            border: "3px dashed #3a7bd5",
+            position: "absolute",
+            bgcolor: "#6183cc36",
+            p: 1,
+            top: 10,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           }}
         >
           <IconButton
@@ -2312,6 +2922,7 @@ const AdminSlide4Canvas = ({
               InputProps={{
                 disableUnderline: true,
                 sx: {
+<<<<<<< HEAD
                   height: "100%",
                   alignItems:
                     verticalAlign4 === "top"
@@ -2320,6 +2931,9 @@ const AdminSlide4Canvas = ({
                         ? "center"
                         : "flex-end",
                   "& .MuiInputBase-input, & .MuiInputBase-inputMultiline": {
+=======
+                  "& .MuiInputBase-input": {
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                     fontSize: fontSize4,
                     fontWeight: fontWeight4,
                     color: fontColor4,
@@ -2328,6 +2942,7 @@ const AdminSlide4Canvas = ({
                     transform: `rotate(${rotation4}deg)`,
                     lineHeight: lineHeight4,
                     letterSpacing: letterSpacing4,
+<<<<<<< HEAD
                     minHeight: "unset !important",
                     height: "auto !important",
                     maxHeight: "100%",
@@ -2337,6 +2952,12 @@ const AdminSlide4Canvas = ({
                 },
               }}
               sx={{ width: "100%", height: "100%" }}
+=======
+                    height: 200,
+                  },
+                },
+              }}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
               autoFocus
               multiline
               fullWidth
@@ -2350,7 +2971,11 @@ const AdminSlide4Canvas = ({
         <Box
           sx={{
             height: "98%",
+<<<<<<< HEAD
             width: "var(--card-slide-w, 475px)",
+=======
+            width: { md: "475px", sm: "375px", xs: "90%" },
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             borderRadius: "6px",
             p: 1,
             position: "absolute",
@@ -2367,7 +2992,11 @@ const AdminSlide4Canvas = ({
                 height: { md: "210px", sm: "180px", xs: "180px" },
                 width: "100%",
                 mb: 2,
+<<<<<<< HEAD
                 border: hideTextOutline ? "none" : "3px dashed #3a7bd5",
+=======
+                border: "3px dashed #3a7bd5",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                 borderRadius: "6px",
                 justifyContent: "center",
                 display: "flex",
@@ -2424,10 +3053,17 @@ const AdminSlide4Canvas = ({
                         width: "100%",
                         resize: "none",
                         height: "100px",
+<<<<<<< HEAD
                         fontSize: textObj.fontSize4 ?? textObj.fontSize1 ?? textObj.fontSize,
                         fontWeight: textObj.fontWeight4 ?? textObj.fontWeight1 ?? textObj.fontWeight,
                         color: textObj.fontColor4 ?? textObj.fontColor1 ?? textObj.fontColor,
                         fontFamily: textObj.fontFamily4 ?? textObj.fontFamily1 ?? textObj.fontFamily,
+=======
+                        fontSize: textObj.fontSize1,
+                        fontWeight: textObj.fontWeight1,
+                        color: textObj.fontColor1,
+                        fontFamily: textObj.fontFamily1,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                         textAlign: textObj.textAlign,
                         lineHeight: textObj.lineHeight,
                         letterSpacing: textObj.letterSpacing,
@@ -2444,10 +3080,17 @@ const AdminSlide4Canvas = ({
                       );
                     }
                     setEditingIndex4(index);
+<<<<<<< HEAD
                     setFontSize4(textObj.fontSize4 ?? textObj.fontSize1 ?? textObj.fontSize ?? 16);
                     setFontFamily4(textObj.fontFamily4 ?? textObj.fontFamily1 ?? textObj.fontFamily ?? "Roboto");
                     setFontWeight4(textObj.fontWeight4 ?? textObj.fontWeight1 ?? textObj.fontWeight ?? 400);
                     setFontColor4(textObj.fontColor4 ?? textObj.fontColor1 ?? textObj.fontColor ?? "#000000");
+=======
+                    setFontSize4(textObj.fontSize1);
+                    setFontFamily4(textObj.fontFamily1);
+                    setFontWeight4(textObj.fontWeight1);
+                    setFontColor4(textObj.fontColor1);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                     setTextAlign4(textObj.textAlign);
                     setVerticalAlign4(textObj.verticalAlign);
                   }}
@@ -2455,10 +3098,17 @@ const AdminSlide4Canvas = ({
                 >
                   <Typography
                     sx={{
+<<<<<<< HEAD
                       fontSize: textObj.fontSize4 ?? textObj.fontSize1 ?? textObj.fontSize,
                       fontWeight: textObj.fontWeight4 ?? textObj.fontWeight1 ?? textObj.fontWeight,
                       color: textObj.fontColor4 ?? textObj.fontColor1 ?? textObj.fontColor,
                       fontFamily: textObj.fontFamily4 ?? textObj.fontFamily1 ?? textObj.fontFamily,
+=======
+                      fontSize: textObj.fontSize1,
+                      fontWeight: textObj.fontWeight1,
+                      color: textObj.fontColor1,
+                      fontFamily: textObj.fontFamily1,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                       textAlign: textObj.textAlign,
                       lineHeight: textObj.lineHeight,
                       letterSpacing: textObj.letterSpacing,
@@ -2480,6 +3130,7 @@ const AdminSlide4Canvas = ({
 
       {/* ====== AI Image ====== */}
       {isAIimage4 && (
+<<<<<<< HEAD
         <ScaledRnd
           bounds="parent"
           size={{ width: aimage4.width, height: aimage4.height }}
@@ -2513,6 +3164,16 @@ const AdminSlide4Canvas = ({
           onResizeStop={(_, __, ref, ___, position) =>
             setAIImage4({ width: parseInt(ref.style.width), height: parseInt(ref.style.height), x: position.x, y: position.y })
           }
+=======
+        <Rnd
+          size={{ width: aimage4.width, height: aimage4.height }}
+          position={{ x: aimage4.x, y: aimage4.y }}
+          onDragStop={(_, d) => setAIImage4((prev) => ({ ...prev, x: d.x, y: d.y }))}
+          onResizeStop={(_, __, ref, ___, position) =>
+            setAIImage4({ width: parseInt(ref.style.width), height: parseInt(ref.style.height), x: position.x, y: position.y })
+          }
+          bounds="parent"
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           enableResizing={{ bottomRight: true }}
           resizeHandleStyles={{
             bottomRight: { width: "10px", height: "10px", background: "white", border: "2px solid #1976d2", borderRadius: "10%", right: "-5px", bottom: "-5px", cursor: "se-resize" },
@@ -2525,7 +3186,11 @@ const AdminSlide4Canvas = ({
               <Close />
             </IconButton>
           </Box>
+<<<<<<< HEAD
         </ScaledRnd>
+=======
+        </Rnd>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       )}
 
       {/* ====== Stickers ====== */}
@@ -2535,7 +3200,11 @@ const AdminSlide4Canvas = ({
         const isLocked = !!sticker.locked;
 
         return (
+<<<<<<< HEAD
           <ScaledRnd
+=======
+          <Rnd
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             key={sticker.id || index}
             size={{ width: sticker.width, height: sticker.height }}
             position={{ x: sticker.x, y: sticker.y }}
@@ -2545,6 +3214,7 @@ const AdminSlide4Canvas = ({
             disableDragging={isLocked}
             enableResizing={isLocked ? false : { bottomRight: true }}
             onMouseDown={() => setSelectedStickerIndex2(index)}
+<<<<<<< HEAD
             onDragStart={() => align.onDragStart()}
             onDrag={(_, d) => {
               if (isLocked) return;
@@ -2574,6 +3244,9 @@ const AdminSlide4Canvas = ({
               }
               align.onDragStop();
             }}
+=======
+            onDragStop={(_, d) => !isLocked && updateSticker4(index, { x: d.x, y: d.y, zIndex: sticker.zIndex })}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             onResizeStop={(_, __, ref, ___, position) =>
               !isLocked && updateSticker4(index, { width: parseInt(ref.style.width), height: parseInt(ref.style.height), x: position.x, y: position.y, zIndex: sticker.zIndex })
             }
@@ -2657,7 +3330,11 @@ const AdminSlide4Canvas = ({
                 </IconButton>
               )}
             </Box>
+<<<<<<< HEAD
           </ScaledRnd>
+=======
+          </Rnd>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         );
       })}
     </Box>

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useEffect, useMemo, useState } from "react";
 import { Box, CircularProgress, Typography } from "@mui/material";
 import { TuneOutlined } from "@mui/icons-material";
@@ -427,6 +428,49 @@ const ViewAllCard = () => {
   };
 
   const loading = catLoading || cardsLoading || templetsLoading;
+=======
+import { Box, Typography } from "@mui/material";
+import MainLayout from "../../../layout/MainLayout";
+import ViewAllCard from "../../../components/ViewAllCard/ViewAllCard";
+import { useLocation, useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { fetchAllCardsFromDB, fetchAllCategoriesFromDB } from "../../../source/source";
+
+const norm = (s?: string) => (s ?? "").toLowerCase().trim();
+
+const ViewAll = () => {
+  const { search } = useParams();
+  const location = useLocation();
+
+  const routeCategoryName = decodeURIComponent(search ?? "").trim();
+  const normalizedRouteName = norm(routeCategoryName);
+
+  const { data: allCards = [] } = useQuery({
+    queryKey: ["allCards"],
+    queryFn: fetchAllCardsFromDB,
+    staleTime: 1000 * 60 * 60,
+    refetchOnWindowFocus: false,
+  });
+
+  console.log(allCards,'---')
+
+  const { data: allCategories = [] } = useQuery({
+    queryKey: ["allCategories"],
+    queryFn: fetchAllCategoriesFromDB,
+    staleTime: 1000 * 60 * 60,
+    refetchOnWindowFocus: false,
+  });
+
+  let categoryId: string | number | null = location.state?.categoryId ?? null;
+  if (!categoryId && normalizedRouteName && allCategories.length > 0) {
+    const hit = allCategories.find(
+      (c: any) => norm(c?.name) === normalizedRouteName
+    );
+    categoryId = hit?.id ?? null;
+  }
+
+  const title = routeCategoryName || "All Products";
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
   return (
     <MainLayout>
@@ -434,13 +478,18 @@ const ViewAllCard = () => {
         sx={{
           display: "flex",
           flexDirection: "column",
+<<<<<<< HEAD
           gap: "18px",
+=======
+          gap: "40px",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           width: { lg: "1340px", md: "100%", sm: "100%", xs: "100%" },
           justifyContent: "center",
           m: "auto",
           p: { lg: 3, md: 3, sm: 3, xs: 1 },
         }}
       >
+<<<<<<< HEAD
         {/* ✅ Title auto changes (because params change) */}
         <Box sx={{ textAlign: "center", mt: 1 }}>
           <Typography sx={{ fontSize: { md: 30, sm: 30, xs: 24 }, fontWeight: 900 }}>
@@ -455,12 +504,31 @@ const ViewAllCard = () => {
               <>
                 Browse all products under <b>{routeCategoryName}</b> category.
               </>
+=======
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: 250,
+            flexDirection: "column",
+            m: "auto",
+          }}
+        >
+          <Typography sx={{ fontSize: { md: "30px", sm: "30px", xs: "24px" }, fontWeight: "bold" }}>
+            {title}
+          </Typography>
+          <Typography sx={{ fontSize: { md: "14px", xs: "10px" }, textAlign: "center", width: { md: "100%", xs: "90%" } }}>
+            {routeCategoryName ? (
+              <>Browse all products under <b>{routeCategoryName}</b> category.</>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             ) : (
               <>Browse all products.</>
             )}
           </Typography>
         </Box>
 
+<<<<<<< HEAD
         {/* Tabs */}
         <Box sx={{ display: "flex", gap: "14px", alignItems: "center", justifyContent: "space-between" }}>
           <Box sx={{ display: "flex", alignItems: "center", flexWrap: "wrap", width: "100%", gap: "5px" }}>
@@ -598,9 +666,23 @@ const ViewAllCard = () => {
             priceLoading={popupLoading}
           />
         )}
+=======
+        <ViewAllCard
+          categoryId={categoryId}
+          categoryName={routeCategoryName}
+          allCategories={allCategories}
+          cardData={allCards}
+        />
+
+        <Box sx={{ height: 200 }} />
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       </Box>
     </MainLayout>
   );
 };
 
+<<<<<<< HEAD
 export default ViewAllCard;
+=======
+export default ViewAll
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0

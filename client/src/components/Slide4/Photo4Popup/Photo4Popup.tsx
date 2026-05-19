@@ -224,6 +224,7 @@ const Photo4Popup = ({ onClose, activeIndex, isAdminEditor = false }: Photo4Popu
         title="Image Filter"
         onClose={() => setImageFilter4(false)}
         sx={{
+<<<<<<< HEAD
           width: { md: 300, sm: 300, xs: "100%" },
           height: { md: 600, sm: 600, xs: "45vh" },
           left: {
@@ -231,6 +232,11 @@ const Photo4Popup = ({ onClose, activeIndex, isAdminEditor = false }: Photo4Popu
             sm: activeIndex === 1 ? "0%" : "17%",
             xs: "auto",
           },
+=======
+          width: { md: 300, sm: 300, xs: "95%" },
+          height: { md: 600, sm: 600, xs: 450 },
+          left: activeIndex === 1 ? { md: "17%", sm: "0%", xs: 0 } : "17%",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           zIndex: 99,
         }}
       >
@@ -261,6 +267,7 @@ const Photo4Popup = ({ onClose, activeIndex, isAdminEditor = false }: Photo4Popu
       title={isAdminEditor ? "Admin Photos" : "Photos"}
       onClose={onClose}
       sx={{
+<<<<<<< HEAD
         width: { md: 300, sm: 300, xs: "100%" },
         height: { md: 600, sm: 600, xs: "45vh" },
         mt: { md: 0, sm: 0, xs: 0 },
@@ -269,6 +276,12 @@ const Photo4Popup = ({ onClose, activeIndex, isAdminEditor = false }: Photo4Popu
           sm: activeIndex === 1 ? "0%" : "17%",
           xs: "auto",
         },
+=======
+        width: { md: 300, sm: 300, xs: "95%" },
+        height: { md: 600, sm: 600, xs: 450 },
+        mt: { md: 0, sm: 0, xs: 0 },
+        left: activeIndex === 1 ? { md: "17%", sm: "0%", xs: 0 } : "17%",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         zIndex: 99,
       }}
     >

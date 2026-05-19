@@ -35,7 +35,11 @@ const MinimalGradientAreaChart = ({
         dataKey="name"
         tickLine={false}
         axisLine={false}
+<<<<<<< HEAD
         tick={{ stroke: "rgba(0,0,0,0.3)", fontSize: 10 }}
+=======
+        tick={{ stroke: "rgba(255,255,255,0.3)", fontSize: 10 }}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         // Hide actual text labels as per the original design (only showing subtle vertical ticks)
         tickFormatter={() => ""}
       />
@@ -52,25 +56,36 @@ const MinimalGradientAreaChart = ({
 );
 
 // --- Order Chart (Purple/Violet Gradient Card) ---
+<<<<<<< HEAD
 type Props = {
   orderCount?: number;
 };
 
 const OrderChart = ({ orderCount: orderCountProp }: Props) => {
+=======
+const OrderChart = () => {
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
   const [orderCount, setOrderCount] = useState(0);
 
   useEffect(() => {
+<<<<<<< HEAD
     if (typeof orderCountProp === "number") {
       setOrderCount(orderCountProp);
       return;
     }
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     const loadOrders = async () => {
       const count: any = await fetchOrderCount();
       setOrderCount(count);
     };
     loadOrders();
+<<<<<<< HEAD
   }, [orderCountProp]);
+=======
+  }, []);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
   return (
     <Box sx={{ flex: "1 1 300px", width: '100%' }}>
@@ -78,6 +93,7 @@ const OrderChart = ({ orderCount: orderCountProp }: Props) => {
         sx={{
           position: "relative",
           p: 3,
+<<<<<<< HEAD
           color: COLORS.black,
           height: { md: 200, sm: 200, xs: 180 },
           boxShadow: "0 14px 30px rgba(5,10,36,0.08)",
@@ -85,6 +101,14 @@ const OrderChart = ({ orderCount: orderCountProp }: Props) => {
           mb: { md: 0, sm: 0, xs: 2 },
           border: "1px solid rgba(0,0,0,0.06)",
           background: "#ffffff",
+=======
+          color: "white",
+          height: { md: 200, sm: 200, xs: 180 },
+          boxShadow: 8,
+          borderRadius: 4,
+          mb: { md: 0, sm: 0, xs: 2 },
+          background: `linear-gradient(135deg, ${COLORS.green} 0%, ${COLORS.primary} 100%)`,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           overflow: "hidden",
         }}
       >
@@ -96,17 +120,26 @@ const OrderChart = ({ orderCount: orderCountProp }: Props) => {
             left: 0,
             width: "100%",
             height: "100%",
+<<<<<<< HEAD
             minWidth: 1,
             minHeight: 1,
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             opacity: 0.7,
           }}
         >
           <MinimalGradientAreaChart
             data={orderData}
             colorId="colorOrder"
+<<<<<<< HEAD
             colorStart="rgba(141,109,161,0.4)"
             colorEnd="rgba(141,109,161,0.05)"
             strokeColor={COLORS.seconday}
+=======
+            colorStart="#ffffff"
+            colorEnd="#ffffff"
+            strokeColor="#ffffff"
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           />
         </Box>
 
@@ -116,7 +149,11 @@ const OrderChart = ({ orderCount: orderCountProp }: Props) => {
             variant="body1"
             fontWeight="medium"
             letterSpacing={1.5}
+<<<<<<< HEAD
             sx={{ opacity: 0.8, color: COLORS.black }}
+=======
+            sx={{ opacity: 0.9 }}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           >
             TOTAL ORDERS
           </Typography>
@@ -142,7 +179,11 @@ const OrderChart = ({ orderCount: orderCountProp }: Props) => {
             <Typography
               variant="body2"
               fontWeight="semibold"
+<<<<<<< HEAD
               sx={{ opacity: 0.7, color: COLORS.black }}
+=======
+              sx={{ opacity: 0.8, color: COLORS.white }}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             >
               ALL TIMES ORDERS
             </Typography>

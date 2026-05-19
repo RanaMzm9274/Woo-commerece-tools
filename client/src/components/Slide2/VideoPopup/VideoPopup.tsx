@@ -44,7 +44,11 @@ const VideoPopup = ({ onClose, activeIndex }: VideoPopupProps) => {
   const { user } = useAuth();
   const generateId = () => Date.now() + Math.random();
 
+<<<<<<< HEAD
   // Handle multiple video files
+=======
+  // ✅ Handle multiple video files
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   const handleVideoFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
@@ -54,7 +58,11 @@ const VideoPopup = ({ onClose, activeIndex }: VideoPopupProps) => {
     const validFiles: any = Array.from(files).filter((file) => {
       const fileSizeMB = file.size / (1024 * 1024);
       if (fileSizeMB > 50) {
+<<<<<<< HEAD
         setFileError(`Error: ${file.name.slice(0, 20)} is too large (max 50MB).`);
+=======
+        setFileError(`❌ ${file.name.slice(0, 20)} is too large (max 50MB).`);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         return false;
       }
       return true;
@@ -65,7 +73,11 @@ const VideoPopup = ({ onClose, activeIndex }: VideoPopupProps) => {
   };
 
   // -----------------------------chanages---------------------------
+<<<<<<< HEAD
   // Save video URL to the user's "video" array in DB
+=======
+  // ✅ Save video URL to the user's "video" array in DB
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   const saveVideoUrlToDB = async (videoData: any) => {
     if (!user?.id) return;
 
@@ -76,7 +88,11 @@ const VideoPopup = ({ onClose, activeIndex }: VideoPopupProps) => {
       .single();
 
     if (fetchError) {
+<<<<<<< HEAD
       console.error("Error fetching user data:", fetchError);
+=======
+      console.error("❌ Error fetching user data:", fetchError);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       return;
     }
 
@@ -90,14 +106,22 @@ const VideoPopup = ({ onClose, activeIndex }: VideoPopupProps) => {
       .eq("auth_id", user.id);
 
     if (updateError) {
+<<<<<<< HEAD
       console.error("Error updating videos:", updateError);
+=======
+      console.error("❌ Error updating videos:", updateError);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       return;
     }
   };
 
 
   // --------------------Changes =========================
+<<<<<<< HEAD
   // Upload video to Supabase Storage
+=======
+  // ✅ Upload video to Supabase Storage
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   const handleVideoUpload = async () => {
     if (!video || video.length === 0) {
       alert("No video selected");
@@ -177,7 +201,11 @@ const VideoPopup = ({ onClose, activeIndex }: VideoPopupProps) => {
 
 
   // ------------------------------------changes-----------------------------------
+<<<<<<< HEAD
   // Fetch user videos
+=======
+  // ✅ Fetch user videos
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   const fetchUserVideos = async () => {
     if (!user?.id) return;
     const { data, error } = await supabase
@@ -187,15 +215,26 @@ const VideoPopup = ({ onClose, activeIndex }: VideoPopupProps) => {
       .single();
 
     if (error) {
+<<<<<<< HEAD
       console.error("Error fetching videos:", error);
+=======
+      console.error("❌ Error fetching videos:", error);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       return;
     }
 
     if (data?.video) {
+<<<<<<< HEAD
       console.log("Fetched user videos:", data.video);
       setUserVideos(data.video);
     } else {
       console.log("No videos found for user.");
+=======
+      console.log("✅ Fetched user videos:", data.video);
+      setUserVideos(data.video);
+    } else {
+      console.log("⚠️ No videos found for user.");
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     }
   };
 
@@ -236,7 +275,11 @@ const VideoPopup = ({ onClose, activeIndex }: VideoPopupProps) => {
 
     if (!error) {
       setUserVideos(updated);
+<<<<<<< HEAD
       toast.success("Video deleted successfully");
+=======
+      toast.success("✅ Video deleted successfully");
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     }
   };
 
@@ -409,7 +452,11 @@ const VideoPopup = ({ onClose, activeIndex }: VideoPopupProps) => {
                     {
                       isDeleteMedia ? <Typography
                         sx={{ fontSize: "14px", fontWeight: "bold", mb: 1, color: 'red', opacity: 0.5 }}
+<<<<<<< HEAD
                       >Your videos are deleted after one week</Typography> : <Typography
+=======
+                      >⏱️ Your videos is deleted after one week</Typography> : <Typography
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                         sx={{ fontSize: "16px", fontWeight: "bold", mb: 1 }}
                       >
                         Your Uploaded Videos:
@@ -417,7 +464,11 @@ const VideoPopup = ({ onClose, activeIndex }: VideoPopupProps) => {
                         <hr />
                         <span style={{ fontSize: '14px', fontWeight: 500, }}>
                           Double tap your video to
+<<<<<<< HEAD
                           load your qr code onto your card
+=======
+                          load your qr code onto your card
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                         </span>
                       </Typography>
                     }
@@ -462,7 +513,11 @@ const VideoPopup = ({ onClose, activeIndex }: VideoPopupProps) => {
                               {v.name.slice(0, 15)}
                             </Typography>
                             <Typography sx={{ fontSize: "13px", color: "#575656ff" }}>
+<<<<<<< HEAD
                               Duration: {v.duration || "-"} &nbsp; | &nbsp; Size: {v.size || "-"}
+=======
+                              ⏱ {v.duration || "–"} &nbsp; • &nbsp; 💾 {v.size || "–"}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                             </Typography>
                           </Box>
 

@@ -1,10 +1,17 @@
 // Sticker3Popup.tsx
+<<<<<<< HEAD
 import { Box, TextField } from "@mui/material";
+=======
+import { Box } from "@mui/material";
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 import PopupWrapper from "../../PopupWrapper/PopupWrapper";
 import { STICKERS_DATA } from "../../../constant/data";
 import { COLORS } from "../../../constant/color";
 import { useSlide4 } from "../../../context/Slide4Context";
+<<<<<<< HEAD
 import { useMemo, useState } from "react";
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
 interface Sticker3PopupProps {
   onClose: () => void;
@@ -14,6 +21,7 @@ interface Sticker3PopupProps {
 const Sticker4Popup = ({ onClose }: Sticker3PopupProps) => {
   const { addSticker4 } = useSlide4();
 
+<<<<<<< HEAD
     const [search, setSearch] = useState('')
   
     const filteredStickers = useMemo(() => {
@@ -27,6 +35,8 @@ const Sticker4Popup = ({ onClose }: Sticker3PopupProps) => {
       });
     }, [search]);
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   const handleSelectSticker = (stick: any) => {
     addSticker4(stick);
   };
@@ -43,6 +53,7 @@ const Sticker4Popup = ({ onClose }: Sticker3PopupProps) => {
       }}
     >
       <Box
+<<<<<<< HEAD
               sx={{
                 mt: 2,
                 display: "flex",
@@ -91,6 +102,53 @@ const Sticker4Popup = ({ onClose }: Sticker3PopupProps) => {
                 </Box>
               ))}
             </Box>
+=======
+        sx={{
+          mt: 2,
+          display: "flex",
+          flexWrap: "wrap",
+          gap: 1,
+          overflowY: "auto",
+          "&::-webkit-scrollbar": {
+            height: "6px",
+            width: "5px",
+          },
+          "&::-webkit-scrollbar-track": {
+            backgroundColor: "#f3f3f3",
+            borderRadius: "20px",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            backgroundColor: COLORS.primary,
+            borderRadius: "20px",
+          },
+          height: 500,
+        }}
+      >
+        {STICKERS_DATA.map((stick) => (
+          <Box
+            key={stick.id}
+            onClick={() => handleSelectSticker(stick)} // ✅ handle click
+            sx={{
+              width: { md: "80px", sm: "80px", xs: "70px" },
+              height: "90px",
+              borderRadius: 2,
+              bgcolor: "rgba(233, 232, 232, 3)",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              color: "white",
+              userSelect: "none",
+            }}
+          >
+            <Box
+              component={"img"}
+              src={stick.sticker}
+              sx={{ width: "100%", height: "auto" }}
+            />
+          </Box>
+        ))}
+      </Box>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     </PopupWrapper>
   );
 };

@@ -1,7 +1,10 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
+<<<<<<< HEAD
 import { safeGetStorage, safeSetLocalStorage } from "../lib/storage";
 import { getDraftCardId } from "../lib/draftCardId";
 import { clearSlideStateFromIdb, getSlideStateKeys, loadSlideStateFromIdb, saveSlideStateToIdb } from "../lib/idbSlideState";
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
 const fontColors = [
   "#000000",
@@ -16,6 +19,7 @@ const fontColors = [
   "#FFD700",
 ];
 
+<<<<<<< HEAD
 const normalizeStoredUrl = (value: unknown): string | null => {
   if (typeof value === "string") {
     const trimmed = value.trim();
@@ -28,6 +32,8 @@ const normalizeStoredUrl = (value: unknown): string | null => {
   return null;
 };
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 interface Position {
   x: number;
   y: number;
@@ -254,7 +260,10 @@ interface Slide2ContextType {
 
   // For Sticker
   selectedStickers2: StickerItem[];
+<<<<<<< HEAD
   setSelectedStickers2: any;
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   addSticker2: (
     sticker: Omit<StickerItem, "x" | "y" | "width" | "height" | "zIndex">
   ) => void;
@@ -444,12 +453,15 @@ export const Slide2Provider: React.FC<{ children: React.ReactNode }> = ({
   const [duration, setDuration] = useState<number | null>(null);
   const [poster, setPoster] = useState<string | null>(null);
 
+<<<<<<< HEAD
   // --- 💾 Persist heavy image data to IndexedDB ---
   useEffect(() => {
     const [key] = getSlideStateKeys(2, getDraftCardId());
     void saveSlideStateToIdb(key, { images, draggableImages }).catch(() => {});
   }, [images, draggableImages]);
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   // New states for position and size
   const [textPositions, setTextPositions] = useState<Position[]>(
     texts.map(() => ({ x: 0, y: 0 }))
@@ -649,6 +661,7 @@ export const Slide2Provider: React.FC<{ children: React.ReactNode }> = ({
   // Passed value to storing and state recognizing.
   useEffect(() => {
     try {
+<<<<<<< HEAD
       const saved = safeGetStorage("slide2_state");
       if (saved) {
         const parsed = JSON.parse(saved);
@@ -657,17 +670,27 @@ export const Slide2Provider: React.FC<{ children: React.ReactNode }> = ({
         if (currentDraftId) {
           if (!savedDraftId || savedDraftId !== currentDraftId) return;
         }
+=======
+      const saved = localStorage.getItem("slide2_state");
+      if (saved) {
+        const parsed = JSON.parse(saved);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
         if (parsed.textElements) setTextElements(parsed.textElements);
         if (parsed.draggableImages) setDraggableImages(parsed.draggableImages);
         if (parsed.images) setImages(parsed.images);
         if (parsed.selectedImg) setSelectedImage(parsed.selectedImg);
+<<<<<<< HEAD
         {
           const videoUrl = normalizeStoredUrl(parsed.selectedVideoUrl);
           const audioUrl = normalizeStoredUrl(parsed.selectedAudioUrl);
           if (videoUrl) setSelectedVideoUrl(videoUrl);
           if (audioUrl) setSelectedAudioUrl(audioUrl);
         }
+=======
+        if (parsed.selectedVideoUrl) setSelectedVideoUrl(parsed.selectedVideoUrl);
+        if (parsed.selectedAudioUrl) setSelectedAudioUrl(parsed.selectedAudioUrl);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         if (parsed.selectedLayout) setSelectedLayout(parsed.selectedLayout);
         if (parsed.oneTextValue) setOneTextValue(parsed.oneTextValue);
         if (parsed.showOneTextRightSideBox) setShowOneTextRightSideBox(parsed.showOneTextRightSideBox);
@@ -692,6 +715,7 @@ export const Slide2Provider: React.FC<{ children: React.ReactNode }> = ({
         if (parsed.fontColor) setFontColor(parsed.fontColor);
         if (parsed.textAlign) setTextAlign(parsed.textAlign);
         if (parsed.verticalAlign) setVerticalAlign(parsed.verticalAlign);
+<<<<<<< HEAD
         const restoredLetterSpacing = parsed.letterSpacing2 ?? parsed.letterSpacing;
         const restoredLineHeight = parsed.lineHeight2 ?? parsed.lineHeight;
         if (restoredLetterSpacing !== undefined) setLetterSpacing2(restoredLetterSpacing);
@@ -713,12 +737,19 @@ export const Slide2Provider: React.FC<{ children: React.ReactNode }> = ({
           } catch {}
         }
 
+=======
+        if (parsed.letterSpacing !== undefined) setLetterSpacing2(parsed.letterSpacing);
+        if (parsed.lineHeight !== undefined) setLineHeight2(parsed.lineHeight);
+        if (parsed.rotation !== undefined) setRotation(parsed.rotation);
+
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       }
     } catch (error) {
       console.error("❌ Error restoring slide2_state:", error);
     }
   }, []);
 
+<<<<<<< HEAD
   // --- 🧠 Restore heavy image data from IndexedDB (if localStorage skipped it) ---
   useEffect(() => {
     if (images.length || draggableImages.length) return;
@@ -751,6 +782,14 @@ export const Slide2Provider: React.FC<{ children: React.ReactNode }> = ({
     const stateToSave = {
       draftId: getDraftCardId() ?? null,
       textElements,
+=======
+  // --- 💾 Auto-save changes ---
+  useEffect(() => {
+    const stateToSave = {
+      textElements,
+      draggableImages,
+      images,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       selectedImg,
       selectedVideoUrl,
       selectedAudioUrl,
@@ -782,6 +821,7 @@ export const Slide2Provider: React.FC<{ children: React.ReactNode }> = ({
 
     };
 
+<<<<<<< HEAD
     const payload = JSON.stringify(stateToSave);
     const ok = safeSetLocalStorage("slide2_state", payload, {
       clearOnFail: ["slides_backup", "slide2_state"],
@@ -792,6 +832,17 @@ export const Slide2Provider: React.FC<{ children: React.ReactNode }> = ({
     }
   }, [
     textElements,
+=======
+    try {
+      localStorage.setItem("slide2_state", JSON.stringify(stateToSave));
+    } catch (error) {
+      console.error("❌ Error saving slide2_state:", error);
+    }
+  }, [
+    textElements,
+    draggableImages,
+    images,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     selectedImg,
     selectedVideoUrl,
     selectedAudioUrl,
@@ -827,11 +878,14 @@ export const Slide2Provider: React.FC<{ children: React.ReactNode }> = ({
   const clearSlide2LocalData = () => {
     try {
       localStorage.removeItem("slide2_state");
+<<<<<<< HEAD
       sessionStorage.removeItem("slide2_state");
       const keys = getSlideStateKeys(2, getDraftCardId());
       keys.forEach((key) => {
         void clearSlideStateFromIdb(key).catch(() => {});
       });
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       console.log("🧹 Cleared Slide2 saved state");
     } catch (error) {
       console.error("Error clearing slide2_state:", error);
@@ -907,7 +961,10 @@ export const Slide2Provider: React.FC<{ children: React.ReactNode }> = ({
 
         addSticker2,
         selectedStickers2,
+<<<<<<< HEAD
         setSelectedStickers2,
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         updateSticker2,
         removeSticker2,
 
@@ -1011,4 +1068,8 @@ export const useSlide2 = () => {
     throw new Error("useWishCard must be used within a WishCardProvider");
   }
   return context;
+<<<<<<< HEAD
 };
+=======
+};
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0

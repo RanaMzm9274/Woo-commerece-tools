@@ -14,7 +14,10 @@ import {
   PeopleOutline,
   Person2Outlined,
   SettingsOutlined,
+<<<<<<< HEAD
   WorkspacePremiumOutlined,
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 } from "@mui/icons-material";
 import { COLORS } from "../../../constant/color";
 
@@ -59,11 +62,14 @@ const Sidebar = () => {
       href: ADMINS_DASHBOARD.ADMIN_BLOGS,
     },
     {
+<<<<<<< HEAD
       icon: <WorkspacePremiumOutlined />,
       title: "Subscriptions",
       href: ADMINS_DASHBOARD.ADMIN_SUBSCRIPTION_PLANS,
     },
     {
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       icon: <PeopleOutline />,
       title: "Community Hub",
       href: ADMINS_DASHBOARD.ADMIN_COMMUNITY_HUB,
@@ -109,6 +115,7 @@ const Sidebar = () => {
                 justifyContent: "space-between",
                 alignItems: "center",
                 height: "44px",
+<<<<<<< HEAD
                 borderRadius: 10,
                 fontWeight: 600,
                 paddingLeft: 12,
@@ -120,6 +127,17 @@ const Sidebar = () => {
                 transition: "background-color 0.3s",
                 marginBottom: 4,
                 boxShadow: isActive ? "0 10px 24px rgba(6,10,35,0.35)" : "none",
+=======
+                borderRadius: 6,
+                fontWeight: 600,
+                paddingLeft: 2,
+                fontSize: '12px',
+                textDecoration: "none",
+                color: isActive ? "#414040ff" : COLORS.white,
+                backgroundColor: isActive ? `${COLORS.white}` : "#1313137c",
+                transition: "background-color 0.3s",
+                marginBottom: 4,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
               }}
             >
               <Box

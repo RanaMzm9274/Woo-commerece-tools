@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 // src/pages/admin/.../NewCardsForm.tsx
 import { Box, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+=======
+﻿import { Box } from "@mui/material";
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 import { useMemo, useRef, useState, useEffect } from "react";
 import CustomInput from "../../../../components/CustomInput/CustomInput";
 import LandingButton from "../../../../components/LandingButton/LandingButton";
@@ -19,6 +23,7 @@ import {
   applyPolygonLayoutToContexts,
   buildPolygonLayout,
   captureNodeToPng,
+<<<<<<< HEAD
   mergeBuckets,
   pickPolygonLayout,
   type SlidePayloadV2,
@@ -37,26 +42,42 @@ import Slide1PreviewBox from "./FirstSlidePreview/FirstSlidePreview";
 
 type AccessPlan = "free" | "bundle" | "pro";
 
+=======
+  isMeaningfulPolygonLayout,
+  pickPolygonLayout,
+} from "../../../../lib/polygon";
+import Slide1PreviewBox from "./FirstSlidePreview/FirstSlidePreview";
+
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 type FormValue = {
   cardname: string;
   cardcategory: string;
   subCategory?: string;
   subSubCategory?: string;
   sku: string;
+<<<<<<< HEAD
 
   // ✅ NEW
   accessPlan: AccessPlan;
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   actualprice?: string;
   a4price?: string;
   a5price?: string;
   usletter?: string;
+<<<<<<< HEAD
   ustabloid?: string;
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   saleprice?: string;
   salea4price?: string;
   salea5price?: string;
   saleusletter?: string;
+<<<<<<< HEAD
   saleustabloid?: string;
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   description: string;
   cardImage: FileList;
   polygon_shape: string;
@@ -77,12 +98,18 @@ type EditFormValue = {
   a4price?: string;
   a5price?: string;
   usletter?: string;
+<<<<<<< HEAD
   ustabloid?: string;
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   salePrice?: string;
   salea4price?: string;
   salea5price?: string;
   saleusletter?: string;
+<<<<<<< HEAD
   saleustabloid?: string;
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   description?: string;
   imageUrl?: string;
   polygon_shape?: string;
@@ -100,15 +127,19 @@ type EditFormValue = {
   lastpageimageurl?: string;
   lastmessage?: string;
 
+<<<<<<< HEAD
   // ✅ NEW (for edit prefill)
   accessPlan?: AccessPlan;
   accessplan?: AccessPlan;
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   polyganLayout?: any;
 };
 
 type Props = { editProduct?: EditFormValue };
 
+<<<<<<< HEAD
 const parseLayoutPricing = (layout: any) => {
   if (!layout) return { pricing: {}, salePricing: {} };
   const obj =
@@ -456,15 +487,20 @@ const prepareTemplateSlideForCanvas = async (slide: TemplateSlide): Promise<Temp
   );
   return { ...slide, elements };
 };
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
 const NewCardsForm = ({ editProduct }: Props) => {
   const slide1 = useSlide1();
   const slide2 = useSlide2();
   const slide3 = useSlide3();
   const slide4 = useSlide4();
+<<<<<<< HEAD
   const theme = useTheme();
   const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
   const isSmUp = useMediaQuery(theme.breakpoints.up("sm"));
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -472,8 +508,18 @@ const NewCardsForm = ({ editProduct }: Props) => {
   const { id, product, formData, mode } = navState;
 
   const isEditMode = Boolean(id) || mode === "edit";
+<<<<<<< HEAD
   const toFloat = (v: any) => (v === "" || v == null ? undefined : parseFloat(String(v)));
 
+=======
+  const toFloat = (v: any) => {
+    if (v === "" || v == null) return null;
+    const num = parseFloat(String(v));
+    return Number.isNaN(num) ? null : num;
+  };
+
+  // âœ… Always prefer most-recent: navState -> formData -> product
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   const editLayout = useMemo(() => {
     return pickPolygonLayout(
       navState?.polygonlayout,
@@ -492,8 +538,13 @@ const NewCardsForm = ({ editProduct }: Props) => {
     product?.polyganLayout,
   ]);
 
+<<<<<<< HEAD
   const [loading, setLoading] = useState(false);
   const [editLoading, setEditLoading] = useState(false);
+=======
+  const [loading, setLoading] = useState(false); // Save & Publish
+  const [editLoading, setEditLoading] = useState(false); // Edit/Update Layout (2 sec)
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
   const {
     data: categories = [],
@@ -506,11 +557,25 @@ const NewCardsForm = ({ editProduct }: Props) => {
   });
 
   const cardsRow = useMemo(
+<<<<<<< HEAD
     () => categories.find((c) => (c?.name ?? "").trim().toLowerCase() === "cards") || null,
     [categories]
   );
 
   const categoryOptions = useMemo(() => (cardsRow ? [{ label: "Cards", value: "Cards" }] : []), [cardsRow]);
+=======
+    () =>
+      categories.find(
+        (c) => (c?.name ?? "").trim().toLowerCase() === "cards"
+      ) || null,
+    [categories]
+  );
+
+  const categoryOptions = useMemo(
+    () => (cardsRow ? [{ label: "Cards", value: "Cards" }] : []),
+    [cardsRow]
+  );
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
   const {
     register,
@@ -528,20 +593,29 @@ const NewCardsForm = ({ editProduct }: Props) => {
       subCategory: "",
       subSubCategory: "",
       sku: "",
+<<<<<<< HEAD
 
       // ✅ NEW default
       accessPlan: "free",
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       actualprice: "",
       a4price: "",
       a5price: "",
       usletter: "",
+<<<<<<< HEAD
       ustabloid: "",
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       saleprice: "",
       salea4price: "",
       salea5price: "",
       saleusletter: "",
+<<<<<<< HEAD
       saleustabloid: "",
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       description: "",
       polygon_shape: "",
     },
@@ -550,6 +624,7 @@ const NewCardsForm = ({ editProduct }: Props) => {
   const normalizedEdit = useMemo(() => {
     const src = editProduct ?? {};
     const fd = formData ?? product ?? {};
+<<<<<<< HEAD
     const pricingSource = pickLayoutCandidate(
       (src as any).polygonlayout,
       (src as any).polyganLayout,
@@ -629,6 +704,64 @@ const NewCardsForm = ({ editProduct }: Props) => {
     const v = typeof picked === "string" ? picked.trim() : "";
     return v || null;
   }, [editProduct, formData, product, navState]);
+=======
+    return {
+      cardname: (src.cardname ??
+        src.cardName ??
+        fd.cardname ??
+        fd.cardName ??
+        "") as string,
+      cardcategory: "Cards",
+      sku: (src.sku ?? fd.sku ?? "") as string,
+      actualprice: (src.actualprice ??
+        src.actualPrice ??
+        fd.actualprice ??
+        fd.actualPrice ??
+        "") as any,
+      a4price: (src.a4price ??
+        fd.a4price ??
+        src.actualprice ??
+        src.actualPrice ??
+        fd.actualprice ??
+        fd.actualPrice ??
+        "") as any,
+      a5price: (src.a5price ??
+        fd.a5price ??
+        src.actualprice ??
+        src.actualPrice ??
+        fd.actualprice ??
+        fd.actualPrice ??
+        "") as any,
+      usletter: (src.usletter ??
+        fd.usletter ??
+        src.actualprice ??
+        src.actualPrice ??
+        fd.actualprice ??
+        fd.actualPrice ??
+        "") as any,
+      saleprice: (src.saleprice ??
+        src.salePrice ??
+        fd.saleprice ??
+        fd.salePrice ??
+        "") as any,
+      salea4price: (src.salea4price ?? fd.salea4price ?? "") as any,
+      salea5price: (src.salea5price ?? fd.salea5price ?? "") as any,
+      saleusletter: (src.saleusletter ?? fd.saleusletter ?? "") as any,
+      description: (src.description ?? fd.description ?? "") as string,
+      polygon_shape: (src.polygon_shape ?? fd.polygon_shape ?? "") as string,
+      subCategory: (src.subCategory ??
+        (src as any).subcategory ??
+        fd.subCategory ??
+        (fd as any).subcategory ??
+        "") as string,
+      subSubCategory: (src.subSubCategory ??
+        (src as any).sub_subcategory ??
+        fd.subSubCategory ??
+        (fd as any).sub_subcategory ??
+        "") as string,
+    } as any;
+  }, [editProduct, formData, product]);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
   useEffect(() => {
     reset(normalizedEdit);
@@ -642,7 +775,14 @@ const NewCardsForm = ({ editProduct }: Props) => {
 
   const subCategoryOptions = useMemo(() => {
     if (!cardsRow) return [];
+<<<<<<< HEAD
     return (cardsRow.subcategories ?? []).map((sub) => ({ label: sub, value: sub }));
+=======
+    return (cardsRow.subcategories ?? []).map((sub) => ({
+      label: sub,
+      value: sub,
+    }));
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   }, [cardsRow]);
 
   const subSubCategoryOptions = useMemo(() => {
@@ -652,6 +792,7 @@ const NewCardsForm = ({ editProduct }: Props) => {
   }, [cardsRow, selectedSubCategory]);
 
   const previewRef = useRef<HTMLDivElement>(null);
+<<<<<<< HEAD
   const previewRatio = useMemo(() => {
     const rect = (slide1 as any)?.bgRect1;
     const w = Number(rect?.width ?? 0);
@@ -700,14 +841,73 @@ const NewCardsForm = ({ editProduct }: Props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEditMode, editLayout]);
 
+=======
+
+<<<<<<< HEAD
+  // âœ… hydrate when meaningful layout arrives
+  const lastGoodLayoutRef = useRef<any>(null);
+
+  useEffect(() => {
+    const nextLayout = isMeaningfulPolygonLayout(editLayout)
+      ? editLayout
+      : lastGoodLayoutRef.current;
+    if (isMeaningfulPolygonLayout(editLayout)) {
+      lastGoodLayoutRef.current = editLayout;
+    }
+    if (nextLayout) {
+      applyPolygonLayoutToContexts(nextLayout, slide1, slide2, slide3, slide4);
+    }  }, [editLayout]);
+=======
+  // ✅ hydrate when meaningful layout arrives
+  useEffect(() => {
+    applyPolygonLayoutToContexts(editLayout, slide1, slide2, slide3, slide4);
+  }, [editLayout]);
+>>>>>>> a14ba4f93fd745df71dd2fa5e97ab521e4c1538a
+
+  // AddNewCards page
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   const handleEditLayout = async () => {
     if (editLoading) return;
     setEditLoading(true);
 
+<<<<<<< HEAD
     const formSnapshot = getValues();
     const layoutNow = buildPolygonLayout(slide1, slide2, slide3, slide4);
     const designToSend = pickPolygonLayout(layoutNow, editLayout) ?? null;
 
+=======
+<<<<<<< HEAD
+    try {
+      const layoutNow = buildPolygonLayout(slide1, slide2, slide3, slide4);
+      const layoutToSend =
+        pickPolygonLayout(layoutNow, lastGoodLayoutRef.current, editLayout) ??
+        lastGoodLayoutRef.current ??
+        editLayout ??
+        layoutNow;
+
+      navigate(ADMINS_DASHBOARD.ADMIN_EDITOR, {
+        state: {
+          mode: isEditMode ? "edit" : "create",
+          id,
+          polygonlayout: layoutToSend,
+          formData: getValues(),
+        },
+      });
+    } finally {
+      setEditLoading(false);
+    }  };
+=======
+    await sleep(300);
+
+    // ✅ snapshot of current form (so nothing is lost)
+    const formSnapshot = getValues();
+
+    // ✅ send latest layout
+    const layoutNow = buildPolygonLayout(slide1, slide2, slide3, slide4);
+    const designToSend = pickPolygonLayout(layoutNow, editLayout) ?? null;
+
+    // ⚠️ setLoading false BEFORE navigate (component unmount ho jata hai)
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     setEditLoading(false);
 
     navigate(ADMINS_DASHBOARD.ADMIN_EDITOR, {
@@ -719,12 +919,18 @@ const NewCardsForm = ({ editProduct }: Props) => {
       },
     });
   };
+<<<<<<< HEAD
+=======
+>>>>>>> a14ba4f93fd745df71dd2fa5e97ab521e4c1538a
+
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
   const onSubmit = async (data: FormValue) => {
     try {
       setLoading(true);
 
       const layoutNow = buildPolygonLayout(slide1, slide2, slide3, slide4, { onlySelectedImages: true });
+<<<<<<< HEAD
       const baseLayout = pickPolygonLayout(layoutNow, editLayout) ?? {};
       const layoutObj = typeof baseLayout === "object" && baseLayout !== null ? baseLayout : {};
       const { pricing: existingPricing, salePricing: existingSalePricing } = parseLayoutPricing(
@@ -828,6 +1034,18 @@ const NewCardsForm = ({ editProduct }: Props) => {
         (typeof capturedImageurl === "string" && capturedImageurl.startsWith("data:image/"))
           ? capturedImageurl
           : (id ? existingThumbnail : null);
+=======
+      const polygonlayout = pickPolygonLayout(layoutNow, editLayout) ?? {};
+
+      let imageurl: string | null = null;
+      if (previewRef.current) {
+        try {
+          imageurl = await captureNodeToPng(previewRef.current, "#ffffff");
+        } catch {
+          imageurl = null;
+        }
+      }
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
       const payload = {
         cardname: data.cardname,
@@ -839,12 +1057,17 @@ const NewCardsForm = ({ editProduct }: Props) => {
         polygon_shape: "",
         polygonlayout,
         lastmessage: "",
+<<<<<<< HEAD
         ...(finalImageurl ? { imageurl: finalImageurl } : id ? {} : { imageurl: null }),
         ...(id ? {} : { lastpageimageurl: null }),
 
         // ✅ NEW (DB column: accessplan)
         accessplan: data.accessPlan,
 
+=======
+        imageurl,
+        lastpageimageurl: null,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         actualprice: data.actualprice,
         a4price: data.a4price,
         a5price: data.a5price,
@@ -855,6 +1078,7 @@ const NewCardsForm = ({ editProduct }: Props) => {
         saleusletter: data.saleusletter,
       };
 
+<<<<<<< HEAD
       if (payload.actualprice == null) throw new Error("Actual Price is required");
 
       if (finalImageurl) {
@@ -899,6 +1123,28 @@ const NewCardsForm = ({ editProduct }: Props) => {
 
       if (!id) {
         reset();
+=======
+      if (payload.actualprice == null)
+        throw new Error("Actual Price is required");
+
+      if (id) {
+        const { error } = await supabase
+          .from("cards")
+          .update(payload)
+          .eq("id", id);
+        if (error) throw error;
+        toast.success("Card updated successfully!");
+        reset()
+        slide1.resetSlide1State?.();
+        slide2.resetSlide2State?.();
+        slide3.resetSlide3State?.();
+        slide4.resetSlide4State?.();
+      } else {
+        const { error } = await supabase.from("cards").insert([payload]);
+        if (error) throw error;
+        toast.success("Card saved successfully!");
+        reset()
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         slide1.resetSlide1State?.();
         slide2.resetSlide2State?.();
         slide3.resetSlide3State?.();
@@ -906,25 +1152,46 @@ const NewCardsForm = ({ editProduct }: Props) => {
       }
     } catch (err: any) {
       toast.error("Failed to save card: " + (err?.message || "Unknown error"));
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+  } finally {
+    setLoading(false);
+  }
+};
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     } finally {
       setLoading(false);
     }
   };
 
+<<<<<<< HEAD
+=======
+>>>>>>> a14ba4f93fd745df71dd2fa5e97ab521e4c1538a
+
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   return (
     <Box>
       <Box
         sx={{
+<<<<<<< HEAD
           display: { md: "flex", sm: "block", xs: "block" },
           gap: "20px",
           justifyContent: "center",
           alignItems: { md: "center", sm: "stretch", xs: "stretch" },
+=======
+          display: { md: "flex", sm: "flex", xs: "block" },
+          gap: "20px",
+          justifyContent: "center",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           width: "100%",
           height: "auto",
           overflow: "hidden",
           mt: 2,
         }}
       >
+<<<<<<< HEAD
         {/* Left — Preview (Slide-1 ONLY) */}
         <Box
           ref={previewRef}
@@ -932,6 +1199,14 @@ const NewCardsForm = ({ editProduct }: Props) => {
             width: previewSize.width,
             height: previewSize.height,
             maxWidth: "100%",
+=======
+        {/* Left â€” Preview (Slide-1 ONLY) */}
+        <Box
+          ref={previewRef}
+          sx={{
+            width: { md: "500px", sm: "400px", xs: "100%" },
+            height: { md: "700px", sm: "600px", xs: 400 },
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             position: "relative",
             overflow: "hidden",
             borderRadius: "12px",
@@ -940,6 +1215,7 @@ const NewCardsForm = ({ editProduct }: Props) => {
             userSelect: "none",
           }}
         >
+<<<<<<< HEAD
           <Slide1PreviewBox width={previewSize.width} height={previewSize.height} scale={1} />
         </Box>
 
@@ -949,6 +1225,16 @@ const NewCardsForm = ({ editProduct }: Props) => {
           sx={{
             width: { md: "500px", sm: "100%", xs: "100%" },
             maxWidth: "100%",
+=======
+          <Slide1PreviewBox width={500} height={700} scale={1} />
+        </Box>
+
+        {/* Right â€” Form */}
+        <Box
+          component="form"
+          sx={{
+            width: { md: "500px", sm: "500px", xs: "100%" },
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             mt: { md: 0, sm: 0, xs: 3 },
           }}
           onSubmit={handleSubmit(onSubmit)}
@@ -957,11 +1243,20 @@ const NewCardsForm = ({ editProduct }: Props) => {
             label="Card Name"
             placeholder="Enter your card name"
             defaultValue=""
+<<<<<<< HEAD
             register={register("cardname", { required: "Card Name is required" })}
             error={errors.cardname?.message}
           />
 
 
+=======
+            register={register("cardname", {
+              required: "Card Name is required",
+            })}
+            error={errors.cardname?.message}
+          />
+
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           <Controller
             name="cardcategory"
             control={control}
@@ -969,9 +1264,23 @@ const NewCardsForm = ({ editProduct }: Props) => {
               <CustomInput
                 label="Card Category"
                 type="select"
+<<<<<<< HEAD
                 placeholder={isLoadingCats ? "Loading categories..." : isErrorCats ? "Failed to load categories" : "Cards"}
                 value={field.value || "Cards"}
                 onChange={(e) => field.onChange((e.target as HTMLInputElement).value)}
+=======
+                placeholder={
+                  isLoadingCats
+                    ? "Loading categories..."
+                    : isErrorCats
+                    ? "Failed to load categories"
+                    : "Cards"
+                }
+                value={field.value || "Cards"}
+                onChange={(e) =>
+                  field.onChange((e.target as HTMLInputElement).value)
+                }
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                 error={errors.cardcategory?.message}
                 options={categoryOptions}
               />
@@ -985,9 +1294,21 @@ const NewCardsForm = ({ editProduct }: Props) => {
               <CustomInput
                 label="Sub Category"
                 type="select"
+<<<<<<< HEAD
                 placeholder={subCategoryOptions.length === 0 ? "No sub categories" : "Select sub category (optional)"}
                 value={field.value ?? ""}
                 onChange={(e) => field.onChange((e.target as HTMLInputElement).value)}
+=======
+                placeholder={
+                  subCategoryOptions.length === 0
+                    ? "No sub categories"
+                    : "Select sub category (optional)"
+                }
+                value={field.value ?? ""}
+                onChange={(e) =>
+                  field.onChange((e.target as HTMLInputElement).value)
+                }
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                 error={errors.subCategory?.message}
                 options={subCategoryOptions}
               />
@@ -1005,11 +1326,21 @@ const NewCardsForm = ({ editProduct }: Props) => {
                   !watch("subCategory")
                     ? "Select sub category first (optional)"
                     : subSubCategoryOptions.length === 0
+<<<<<<< HEAD
                       ? "No sub-sub categories"
                       : "Select sub-sub category (optional)"
                 }
                 value={field.value ?? ""}
                 onChange={(e) => field.onChange((e.target as HTMLInputElement).value)}
+=======
+                    ? "No sub-sub categories"
+                    : "Select sub-sub category (optional)"
+                }
+                value={field.value ?? ""}
+                onChange={(e) =>
+                  field.onChange((e.target as HTMLInputElement).value)
+                }
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                 error={errors.subSubCategory?.message}
                 options={subSubCategoryOptions}
               />
@@ -1026,6 +1357,7 @@ const NewCardsForm = ({ editProduct }: Props) => {
 
           <Box
             sx={{
+<<<<<<< HEAD
               display: "grid",
               gridTemplateColumns: {
                 xs: "1fr",
@@ -1035,6 +1367,12 @@ const NewCardsForm = ({ editProduct }: Props) => {
               },
               gap: 1,
               alignItems: "start",
+=======
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: 1,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             }}
           >
             <CustomInput
@@ -1042,6 +1380,7 @@ const NewCardsForm = ({ editProduct }: Props) => {
               placeholder="Actual price"
               defaultValue=""
               type="number"
+<<<<<<< HEAD
               register={register("actualprice", { required: "Actual Price is required", setValueAs: toFloat })}
               error={errors.actualprice?.message}
             />
@@ -1132,13 +1471,41 @@ const NewCardsForm = ({ editProduct }: Props) => {
               register={register("saleustabloid", { setValueAs: toFloat })}
               error={errors.saleustabloid?.message}
             />
+=======
+              register={register("actualprice", { required: "Actual Price is required", setValueAs: toFloat, })}
+              error={errors.actualprice?.message}
+            />
+            <CustomInput label="A4 Price" placeholder="A4 price" defaultValue="" type="number" register={register("a4price", { required: "A4 Price is required", setValueAs: toFloat, })} error={errors.a4price?.message} />
+            <CustomInput label="A5 Price" placeholder="A5 price" defaultValue="" type="number" register={register("a5price", { required: "A5 Price is required", setValueAs: toFloat, })} error={errors.a5price?.message} />
+            <CustomInput label="US Letter" placeholder="US Letter" defaultValue="" type="number" register={register("usletter", { required: "US Letter Price is required", setValueAs: toFloat, })} error={errors.usletter?.message} />
+          </Box>
+
+          <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 1 }}>
+<<<<<<< HEAD
+            <CustomInput label="Sale Price" placeholder="Sale price" type="number" defaultValue="" register={register("saleprice", { setValueAs: toFloat })} error={errors.saleprice?.message} showRequiredAsterisk={false} />
+            <CustomInput label="Sale A4 Price" placeholder="A4 Price" type="number" defaultValue="" register={register("salea4price", { setValueAs: toFloat })} error={errors.salea4price?.message} showRequiredAsterisk={false} />
+            <CustomInput label="Sale A5 Price" placeholder="A5 Price" type="number" defaultValue="" register={register("salea5price", { setValueAs: toFloat })} error={errors.salea5price?.message} showRequiredAsterisk={false} />
+            <CustomInput label="Sale US Letter" placeholder="US Letter" type="number" defaultValue="" register={register("saleusletter", { setValueAs: toFloat })} error={errors.saleusletter?.message} showRequiredAsterisk={false} />
+=======
+            <CustomInput label="Sale Price" placeholder="Sale price" type="number" defaultValue="" register={register("saleprice", { setValueAs: toFloat })} error={errors.saleprice?.message} />
+            <CustomInput label="Sale A4 Price" placeholder="A4 Price" type="number" defaultValue="" register={register("salea4price", { setValueAs: toFloat })} error={errors.salea4price?.message} />
+            <CustomInput label="Sale A5 Price" placeholder="A5 Price" type="number" defaultValue="" register={register("salea5price", { setValueAs: toFloat })} error={errors.salea5price?.message} />
+            <CustomInput label="Sale US Letter" placeholder="US Letter" type="number" defaultValue="" register={register("saleusletter", { setValueAs: toFloat })} error={errors.saleusletter?.message} />
+>>>>>>> a14ba4f93fd745df71dd2fa5e97ab521e4c1538a
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           </Box>
 
           <CustomInput
             label="Card description"
             placeholder="Enter your description"
             defaultValue=""
+<<<<<<< HEAD
             register={register("description", { required: "Description is required" })}
+=======
+            register={register("description", {
+              required: "Description is required",
+            })}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             error={errors.description?.message}
             multiline
           />
@@ -1146,10 +1513,15 @@ const NewCardsForm = ({ editProduct }: Props) => {
           <Box
             sx={{
               display: "flex",
+<<<<<<< HEAD
               flexDirection: { xs: "column", sm: "row" },
               justifyContent: { xs: "stretch", sm: "space-between" },
               alignItems: { xs: "stretch", sm: "center" },
               gap: 2,
+=======
+              justifyContent: "space-between",
+              alignItems: "center",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
               mt: 2,
             }}
           >
@@ -1176,3 +1548,7 @@ const NewCardsForm = ({ editProduct }: Props) => {
 };
 
 export default NewCardsForm;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0

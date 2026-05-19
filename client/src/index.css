@@ -18,6 +18,7 @@ body {
   text-align: center;
 }
 
+<<<<<<< HEAD
 /* iOS data-detector hardening for template editor/preview text surfaces */
 .templet-editor-wrapper,
 .templet-preview-wrapper,
@@ -44,6 +45,8 @@ body {
   pointer-events: none;
 }
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
 .panning-img {
   animation: panLeftRight 10s infinite linear;

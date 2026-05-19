@@ -15,7 +15,11 @@ type SigninForm = {
 
 const SignIn = () => {
   const navigate = useNavigate();
+<<<<<<< HEAD
   const { signIn, signInWithGoogle ,loading} = useAuth();
+=======
+  const { signIn, signInWithGoogle } = useAuth();
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
   const {
     register,
@@ -23,6 +27,7 @@ const SignIn = () => {
     formState: { errors },
   } = useForm<SigninForm>();
 
+<<<<<<< HEAD
 
 const onSubmitForm = async (data: SigninForm) => {
   try {
@@ -33,6 +38,20 @@ const onSubmitForm = async (data: SigninForm) => {
   }
 };
 
+=======
+  const onSubmitForm = async (data: SigninForm) => {
+    try {
+      await signIn({
+        email: data.email,
+        password: data.password,
+      });
+      toast.success("Login successful!");
+      navigate('/');
+    } catch (err: any) {
+      toast.error(err.message);
+    }
+  };
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
   return (
     <Box
@@ -45,7 +64,11 @@ const onSubmitForm = async (data: SigninForm) => {
     >
       <Box
         component={"img"}
+<<<<<<< HEAD
         src="/assets/images/signinbg.png"
+=======
+        src="/assets/images/animated-banner.jpg"
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         sx={{
           position: "absolute",
           top: 0,
@@ -114,7 +137,10 @@ const onSubmitForm = async (data: SigninForm) => {
               width="450px"
               personal
               type="submit"
+<<<<<<< HEAD
               loading={loading}
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             />
 
             <Typography sx={{ fontSize: "13px", textAlign: "start", mt: 3 }}>

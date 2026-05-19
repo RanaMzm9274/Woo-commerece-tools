@@ -1,7 +1,10 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
+<<<<<<< HEAD
 import { safeGetStorage, safeSetLocalStorage } from "../lib/storage";
 import { getDraftCardId } from "../lib/draftCardId";
 import { clearSlideStateFromIdb, getSlideStateKeys, loadSlideStateFromIdb, saveSlideStateToIdb } from "../lib/idbSlideState";
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
 const fontColors = [
   "#000000",
@@ -16,6 +19,7 @@ const fontColors = [
   "#FFD700",
 ];
 
+<<<<<<< HEAD
 const normalizeStoredUrl = (value: unknown): string | null => {
   if (typeof value === "string") {
     const trimmed = value.trim();
@@ -28,6 +32,8 @@ const normalizeStoredUrl = (value: unknown): string | null => {
   return null;
 };
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 interface Position {
   x: number;
   y: number;
@@ -228,7 +234,10 @@ interface Slide3ContextType {
 
   // For Sticker
   selectedStickers3: StickerItem[];
+<<<<<<< HEAD
   setSelectedStickers3: any;
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   addSticker3: (
     sticker: Omit<StickerItem, "x" | "y" | "width" | "height" | "zIndex">
   ) => void;
@@ -421,12 +430,15 @@ export const Slide3Provider: React.FC<{ children: React.ReactNode }> = ({
   const [duration3, setDuration3] = useState<number | null>(null);
   const [poster3, setPoster3] = useState<string | null>(null);
 
+<<<<<<< HEAD
   // --- 💾 Persist heavy image data to IndexedDB ---
   useEffect(() => {
     const [key] = getSlideStateKeys(3, getDraftCardId());
     void saveSlideStateToIdb(key, { images3, draggableImages3 }).catch(() => {});
   }, [images3, draggableImages3]);
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   // New states for position and size
   const [textPositions3, setTextPositions3] = useState<Position[]>(
     texts3.map(() => ({ x: 0, y: 0 }))
@@ -627,6 +639,7 @@ export const Slide3Provider: React.FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     try {
+<<<<<<< HEAD
       const saved = safeGetStorage("slide3_state");
       if (saved) {
         const parsed = JSON.parse(saved);
@@ -635,17 +648,27 @@ export const Slide3Provider: React.FC<{ children: React.ReactNode }> = ({
         if (currentDraftId) {
           if (!savedDraftId || savedDraftId !== currentDraftId) return;
         }
+=======
+      const saved = localStorage.getItem("slide3_state");
+      if (saved) {
+        const parsed = JSON.parse(saved);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
         if (parsed.textElements3) setTextElements3(parsed.textElements3);
         if (parsed.draggableImages3) setDraggableImages3(parsed.draggableImages3);
         if (parsed.images3) setImages3(parsed.images3);
         if (parsed.selectedImg3) setSelectedImage3(parsed.selectedImg3);
+<<<<<<< HEAD
         {
           const videoUrl = normalizeStoredUrl(parsed.selectedVideoUrl3);
           const audioUrl = normalizeStoredUrl(parsed.selectedAudioUrl3);
           if (videoUrl) setSelectedVideoUrl3(videoUrl);
           if (audioUrl) setSelectedAudioUrl3(audioUrl);
         }
+=======
+        if (parsed.selectedVideoUrl3) setSelectedVideoUrl3(parsed.selectedVideoUrl3);
+        if (parsed.selectedAudioUrl3) setSelectedAudioUrl3(parsed.selectedAudioUrl3);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         if (parsed.selectedLayout3) setSelectedLayout3(parsed.selectedLayout3);
         if (parsed.oneTextValue3) setOneTextValue3(parsed.oneTextValue3);
         if (parsed.showOneTextRightSideBox3) setShowOneTextRightSideBox3(parsed.showOneTextRightSideBox3);
@@ -674,6 +697,7 @@ export const Slide3Provider: React.FC<{ children: React.ReactNode }> = ({
         if (parsed.lineHeight3 !== undefined) setLineHeight3(parsed.lineHeight3);
         if (parsed.rotation3 !== undefined) setRotation3(parsed.rotation3);
 
+<<<<<<< HEAD
         const hasHeavyLocal =
           (parsed.images3 && parsed.images3.length) ||
           (parsed.draggableImages3 && parsed.draggableImages3.length);
@@ -689,12 +713,15 @@ export const Slide3Provider: React.FC<{ children: React.ReactNode }> = ({
           } catch {}
         }
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       }
     } catch (error) {
       console.error("❌ Error restoring slide3_state:", error);
     }
   }, []);
 
+<<<<<<< HEAD
   // --- 🧠 Restore heavy image data from IndexedDB (if localStorage skipped it) ---
   useEffect(() => {
     if (images3.length || draggableImages3.length) return;
@@ -727,6 +754,14 @@ export const Slide3Provider: React.FC<{ children: React.ReactNode }> = ({
     const stateToSave = {
       draftId: getDraftCardId() ?? null,
       textElements3,
+=======
+  // --- 💾 Auto-save changes ---
+  useEffect(() => {
+    const stateToSave = {
+      textElements3,
+      draggableImages3,
+      images3,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       selectedImg3,
       selectedVideoUrl3,
       selectedAudioUrl3,
@@ -757,6 +792,7 @@ export const Slide3Provider: React.FC<{ children: React.ReactNode }> = ({
       layout3
     };
 
+<<<<<<< HEAD
     const payload = JSON.stringify(stateToSave);
     const ok = safeSetLocalStorage("slide3_state", payload, {
       clearOnFail: ["slides_backup", "slide3_state"],
@@ -767,6 +803,17 @@ export const Slide3Provider: React.FC<{ children: React.ReactNode }> = ({
     }
   }, [
     textElements3,
+=======
+    try {
+      localStorage.setItem("slide3_state", JSON.stringify(stateToSave));
+    } catch (error) {
+      console.error("❌ Error saving slide3_state:", error);
+    }
+  }, [
+    textElements3,
+    draggableImages3,
+    images3,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     selectedImg3,
     selectedVideoUrl3,
     selectedAudioUrl3,
@@ -800,11 +847,14 @@ export const Slide3Provider: React.FC<{ children: React.ReactNode }> = ({
   const clearSlide3LocalData = () => {
     try {
       localStorage.removeItem("slide3_state");
+<<<<<<< HEAD
       sessionStorage.removeItem("slide3_state");
       const keys = getSlideStateKeys(3, getDraftCardId());
       keys.forEach((key) => {
         void clearSlideStateFromIdb(key).catch(() => {});
       });
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     } catch (error) {
       console.error("Error clearing slide3_state:", error);
     }
@@ -863,7 +913,10 @@ export const Slide3Provider: React.FC<{ children: React.ReactNode }> = ({
         setImages3,
         addSticker3,
         selectedStickers3,
+<<<<<<< HEAD
         setSelectedStickers3,
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         updateSticker3,
         removeSticker3,
 
@@ -964,4 +1017,8 @@ export const useSlide3 = () => {
     throw new Error("useWishCard must be used within a WishCardProvider");
   }
   return context;
+<<<<<<< HEAD
 };
+=======
+};
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0

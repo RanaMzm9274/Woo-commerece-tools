@@ -11,7 +11,11 @@
   justify-content: center;
   align-items: center;
   overflow: hidden;
+<<<<<<< HEAD
   width: 100%;
+=======
+  width: 1000px;
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 }
 
 .paper {
@@ -25,6 +29,10 @@
 
 .front {
   backface-visibility: hidden;
+<<<<<<< HEAD
+=======
+  border-left: 10px solid #8d6da1;
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   border-radius: 14px;
 }
 
@@ -92,8 +100,13 @@
 /* Tablets (≤ 768px) */
 @media (max-width: 768px) {
   .book {
+<<<<<<< HEAD
     width: 500px;
     height: 700px;
+=======
+    width: 410px;
+    height: 600px;
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   }
 }
 
@@ -101,14 +114,28 @@
 @media (max-width: 480px) {
   .front-content,
   .back-content {
+<<<<<<< HEAD
     width: 80%;
     height: 90%;
+=======
+    width: 100%;
+    height: 100%;
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   }
 
   .book {
     display: none;
   } /* hide 3D book on mobile */
+<<<<<<< HEAD
   .mobile-slide {
+=======
+  .mobile-only {
+    width: 400px;
+  }
+  .mobile-slide {
+    width: 400px;
+    height: 600px;
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     border-radius: 15px;
     border: 1px solid #dbdbdb;
     overflow: hidden; /* show only active slide */
@@ -117,6 +144,10 @@
   }
 
   .book-container {
+<<<<<<< HEAD
     width: 100%;
+=======
+    width: 400px;
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   }
 }

@@ -104,7 +104,11 @@ export default function Categories() {
 
   return (
     <DashboardLayout title="Categories" addBtn="Add Category" onClick={openAdd}>
+<<<<<<< HEAD
       <Box sx={{ width: "100%", display: "flex", flexWrap: "wrap", gap: '6px' , m: 'auto',justifyContent: 'center' }}>
+=======
+      <Box sx={{ width: "100%", display: "flex", flexWrap: "wrap", gap: 1 }}>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         {paginatedData.map((cate: any) => (
           <CategoriesCard
             key={cate.id}

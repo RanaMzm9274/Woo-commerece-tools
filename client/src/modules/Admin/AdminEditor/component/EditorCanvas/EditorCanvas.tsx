@@ -38,7 +38,10 @@ type Props = {
   setStickerElements: React.Dispatch<React.SetStateAction<StickerType[]>>;
   onFocus?: () => void;
   disabled?: boolean;
+<<<<<<< HEAD
   canvasScale?: number;
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 };
 
 const EditorCanvas = forwardRef<EditorCanvasHandle, Props>(
@@ -52,7 +55,10 @@ const EditorCanvas = forwardRef<EditorCanvasHandle, Props>(
       setStickerElements,
       onFocus,
       disabled = false,
+<<<<<<< HEAD
       canvasScale,
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     },
     ref
   ) => {
@@ -184,6 +190,7 @@ const EditorCanvas = forwardRef<EditorCanvasHandle, Props>(
       e.target.value = "";
     };
 
+<<<<<<< HEAD
     const scale = Math.max(1, canvasScale ?? 1);
     const baseSize = {
       mdW: 500,
@@ -194,10 +201,13 @@ const EditorCanvas = forwardRef<EditorCanvasHandle, Props>(
       xsH: 400,
     };
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     return (
       <Box
         onMouseDown={onFocus}
         sx={{
+<<<<<<< HEAD
           width: {
             md: `${baseSize.mdW * scale}px`,
             sm: `${baseSize.smW * scale}px`,
@@ -208,19 +218,28 @@ const EditorCanvas = forwardRef<EditorCanvasHandle, Props>(
             sm: `${baseSize.smH * scale}px`,
             xs: `${baseSize.xsH * scale}px`,
           },
+=======
+          width: { md: "500px", sm: "400px", xs: "100%" },
+          height: { md: "700px", sm: "600px", xs: 400 },
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           borderRadius: "12px",
           boxShadow: "3px 5px 8px gray",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           position: "relative",
+<<<<<<< HEAD
           overflow: "visible",
+=======
+          overflow: "hidden",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           border: `1px solid lightGray`,
           cursor: disabled ? "not-allowed" : "pointer",
           pointerEvents: disabled ? "none" : "auto", // why: freeze when inactive
           backgroundColor: "#fff",
         }}
       >
+<<<<<<< HEAD
         <Box
           sx={{
             width: { md: "500px", sm: "400px", xs: "320px" },
@@ -233,6 +252,8 @@ const EditorCanvas = forwardRef<EditorCanvasHandle, Props>(
             transformOrigin: "top left",
           }}
         >
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         <input
           type="file"
           accept="image/*"
@@ -246,7 +267,10 @@ const EditorCanvas = forwardRef<EditorCanvasHandle, Props>(
             key={el.id}
             default={{ x: el.x, y: el.y, width: el.width, height: el.height }}
             bounds="parent"
+<<<<<<< HEAD
             scale={scale}
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             onDragStart={() => {
               draggingRef.current = true;
             }}
@@ -368,7 +392,10 @@ const EditorCanvas = forwardRef<EditorCanvasHandle, Props>(
             key={t.id}
             default={{ x: t.x, y: t.y, width: t.width, height: t.height }}
             bounds="parent"
+<<<<<<< HEAD
             scale={scale}
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             onDragStart={() => {
               draggingRef.current = true;
             }}
@@ -530,7 +557,10 @@ const EditorCanvas = forwardRef<EditorCanvasHandle, Props>(
             key={st.id}
             default={{ x: st.x, y: st.y, width: st.width, height: st.height }}
             bounds="parent"
+<<<<<<< HEAD
             scale={scale}
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             onDragStop={(_, d) => {
               setStickerElements((prev) =>
                 prev.map((s) => (s.id === st.id ? { ...s, x: d.x, y: d.y } : s))
@@ -628,9 +658,16 @@ const EditorCanvas = forwardRef<EditorCanvasHandle, Props>(
           </Rnd>
         ))}
       </Box>
+<<<<<<< HEAD
       </Box>
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     );
   }
 );
 
+<<<<<<< HEAD
 export default EditorCanvas;
+=======
+export default EditorCanvas;
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0

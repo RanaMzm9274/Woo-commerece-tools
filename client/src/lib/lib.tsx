@@ -2,7 +2,10 @@
 import toast from 'react-hot-toast';
 import { supabase } from '../supabase/supabase';
 import { createSyncStoragePersister } from './../../node_modules/@tanstack/query-sync-storage-persister/src/index';
+<<<<<<< HEAD
 import type { CategoryKey } from '../constant/data';
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 export const storagePersister = createSyncStoragePersister({
   storage: window.localStorage,
 });
@@ -199,6 +202,7 @@ export const preservePdfItems = (prev: any[], next: any[]) => {
   const keepPdf = prevPdf.filter((p) => p?.id && !nextIds.has(p.id));
 
   return [...nextNoPdf, ...keepPdf];
+<<<<<<< HEAD
 };
 
 // canvasMultiplier.ts
@@ -427,3 +431,6 @@ export async function removeWhiteBg(
 
   return task;
 }
+=======
+};
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0

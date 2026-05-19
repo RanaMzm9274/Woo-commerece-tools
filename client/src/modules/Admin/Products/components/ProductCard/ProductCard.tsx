@@ -3,7 +3,10 @@
 // ===============================================
 import { Delete, Edit } from "@mui/icons-material";
 import { Box, IconButton } from "@mui/material";
+<<<<<<< HEAD
 import TemplateSvgThumbnail from "../../../../../components/TemplateSvgThumbnail/TemplateSvgThumbnail";
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
 // Keep in sync with callers
 type Card = {
@@ -20,10 +23,14 @@ type Card = {
   lastpageImageUrl?: string;
   img_url?: string;
   subCategory?:string;
+<<<<<<< HEAD
   subSubCategory?:string;
   __type?: "card" | "templet";
   slides?: any;
   raw_stores?: any;
+=======
+  subSubCategory?:string
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 };
 
 type Props = {
@@ -34,15 +41,19 @@ type Props = {
 
 const ProductCard = (props: Props) => {
   const { data, openDeleteModal, onEdit } = props || {};
+<<<<<<< HEAD
   const isTemplate = data?.__type === "templet";
   const useContainThumb = /(mug|candle|business\s*card|business\s*leaflet|tote\s*bag|bag|sticker)/i.test(
     String(data?.card_category ?? ""),
   );
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
   return (
     <Box
       component={"div"}
       sx={{
+<<<<<<< HEAD
         width: "100%",
         height: "auto",
         aspectRatio: "3 / 4",
@@ -55,10 +66,22 @@ const ProductCard = (props: Props) => {
         position: "relative",
         cursor: "pointer",
         "&:hover": { boxShadow: "0 10px 28px rgba(20, 23, 31, 0.12)" },
+=======
+        width: { md: 200, sm: 200, xs: "100%" },
+        height: { md: 250, sm: 250, xs: 280 },
+        border: "1px solid #e0e0e0",
+        borderRadius: 3,
+        overflow: "hidden",
+        boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
+        position: "relative",
+        cursor: "pointer",
+        "&:hover": { boxShadow: "0 4px 15px rgba(0,0,0,0.2)" },
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         "&:hover .overlay": { opacity: 1 },
       }}
     >
       {/* Product Image */}
+<<<<<<< HEAD
       {isTemplate ? (
         <TemplateSvgThumbnail
           template={{
@@ -92,6 +115,19 @@ const ProductCard = (props: Props) => {
           }}
         />
       )}
+=======
+      <Box
+        component={"img"}
+        src={data?.imageUrl || data?.lastpageImageUrl || data?.img_url}
+        alt="Product"
+        sx={{
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          clipPath: data?.polygon_shape || "none",
+        }}
+      />
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
       {/* Overlay with Buttons */}
       <Box

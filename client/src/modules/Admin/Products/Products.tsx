@@ -1,7 +1,12 @@
+<<<<<<< HEAD
+=======
+// src/pages/Products/Products.tsx
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 import {
   Box,
   CircularProgress,
   Typography,
+<<<<<<< HEAD
   Tabs,
   Tab,
   Badge,
@@ -12,6 +17,23 @@ import {
 } from "@mui/material";
 import DashboardLayout from "../../../layout/DashboardLayout";
 import { supabase, supabaseAdmin } from "../../../supabase/supabase";
+=======
+  Button,
+  Tabs,
+  Tab,
+  Badge,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
+  Divider,
+  Paper,
+  Tooltip,
+  IconButton,
+  Collapse,
+} from "@mui/material";
+import DashboardLayout from "../../../layout/DashboardLayout";
+import { supabase } from "../../../supabase/supabase";
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 import useModal from "../../../hooks/useModal";
 import ConfirmModal from "../../../components/ConfirmModal/ConfirmModal";
 import { Delete, Style as CardsIcon, Category as TemplatesIcon, FilterList } from "@mui/icons-material";
@@ -26,6 +48,10 @@ import {
   fetchAllCategoriesFromDB,
   fetchAllTempletDesigns,
 } from "../../../source/source";
+<<<<<<< HEAD
+=======
+import { COLORS } from "../../../constant/color";
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
 type CardRow = {
   id: number;
@@ -67,6 +93,27 @@ type TemplateDesign = {
   subSubCategory?: string; sub_subcategory?: string;
 };
 
+<<<<<<< HEAD
+=======
+type TemplateFilterSidebarProps = {
+  open: boolean;
+  onToggle: () => void;
+  ALL: string;
+  mainCats: string[];
+  tMainCat: string;
+  setTMainCat: (v: string) => void;
+  tSubcats: string[];
+  tSubCat: string;
+  setTSubCat: (v: string) => void;
+
+  // ✅ add and type both of these properly
+  tSubSubs: Set<string>;
+  setTSubSubs: React.Dispatch<React.SetStateAction<Set<string>>>;
+
+  tVisibleSubSubs: string[];
+};
+
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 const ALL = "ALL";
 type ActiveTab = "cards" | "templates";
 type DeletePick = { id: number | string; source: ActiveTab };
@@ -75,17 +122,26 @@ type DeletePick = { id: number | string; source: ActiveTab };
 
 // delete helpers
 const deleteCardById = async (id: number | string) => {
+<<<<<<< HEAD
   const { error } = await supabaseAdmin.from("cards").delete().eq("id", id);
+=======
+  const { error } = await supabase.from("cards").delete().eq("id", id);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   if (error) throw new Error(error.message);
   return id;
 };
 const deleteTemplateById = async (id: number | string) => {
+<<<<<<< HEAD
   const { error } = await supabaseAdmin.from("templetDesign").delete().eq("id", id);
+=======
+  const { error } = await supabase.from("templetDesign").delete().eq("id", id);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   if (error) throw new Error(error.message);
   return id;
 };
 const getTabIndex = (t: ActiveTab) => (t === "cards" ? 0 : 1);
 const indexToTab = (i: number): ActiveTab => (i === 0 ? "cards" : "templates");
+<<<<<<< HEAD
 const resolveCardThumb = (row: any) =>
   row?.imageurl ??
   row?.imageUrl ??
@@ -97,6 +153,10 @@ const resolveCardThumb = (row: any) =>
 
 // cards normalize helpers
 const getCardMain = (r: CardRow) => (r.cardcategory ?? r.card_category ?? "").trim();
+=======
+
+// cards normalize helpers
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 const getSub = (r: CardRow) => (r.subCategory ?? r.subcategory ?? "").trim();
 const getSubSub = (r: CardRow) => (r.subSubCategory ?? r.sub_subcategory ?? "").trim();
 
@@ -118,6 +178,7 @@ function buildCardTreesFromRows(rows: CardRow[]) {
   return { subcategories, sub_subcategories };
 }
 
+<<<<<<< HEAD
 function FilterBar({
   categories,
   category,
@@ -138,11 +199,39 @@ function FilterBar({
   subsubcategories: string[];
   subsubcategory: string;
   onSubsubcategoryChange: (v: string) => void;
+=======
+/* ---------------- Filter Sidebars ---------------- */
+
+// Cards filter (unchanged)
+function CardsFilterSidebar({
+  open,
+  onToggle,
+  ALL,
+  cardSubcategories,
+  selectedSubCat,
+  setSelectedSubCat,
+  selectedSubSubs,
+  toggleSubSub,
+  clearSubSub,
+  visibleSubSubs,
+}: {
+  open: boolean;
+  onToggle: () => void;
+  ALL: string;
+  cardSubcategories: string[];
+  selectedSubCat: string;
+  setSelectedSubCat: (v: string) => void;
+  selectedSubSubs: Set<string>;
+  toggleSubSub: (v: string) => void;
+  clearSubSub: () => void;
+  visibleSubSubs: string[];
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 }) {
   return (
     <Paper
       elevation={0}
       sx={{
+<<<<<<< HEAD
         borderRadius: 3,
         border: "1px solid #E6E9EF",
         bgcolor: "#F7F8FB",
@@ -215,6 +304,254 @@ function FilterBar({
           </Select>
         </FormControl>
       </Box>
+=======
+        width: open ? 180 : 50,
+        p: 1,
+        border: `1px solid ${COLORS.seconday}`,
+        borderRadius: 2,
+        alignSelf: "flex-start",
+        transition: (theme) =>
+          theme.transitions.create(["width", "padding"], { duration: theme.transitions.duration.shortest }),
+        position: "sticky",
+        top: 0,
+      }}
+    >
+      {open ? (
+        <Box onClick={onToggle} sx={{ display: "flex", alignItems: "center", gap: 1, cursor: "pointer", mb: 1, userSelect: "none" }}>
+          <FilterList fontSize="small" />
+          <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>Filters</Typography>
+        </Box>
+      ) : (
+        <Tooltip title="Open filters">
+          <IconButton onClick={onToggle} size="small" sx={{ mx: "auto", display: "block" }}>
+            <FilterList />
+          </IconButton>
+        </Tooltip>
+      )}
+
+      <Collapse in={open} timeout="auto" unmountOnExit>
+        <Typography variant="caption" sx={{ fontWeight: 700, textTransform: "uppercase", letterSpacing: 0.6 }}>
+          categories
+        </Typography>
+
+        <Box sx={{ display: "flex", height: 320, overflowY: "auto", }}>
+          <Tabs
+            orientation="vertical"
+            variant="scrollable"
+            scrollButtons="auto"
+            allowScrollButtonsMobile
+            value={[ALL, ...cardSubcategories].indexOf(selectedSubCat)}
+            onChange={(_, idx: number) => {
+              const name = [ALL, ...cardSubcategories][idx] ?? ALL;
+              setSelectedSubCat(name);
+            }}
+            sx={{
+              borderRight: 1,
+              borderColor: "transparent",
+              maxHeight: 320,
+              width: '100%',
+              "& .MuiTabs-scroller": { overflowY: "auto" },
+              "& .MuiTab-root": { alignItems: "flex-start", textTransform: "none" },
+            }}
+          >
+            <Tab label="All" />
+            {cardSubcategories.map((name) => (
+              <Tab key={name} label={name} />
+            ))}
+          </Tabs>
+        </Box>
+
+        {selectedSubCat !== ALL && (
+          <>
+            <Divider sx={{ my: 2 }} />
+            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexDirection: 'column', }}>
+              <Typography variant="caption" sx={{ fontWeight: 700, textTransform: "uppercase", letterSpacing: 0.6 }}>
+                {selectedSubCat} – Sub-filters
+              </Typography>
+              {selectedSubSubs.size > 0 && (
+                <Button size="small" onClick={clearSubSub} sx={{ textTransform: "none" }}>
+                  Clear
+                </Button>
+              )}
+            </Box>
+
+            <FormGroup sx={{ mt: 1, maxHeight: 350, overflowY: "hidden", width: '100%', display: 'flex', flexDirection: 'column' }}>
+              {visibleSubSubs.length === 0 ? (
+                <Typography variant="body2" color="text.secondary">
+                  No sub-subcategories.
+                </Typography>
+              ) : (
+                visibleSubSubs.map((name) => (
+                  <FormControlLabel
+                    key={name}
+                    control={
+                      <Checkbox
+                        size="small"
+                        checked={selectedSubSubs.has(name)}
+                        onChange={() => toggleSubSub(name)}
+                      />
+                    }
+                    label={name}
+                  />
+                ))
+              )}
+            </FormGroup>
+          </>
+        )}
+
+        {/* <Typography>
+          Sale Card
+        </Typography> */}
+      </Collapse>
+    </Paper>
+  );
+}
+
+// NEW: Templates filter
+function TemplateFilterSidebar({
+  open,
+  onToggle,
+  ALL,
+  mainCats,
+  tMainCat, setTMainCat,
+  tSubcats,
+  tSubCat, setTSubCat,
+  tSubSubs, setTSubSubs,
+  tVisibleSubSubs,
+}: TemplateFilterSidebarProps) {
+  const toggleSubSub = (name: string) => {
+    setTSubSubs((prev) => {
+      const next = new Set(prev);
+      next.has(name) ? next.delete(name) : next.add(name);
+      return next;
+    });
+  };
+  const clearSubSub = () => setTSubSubs(new Set());
+
+  return (
+    <Paper
+      elevation={0}
+      sx={{
+        width: open ? 180 : 50,
+        p: open ? 2 : 1,
+        border: `1px solid ${COLORS.seconday}`,
+        borderRadius: 2,
+        alignSelf: "flex-start",
+        transition: (theme) =>
+          theme.transitions.create(["width", "padding"], { duration: theme.transitions.duration.shortest }),
+        position: "sticky",
+        top: 0,
+      }}
+    >
+      {open ? (
+        <Box onClick={onToggle} sx={{ display: "flex", alignItems: "center", gap: 1, cursor: "pointer", mb: 1, userSelect: "none" }}>
+          <FilterList fontSize="small" />
+          <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>Filters</Typography>
+        </Box>
+      ) : (
+        <Tooltip title="Open filters">
+          <IconButton onClick={onToggle} size="small" sx={{ mx: "auto", display: "block" }}>
+            <FilterList />
+          </IconButton>
+        </Tooltip>
+      )}
+
+      <Collapse in={open} timeout="auto" unmountOnExit>
+        {/* Main Category */}
+        <Typography variant="caption" sx={{ fontWeight: 700, textTransform: "uppercase", letterSpacing: 0.6 }}>
+          Category
+        </Typography>
+        <Box sx={{ display: "flex", height: 280, overflowY: "auto", mt: 1 }}>
+          <Tabs
+            orientation="vertical"
+            variant="scrollable"
+            scrollButtons="auto"
+            allowScrollButtonsMobile
+            value={[ALL, ...mainCats].indexOf(tMainCat)}
+            onChange={(_, idx: number) => {
+              const name = [ALL, ...mainCats][idx] ?? ALL;
+              setTMainCat(name);
+              setTSubCat(ALL);
+              setTSubSubs(new Set());
+            }}
+            sx={{
+              borderRight: 1, borderColor: "transparent", maxHeight: 300,
+              width: '100%',
+              "& .MuiTabs-scroller": { overflowY: "auto" },
+              "& .MuiTab-root": { alignItems: "flex-start", textTransform: "none" },
+            }}
+          >
+            <Tab label="All" />
+            {mainCats.map((name) => <Tab key={name} label={name} />)}
+          </Tabs>
+        </Box>
+
+        {/* SubCategory */}
+        <Divider sx={{ my: 2 }} />
+        <Typography variant="caption" sx={{ fontWeight: 700, textTransform: "uppercase", letterSpacing: 0.6 }}>
+          Subcategory
+        </Typography>
+        <Box sx={{ display: "flex", height: 300, overflowY: "auto", mt: 1 }}>
+          <Tabs
+            orientation="vertical"
+            variant="scrollable"
+            scrollButtons="auto"
+            value={[ALL, ...tSubcats].indexOf(tSubCat)}
+            onChange={(_, idx: number) => {
+              const name = [ALL, ...tSubcats][idx] ?? ALL;
+              setTSubCat(name);
+              setTSubSubs(new Set());
+            }}
+            sx={{
+              borderRight: 1, borderColor: "transparent", maxHeight: 300,
+              width: '100%',
+              "& .MuiTabs-scroller": { overflowY: "auto" },
+              "& .MuiTab-root": { alignItems: "flex-start", textTransform: "none" },
+            }}
+          >
+            <Tab label="All" />
+            {tSubcats.map((name) => <Tab key={name} label={name} />)}
+          </Tabs>
+        </Box>
+
+        {/* Sub-SubCategory */}
+        {tSubCat !== ALL && (
+          <>
+            <Divider sx={{ my: 2 }} />
+            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexDirection: 'column' }}>
+              <Typography variant="caption" sx={{ fontWeight: 700, textTransform: "uppercase", letterSpacing: 0.6 }}>
+                {tSubCat} – Sub-filters
+              </Typography>
+              {tSubSubs.size > 0 && (
+                <Button size="small" onClick={clearSubSub} sx={{ textTransform: "none" }}>
+                  Clear
+                </Button>
+              )}
+            </Box>
+
+            <FormGroup sx={{ mt: 1, maxHeight: 350, overflowY: "auto" }}>
+              {tVisibleSubSubs.length === 0 ? (
+                <Typography variant="body2" color="text.secondary">No sub-subcategories.</Typography>
+              ) : (
+                tVisibleSubSubs.map((name) => (
+                  <FormControlLabel
+                    key={name}
+                    control={
+                      <Checkbox
+                        size="small"
+                        checked={tSubSubs.has(name)}
+                        onChange={() => toggleSubSub(name)}
+                      />
+                    }
+                    label={name}
+                  />
+                ))
+              )}
+            </FormGroup>
+          </>
+        )}
+      </Collapse>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     </Paper>
   );
 }
@@ -225,14 +562,23 @@ const Products = () => {
   const [activeTab, setActiveTab] = useState<ActiveTab>("cards");
 
   // cards filter state
+<<<<<<< HEAD
   const [cardMainCat, setCardMainCat] = useState<string>(ALL);
   const [selectedSubCat, setSelectedSubCat] = useState<string>(ALL);
   const [selectedSubSub, setSelectedSubSub] = useState<string>(ALL);
+=======
+  const [selectedSubCat, setSelectedSubCat] = useState<string>(ALL);
+  const [selectedSubSubs, setSelectedSubSubs] = useState<Set<string>>(new Set());
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
   // templates filter state
   const [tMainCat, setTMainCat] = useState<string>(ALL);
   const [tSubCat, setTSubCat] = useState<string>(ALL);
+<<<<<<< HEAD
   const [tSubSub, setTSubSub] = useState<string>(ALL);
+=======
+  const [tSubSubs, setTSubSubs] = useState<Set<string>>(new Set());
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
   const [selectedToDelete, setSelectedToDelete] = useState<DeletePick | null>(null);
 
@@ -242,11 +588,18 @@ const Products = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
+<<<<<<< HEAD
+=======
+  const [filtersOpen, setFiltersOpen] = useState(true);
+  const toggleFilters = () => setFiltersOpen((v) => !v);
+
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   // queries
   const { data: cards = [], isLoading: isLoadingCards, isError: isErrorCards } = useQuery<CardRow[]>({
     queryKey: ["cards"],
     queryFn: fetchAllCardsFromDB,
     staleTime: 1000 * 60 * 5,
+<<<<<<< HEAD
     refetchOnMount: "always",
   });
   const { data: templates = [], isLoading: isLoadingTemplates, isError: isErrorTemplates } = useQuery<TemplateDesign[]>({
@@ -256,12 +609,22 @@ const Products = () => {
     gcTime: 1000 * 60 * 30,    // garbage collect 30 منٹ بعد
     refetchOnMount: "always",
   });
+=======
+  });
+  const { data: templates = [], isLoading: isLoadingTemplates, isError: isErrorTemplates } =
+    useQuery<TemplateDesign[]>({
+      queryKey: ["templates"],
+      queryFn: fetchAllTempletDesigns,
+      staleTime: 1000 * 60 * 5,
+    });
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   const { data: categories = [] } = useQuery<Category[]>({
     queryKey: ["categories"],
     queryFn: fetchAllCategoriesFromDB,
     staleTime: 1000 * 60 * 30,
   });
 
+<<<<<<< HEAD
   // const PAGE_SIZE = 20;
 
   // const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
@@ -287,6 +650,13 @@ const Products = () => {
     });
     return Array.from(set).sort();
   }, [cards]);
+=======
+  // categories helpers
+  const cardsTree = useMemo(
+    () => categories.find((c) => (c?.name ?? "").trim() === "Cards") || null,
+    [categories]
+  );
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   const templateMainCats = useMemo(
     () => categories.map((c) => (c?.name ?? "").trim()).filter((n) => n && n !== "Cards"),
     [categories]
@@ -341,6 +711,7 @@ const Products = () => {
   // reset on tab change
   useEffect(() => {
     // cards
+<<<<<<< HEAD
     setCardMainCat(ALL);
     setSelectedSubCat(ALL);
     setSelectedSubSub(ALL);
@@ -348,11 +719,27 @@ const Products = () => {
     setTMainCat(ALL);
     setTSubCat(ALL);
     setTSubSub(ALL);
+=======
+    setSelectedSubCat(ALL);
+    setSelectedSubSubs(new Set());
+    // templates
+    setTMainCat(ALL);
+    setTSubCat(ALL);
+    setTSubSubs(new Set());
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   }, [activeTab]);
 
   // domain items
   const domainItems = activeTab === "cards" ? cards : templates;
 
+<<<<<<< HEAD
+=======
+
+  const norm = (s?: string | null) => (s ?? "").trim();
+  const ciEq = (a: string, b: string) =>
+    a.localeCompare(b, undefined, { sensitivity: "accent" }) === 0;
+
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   const tplGetCat = (t: any) => norm(t.category);
   const tplGetSub = (t: any) => norm(t.subCategory ?? t.subcategory);
   const tplGetSubSub = (t: any) => norm(t.subSubCategory ?? t.sub_subcategory);
@@ -363,6 +750,7 @@ const Products = () => {
     if (activeTab === "cards") {
       let out = (domainItems as CardRow[]).slice();
 
+<<<<<<< HEAD
       if (cardMainCat !== ALL) {
         out = out.filter((r) => ciEq(getCardMain(r), cardMainCat));
       }
@@ -371,6 +759,16 @@ const Products = () => {
       }
       if (selectedSubSub !== ALL) {
         out = out.filter((r) => ciEq(getSubSub(r), selectedSubSub));
+=======
+      if (selectedSubCat !== ALL) {
+        out = out.filter((r) => ciEq(getSub(r), selectedSubCat));
+      }
+      if (selectedSubSubs.size > 0) {
+        out = out.filter((r) => {
+          const s = getSubSub(r);
+          return !!s && Array.from(selectedSubSubs).some((v) => ciEq(s, v));
+        });
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       }
       return out;
     }
@@ -389,8 +787,16 @@ const Products = () => {
     }
 
     // subSubCategory (only apply if any boxes checked AND a subCategory is chosen)
+<<<<<<< HEAD
     if (tSubCat !== ALL && tSubSub !== ALL) {
       out = out.filter((t) => ciEq(tplGetSubSub(t), tSubSub));
+=======
+    if (tSubCat !== ALL && tSubSubs.size > 0) {
+      out = out.filter((t) => {
+        const s = tplGetSubSub(t);
+        return !!s && Array.from(tSubSubs).some((v) => ciEq(s, v));
+      });
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     }
 
     return out;
@@ -398,6 +804,7 @@ const Products = () => {
     domainItems,
     activeTab,
     // cards deps
+<<<<<<< HEAD
     cardMainCat,
     selectedSubCat,
     selectedSubSub,
@@ -405,6 +812,14 @@ const Products = () => {
     tMainCat,
     tSubCat,
     tSubSub,
+=======
+    selectedSubCat,
+    selectedSubSubs,
+    // templates deps
+    tMainCat,
+    tSubCat,
+    tSubSubs,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   ]);
 
 
@@ -422,9 +837,13 @@ const Products = () => {
     mutationFn: deleteTemplateById,
     onSuccess: (id) => {
       toast.success("Template deleted successfully");
+<<<<<<< HEAD
       queryClient.setQueryData<TemplateDesign[]>(["templates-list"], (old) =>
         old ? old.filter((t) => t.id !== id) : [],
       );
+=======
+      queryClient.setQueryData<TemplateDesign[]>(["templates"], (old) => (old ? old.filter((t) => t.id !== id) : []));
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       setSelectedToDelete(null);
     },
     onError: () => toast.error("Error deleting template"),
@@ -443,7 +862,17 @@ const Products = () => {
     image_url?: string;
     img_url?: string;
     lastpageImageUrl?: string;
+<<<<<<< HEAD
   }) => resolveCardThumb(x);
+=======
+  }) =>
+    x.lastpageimageurl ||
+    x.lastpageImageUrl ||
+    x.imageurl ||
+    x.image_url ||
+    x.img_url ||
+    "";
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
   const onEditCard = (row: any) => {
     navigate(ADMINS_DASHBOARD.ADD_NEW_CARDS, {
@@ -468,7 +897,10 @@ const Products = () => {
           imageUrl: imageForEdit(row),
           polygon_shape: row.polygon_shape ?? "",
           lastpageImageUrl: row.lastpageImageUrl ?? row.lastpageimageurl ?? "",
+<<<<<<< HEAD
           polygonlayout: row.polygonlayout ?? row.polyganLayout ?? null,
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           polyganLayout: row.polygonlayout ?? row.polyganLayout ?? null,
         },
       },
@@ -478,6 +910,7 @@ const Products = () => {
 
   // NEW: open TempletForm with prefill + preview in left box
   const safeParse = (v: any) => {
+<<<<<<< HEAD
     if (!v) return null;
     if (typeof v === "object") return v;
     if (typeof v === "string") {
@@ -543,6 +976,71 @@ const Products = () => {
   };
 
 
+=======
+  if (!v) return null;
+  if (typeof v === "object") return v;
+  if (typeof v === "string") {
+    try { return JSON.parse(v); } catch { return null; }
+  }
+  return null;
+};
+
+const onEditTemplate = (tpl: TemplateDesign & any) => {
+  const rawStores = safeParse(
+    tpl.raw_stores ?? tpl.rawStores ?? tpl.rawstores ?? null
+  );
+
+  navigate(ADMINS_DASHBOARD.ADD_NEW_TEMPLETS_CARDS, {
+    state: {
+      mode: "edit",
+      id: tpl.id,
+
+      rawStores, // ✅ normalized
+
+      imgUrl:
+        tpl.img_url ??
+        tpl.image_url ??
+        tpl.imageurl ??
+        tpl.lastpageImageUrl ??
+        tpl.lastpageimageurl ??
+        "",
+
+      product: {
+        cardname: tpl.title ?? tpl.name ?? "",
+        cardcategory: tpl.category ?? "",
+
+        subCategory: tpl.subCategory ?? tpl.subcategory ?? "",
+        subSubCategory: tpl.subSubCategory ?? tpl.sub_subcategory ?? "",
+
+        sku: tpl.sku ?? "",
+        actualprice: tpl.actualprice ?? tpl.actualPrice ?? "",
+        a4price: tpl.a4price ?? "",
+        a5price: tpl.a5price ?? "",
+        usletter: tpl.usletter ?? "",
+
+        saleprice: tpl.saleprice ?? tpl.salePrice ?? "",
+        salea4price: tpl.salea4price ?? "",
+        salea5price: tpl.salea5price ?? "",
+        saleusletter: tpl.saleusletter ?? "",
+
+        description: tpl.description ?? "",
+      },
+    },
+  });
+};
+
+
+
+  // checkbox handlers (cards)
+  const toggleSubSub = (name: string) => {
+    setSelectedSubSubs((prev) => {
+      const next = new Set(prev);
+      next.has(name) ? next.delete(name) : next.add(name);
+      return next;
+    });
+  };
+  const clearSubSub = () => setSelectedSubSubs(new Set());
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
   return (
     <DashboardLayout
@@ -577,6 +1075,7 @@ const Products = () => {
         </Tabs>
       </Box>
 
+<<<<<<< HEAD
       <FilterBar
         categories={activeTab === "cards" ? cardMainCats : templateMainCats}
         category={activeTab === "cards" ? cardMainCat : tMainCat}
@@ -614,6 +1113,41 @@ const Products = () => {
       />
 
       <Box sx={{ mt: 2 }}>
+=======
+      <Box sx={{ mt: 2, display: "flex", gap: 2 }}>
+        {/* Sidebar Filters */}
+        {activeTab === "cards" ? (
+          <CardsFilterSidebar
+            open={filtersOpen}
+            onToggle={toggleFilters}
+            ALL={ALL}
+            cardSubcategories={cardSubcategories}
+            selectedSubCat={selectedSubCat}
+            setSelectedSubCat={(v) => {
+              setSelectedSubCat(v);
+              setSelectedSubSubs(new Set());
+            }}
+            selectedSubSubs={selectedSubSubs}
+            toggleSubSub={toggleSubSub}
+            clearSubSub={clearSubSub}
+            visibleSubSubs={visibleSubSubs}
+          />
+        ) : (
+          <TemplateFilterSidebar
+            open={filtersOpen}
+            onToggle={toggleFilters}
+            ALL={ALL}
+            mainCats={templateMainCats}
+            tMainCat={tMainCat} setTMainCat={setTMainCat}
+            tSubcats={tSubcats}
+            tSubCat={tSubCat} setTSubCat={setTSubCat}
+            tSubSubs={tSubSubs} setTSubSubs={setTSubSubs}
+            tVisibleSubSubs={tVisibleSubSubs}
+          />
+        )}
+
+        {/* Main content */}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         <Box sx={{ flex: 1, minWidth: 0 }}>
           {(activeTab === "cards" ? isLoadingCards : isLoadingTemplates) ? (
             <Box sx={{ width: "100%", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", minHeight: "40vh" }}>
@@ -625,6 +1159,7 @@ const Products = () => {
           ) : filteredItems.length === 0 ? (
             <Typography>No items found.</Typography>
           ) : (
+<<<<<<< HEAD
             <Box
               sx={{
                 display: "grid",
@@ -633,6 +1168,9 @@ const Products = () => {
                 alignItems: "stretch",
               }}
             >
+=======
+            <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
               {filteredItems.map((item: any) => (
                 <ProductCard
                   key={`${activeTab}-${item.id}`}
@@ -649,10 +1187,22 @@ const Products = () => {
                         sale_price: item.salePrice ?? item.sale_price ?? item.saleprice ?? 0,
                         description: item.description ?? "",
                         created_at: item.created_at ?? new Date().toISOString(),
+<<<<<<< HEAD
                         img_url: resolveCardThumb(item),
                         lastpageImageUrl: item.lastpageImageUrl ?? item.lastpageimageurl ?? "",
                         polygon_shape: item.polygon_shape ?? null,
                         __type: "card",
+=======
+                        img_url:
+                          item.lastpageimageurl ??
+                          item.imageUrl ??
+                          item.imageurl ??
+                          item.image_url ??
+                          item.lastpageImageUrl ??
+                          "",
+                        lastpageImageUrl: item.lastpageImageUrl ?? item.lastpageimageurl ?? "",
+                        polygon_shape: item.polygon_shape ?? null,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                       } as any)
                       : ({
                         id: item.id,
@@ -668,7 +1218,10 @@ const Products = () => {
                         polygon_shape: item.polygon_shape,
                         subCategory: item.subCategory ?? item.subcategory ?? null,
                         subSubCategory: item.subSubCategory ?? item.sub_subcategory ?? null,
+<<<<<<< HEAD
                         __type: "templet",
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                       } as const)
                   }
                   onEdit={activeTab === "cards" ? () => onEditCard(item as CardRow) : () => onEditTemplate(item as TemplateDesign)}

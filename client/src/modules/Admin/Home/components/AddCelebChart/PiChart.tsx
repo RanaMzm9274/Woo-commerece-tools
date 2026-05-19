@@ -9,7 +9,11 @@ const PiChart = ({ totalOrder }: any) => {
     { name: "Pink", value: 48 },
   ];
   // const total = data.reduce((sum, v) => sum + v.value, 0);
+<<<<<<< HEAD
   const colors = ["url(#gradPrimary)", "url(#gradSecondary)", "url(#gradGreen)"];
+=======
+  const colors = ["url(#gradPurple)", "url(#gradBlue)", "url(#gradPink)"];
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
   return (
     <Box
@@ -19,13 +23,19 @@ const PiChart = ({ totalOrder }: any) => {
         height: 250,
         borderRadius: "50%",
         background:
+<<<<<<< HEAD
           "radial-gradient(60% 60% at 30% 20%, rgba(255,255,255,0.96), rgba(255,255,255,0.9) 35%, rgba(86,190,204,0.12) 70%), linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(141,109,161,0.1) 60%)",
         boxShadow: "0 20px 45px rgba(5,10,36,0.12)",
+=======
+          "radial-gradient(60% 60% at 30% 20%, rgba(255,255,255,0.96), rgba(255,255,255,0.88) 30%, rgba(241,245,255,0.96) 60%), linear-gradient(135deg,#FAF8FF 0%, #EEF2FF 60%)",
+        boxShadow: "0 20px 45px rgba(15,23,42,0.08)",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       }}
     >
       <ResponsiveContainer width="100%" height="100%">
         <PieChart>
           <defs>
+<<<<<<< HEAD
             <linearGradient id="gradPrimary" x1="0" y1="0" x2="1" y2="1">
               <stop offset="0%" stopColor={COLORS.primary} />
               <stop offset="100%" stopColor={COLORS.seconday} />
@@ -37,6 +47,19 @@ const PiChart = ({ totalOrder }: any) => {
             <linearGradient id="gradGreen" x1="0" y1="0" x2="1" y2="1">
               <stop offset="0%" stopColor={COLORS.green} />
               <stop offset="100%" stopColor={COLORS.primary} />
+=======
+            <linearGradient id="gradPurple" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor={`${COLORS.primary}`} />
+              <stop offset="100%" stopColor="#7C3AED" />
+            </linearGradient>
+            <linearGradient id="gradBlue" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor={`#1E40AF`} />
+              <stop offset="100%" stopColor="#2563EB" />
+            </linearGradient>
+            <linearGradient id="gradPink" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor="#F472B6" />
+              <stop offset="100%" stopColor="#FB7185" />
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             </linearGradient>
           </defs>
 
@@ -49,7 +72,11 @@ const PiChart = ({ totalOrder }: any) => {
             innerRadius={92}
             outerRadius={104}
           >
+<<<<<<< HEAD
             <Cell fill="rgba(86,190,204,0.12)" />
+=======
+            <Cell fill="#f0effb" />
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           </Pie>
 
           {/* Gradient segments */}
@@ -96,12 +123,26 @@ const PiChart = ({ totalOrder }: any) => {
           sx={{
             fontSize: 28,
             fontWeight: 800,
+<<<<<<< HEAD
             color: COLORS.black,
+=======
+            background: `linear-gradient(90deg,${COLORS.primary} 0%,${COLORS.black} 100%)`,
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           }}
         >
           {totalOrder}
         </Typography>
+<<<<<<< HEAD
         <Typography variant="subtitle2" sx={{ color: COLORS.black }} fontWeight={700}>
+=======
+        <Typography variant="subtitle2" sx={{
+          background: `linear-gradient(90deg,${COLORS.primary} 0%,${COLORS.black} 100%)`,
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+        }} fontWeight={700}>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           Total
         </Typography>
       </Box>

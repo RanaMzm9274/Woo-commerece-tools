@@ -1,10 +1,17 @@
 // Sticker1Popup.tsx
+<<<<<<< HEAD
 import { Box, TextField } from "@mui/material";
+=======
+import { Box } from "@mui/material";
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 import PopupWrapper from "../../PopupWrapper/PopupWrapper";
 import { STICKERS_DATA } from "../../../constant/data";
 import { COLORS } from "../../../constant/color";
 import { useSlide1 } from "../../../context/Slide1Context";
+<<<<<<< HEAD
 import { useMemo, useState } from "react";
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
 interface Sticker1PopupProps {
   onClose: () => void;
@@ -14,6 +21,7 @@ interface Sticker1PopupProps {
 const Sticker1Popup = ({ onClose, activeIndex }: Sticker1PopupProps) => {
   const { addSticker1 } = useSlide1();
 
+<<<<<<< HEAD
   const [search, setSearch] = useState('')
 
   const filteredStickers = useMemo(() => {
@@ -27,6 +35,8 @@ const Sticker1Popup = ({ onClose, activeIndex }: Sticker1PopupProps) => {
     });
   }, [search]);
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   const handleSelectSticker = (stick: any) => {
     addSticker1(stick);
   };
@@ -47,8 +57,11 @@ const Sticker1Popup = ({ onClose, activeIndex }: Sticker1PopupProps) => {
           mt: 2,
           display: "flex",
           flexWrap: "wrap",
+<<<<<<< HEAD
           justifyContent: "flex-start",
           alignContent: "flex-start",
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           gap: 1,
           overflowY: "auto",
           "&::-webkit-scrollbar": {
@@ -66,8 +79,12 @@ const Sticker1Popup = ({ onClose, activeIndex }: Sticker1PopupProps) => {
           height: 500,
         }}
       >
+<<<<<<< HEAD
         <TextField variant="outlined" type="search" placeholder="search Icon ╰(*°▽°*)╯" value={search} fullWidth onChange={(e) => setSearch(e.target.value)} />
         {filteredStickers.map((stick) => (
+=======
+        {STICKERS_DATA.map((stick) => (
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           <Box
             key={stick.id}
             onClick={() => handleSelectSticker(stick)}
@@ -80,7 +97,11 @@ const Sticker1Popup = ({ onClose, activeIndex }: Sticker1PopupProps) => {
               justifyContent: "center",
               alignItems: "center",
               color: "white",
+<<<<<<< HEAD
               userSelect: "none",
+=======
+              cursor: "pointer",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             }}
           >
             <Box

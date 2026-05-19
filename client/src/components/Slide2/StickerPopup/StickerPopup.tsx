@@ -1,9 +1,17 @@
+<<<<<<< HEAD
 import { Box, TextField } from "@mui/material";
+=======
+// Sticker1Popup.tsx
+import { Box } from "@mui/material";
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 import PopupWrapper from "../../PopupWrapper/PopupWrapper";
 import { STICKERS_DATA } from "../../../constant/data";
 import { COLORS } from "../../../constant/color";
 import { useSlide2 } from "../../../context/Slide2Context";
+<<<<<<< HEAD
 import { useMemo, useState } from "react";
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
 interface Sticker1PopupProps {
   onClose: () => void;
@@ -13,6 +21,7 @@ interface Sticker1PopupProps {
 const StickerPopup = ({ onClose }: Sticker1PopupProps) => {
   const { addSticker2 } = useSlide2();
 
+<<<<<<< HEAD
   const [search, setSearch] = useState('')
 
   const filteredStickers = useMemo(() => {
@@ -26,6 +35,8 @@ const StickerPopup = ({ onClose }: Sticker1PopupProps) => {
     });
   }, [search]);
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   const handleSelectSticker = (stick: any) => {
     addSticker2(stick);
   };
@@ -46,8 +57,11 @@ const StickerPopup = ({ onClose }: Sticker1PopupProps) => {
           mt: 2,
           display: "flex",
           flexWrap: "wrap",
+<<<<<<< HEAD
           justifyContent: "flex-start",
           alignContent: "flex-start",
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           gap: 1,
           overflowY: "auto",
           "&::-webkit-scrollbar": {
@@ -65,11 +79,18 @@ const StickerPopup = ({ onClose }: Sticker1PopupProps) => {
           height: 500,
         }}
       >
+<<<<<<< HEAD
         <TextField variant="outlined" type="search" placeholder="search Icon ╰(*°▽°*)╯" value={search} fullWidth onChange={(e) => setSearch(e.target.value)} />
         {filteredStickers.map((stick) => (
           <Box
             key={stick.id}
             onClick={() => handleSelectSticker(stick)}
+=======
+        {STICKERS_DATA.map((stick) => (
+          <Box
+            key={stick.id}
+            onClick={() => handleSelectSticker(stick)} // ✅ handle click
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             sx={{
               width: { md: "80px", sm: "80px", xs: "70px" },
               height: "90px",

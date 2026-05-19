@@ -2,7 +2,11 @@ import React from "react";
 import {
   AppBar,
   Toolbar,
+<<<<<<< HEAD
   // Typography,
+=======
+  Typography,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   Box,
   IconButton,
   InputBase,
@@ -11,10 +15,17 @@ import {
   Avatar,
   Badge,
 } from "@mui/material";
+<<<<<<< HEAD
 import { styled } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
 import {
   // ArrowDropDown,
+=======
+import { styled, alpha } from "@mui/material/styles";
+import SearchIcon from "@mui/icons-material/Search";
+import {
+  ArrowDropDown,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   Chat,
   LogoutOutlined,
   Notifications,
@@ -32,10 +43,17 @@ import { useNotifications } from "../../../context/NotificationContext";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
+<<<<<<< HEAD
   backgroundColor: "#ffffff",
   cursor: "pointer",
   "&:hover": {
     backgroundColor: "#ffffff",
+=======
+  backgroundColor: "transparent",
+  cursor: "pointer",
+  "&:hover": {
+    backgroundColor: alpha(theme.palette.common.white, 0.15),
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   },
   marginLeft: 0,
   width: "100%",
@@ -65,9 +83,15 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     width: "100%",
     flex: 1,
     fontSize: '12px',
+<<<<<<< HEAD
     color: COLORS.black,
     "&::placeholder": {
       color: "rgba(0,0,0,0.6)",
+=======
+    color: COLORS.white,
+    "&::placeholder": {
+      color: "#fff", 
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       opacity: 1, 
     },
     [theme.breakpoints.up("md")]: {
@@ -114,10 +138,15 @@ const DNavbar = () => {
     <AppBar
       position="static"
       sx={{
+<<<<<<< HEAD
         background:
           "linear-gradient(90deg, rgba(16,20,45,0.98) 0%, rgba(18,22,46,0.98) 100%)",
         boxShadow: "0 12px 30px rgba(5,10,36,0.6)",
         borderBottom: "1px solid rgba(255,255,255,0.06)",
+=======
+        backgroundColor: "#240222ff",
+        boxShadow: "none",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         display: { md: 'flex', sm: 'flex', xs: 'none' }
       }}
     >
@@ -140,10 +169,17 @@ const DNavbar = () => {
           />
           <Search>
             <SearchIconWrapper>
+<<<<<<< HEAD
               <SearchIcon sx={{ color: COLORS.seconday }} />
             </SearchIconWrapper>
             <StyledInputBase
               placeholder="   Search everything..."
+=======
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="   Search…"
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
               fullWidth
               inputProps={{ "aria-label": "search" }}
             />
@@ -152,16 +188,24 @@ const DNavbar = () => {
 
         {/* Right side - Admin dropdown */}
         <Box display="flex" alignItems="center" gap={1}>
+<<<<<<< HEAD
           <IconButton sx={{ color: COLORS.primary }} onClick={() => navigate(ADMINS_DASHBOARD.ADMIN_COMMUNITY_HUB)}>
             <Chat />
           </IconButton>
           <IconButton sx={{ color: COLORS.green }} onClick={openNotificationModal}>
+=======
+          <IconButton sx={{ color: "white" }} onClick={() => navigate(ADMINS_DASHBOARD.ADMIN_COMMUNITY_HUB)}>
+            <Chat />
+          </IconButton>
+          <IconButton sx={{ color: "white" }} onClick={openNotificationModal}>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             <Badge badgeContent={unreadCount} color="error">
               <Notifications />
             </Badge>
           </IconButton>
 
           <Avatar
+<<<<<<< HEAD
             sx={{
               bgcolor: COLORS.primary,
               width: 30,
@@ -170,6 +214,9 @@ const DNavbar = () => {
               color: COLORS.black,
               border: "2px solid rgba(255,255,255,0.8)",
             }}
+=======
+            sx={{ bgcolor: COLORS.primary, width: 30, height: 30, cursor: 'pointer' }}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             onClick={handleMenu}
             src={admin?.profile_image || undefined}
           >
@@ -180,6 +227,7 @@ const DNavbar = () => {
             }
           </Avatar>
 
+<<<<<<< HEAD
           {/* <Box
             onClick={handleMenu}
             sx={{
@@ -199,12 +247,21 @@ const DNavbar = () => {
             </Typography>
             <ArrowDropDown sx={{ color: COLORS.black }} />
           </Box> */}
+=======
+          <Typography sx={{ color: "#fff", fontSize: '12px' }}>
+            {admin?.first_name}
+          </Typography>
+          <IconButton onClick={handleMenu} sx={{ color: "#fff" }}>
+            <ArrowDropDown />
+          </IconButton>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
           <Menu
             anchorEl={anchorEl}
             open={open}
             onClose={handleClose}
             PaperProps={{
+<<<<<<< HEAD
               sx: {
                 mt: 1,
                 minWidth: 150,
@@ -212,6 +269,9 @@ const DNavbar = () => {
                 borderRadius: 2,
                 boxShadow: "0 16px 36px rgba(5,10,36,0.25)",
               },
+=======
+              sx: { mt: 1, minWidth: 150, ml: -2 },
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             }}
           >
             {/* <MenuItem onClick={() => navigate(ADMINS_DASHBOARD.SETTINGS)}>

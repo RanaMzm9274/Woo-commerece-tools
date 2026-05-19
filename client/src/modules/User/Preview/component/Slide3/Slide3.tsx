@@ -6,6 +6,7 @@ type AnyEl = Record<string, any>;
 const safeClip = (cp?: string | null) => (cp && typeof cp === "string" ? cp : "none");
 const safeFilter = (f?: string | null) => (f && typeof f === "string" ? f : "none");
 const val = <T,>(v: T | undefined, d: T) => (v === undefined || v === null ? d : v);
+<<<<<<< HEAD
 const normalizeUrl = (value: any) => {
   if (typeof value === "string") return value.trim();
   if (value && typeof value === "object" && typeof value.url === "string") return value.url.trim();
@@ -29,6 +30,9 @@ const pickSlide3Style = (entry: AnyEl, key: string, fallback: any) => {
   }
   return fallback;
 };
+=======
+
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 type Slide3Props = {
   ref?: any
 }
@@ -50,7 +54,10 @@ const Slide3 = (props:Slide3Props) => {
     selectedLayout3,
     selectedAudioUrl3,
     qrAudioPosition3,
+<<<<<<< HEAD
     showOneTextRightSideBox3,
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     textElements3,
     selectedAIimageUrl3,
     selectedStickers3,
@@ -63,17 +70,24 @@ const Slide3 = (props:Slide3Props) => {
     bgColor3,
   } = useSlide3();
   const {ref} = props
+<<<<<<< HEAD
   const isOneTextActive = selectedLayout3 === "oneText" || showOneTextRightSideBox3;
   const videoUrl = normalizeUrl(selectedVideoUrl3);
   const audioUrl = normalizeUrl(selectedAudioUrl3);
   const qrVideoUrl = normalizeUrl(qrPosition3?.url) || videoUrl;
   const qrAudioUrl = normalizeUrl(qrAudioPosition3?.url) || audioUrl;
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   return (
     <Box
     ref={ref}
       sx={{
         position: "relative",
+<<<<<<< HEAD
         width: "100%",
+=======
+        width: 485,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         height: "100%",
         overflow: "hidden",
         borderRadius: 2,
@@ -85,7 +99,11 @@ const Slide3 = (props:Slide3Props) => {
       }}
     >
       {layout3 && (
+<<<<<<< HEAD
         <Box sx={{ width: "100%", height: "100%", position: "relative" }}>
+=======
+        <Box sx={{ width: "100%", height: "100%", position: "relative", p: 1 }}>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           {/* IMAGES / BG ELEMENTS */}
           {layout3?.elements
             ?.slice()
@@ -111,7 +129,11 @@ const Slide3 = (props:Slide3Props) => {
                   sx={{
                     width: "100%",
                     height: "100%",
+<<<<<<< HEAD
                     objectFit: el.id === "bg-image" ? "cover" : (el.objectFit || "fill"),
+=======
+                    objectFit: el.objectFit || "cover",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                     borderRadius: 1,
                     display: "block",
                     pointerEvents: "none",
@@ -218,7 +240,11 @@ const Slide3 = (props:Slide3Props) => {
         </Box>
       )}
 
+<<<<<<< HEAD
       {videoUrl && (
+=======
+      {selectedVideoUrl3 && (
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         <Box
           sx={{
             position: "absolute", // use absolute like Rnd
@@ -256,12 +282,23 @@ const Slide3 = (props:Slide3Props) => {
               borderRadius: 2,
             }}
           >
+<<<<<<< HEAD
             <QrGenerator url={qrVideoUrl} size={70} />
+=======
+            <QrGenerator
+              url={qrPosition3.url || selectedVideoUrl3}
+              size={Math.min(68, 75)}
+            />
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           </Box>
 
           {/* Clickable Link */}
           <a
+<<<<<<< HEAD
             href={videoUrl}
+=======
+            href={`${selectedVideoUrl3}`}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -278,13 +315,21 @@ const Slide3 = (props:Slide3Props) => {
                 "&:hover": { textDecoration: "underline" },
               }}
             >
+<<<<<<< HEAD
               {`${videoUrl.slice(0, 20)}.....`}
+=======
+              {`${selectedVideoUrl3?.slice(0, 20)}.....`}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             </Typography>
           </a>
         </Box>
       )}
 
+<<<<<<< HEAD
       {audioUrl && (
+=======
+      {selectedAudioUrl3 && (
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         <Box
           sx={{
             position: "absolute", // use absolute like Rnd
@@ -302,7 +347,11 @@ const Slide3 = (props:Slide3Props) => {
           {/* Background Image */}
           <Box
             component="img"
+<<<<<<< HEAD
             src="/assets/images/audio-qr-tips.png"
+=======
+            src="/assets/images/video-qr-tips.png"
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             sx={{
               width: 300,       // ✅ match the image width
               height: 200,
@@ -322,12 +371,23 @@ const Slide3 = (props:Slide3Props) => {
               borderRadius: 2,
             }}
           >
+<<<<<<< HEAD
             <QrGenerator url={qrAudioUrl} size={70} />
+=======
+            <QrGenerator
+              url={qrAudioPosition3.url || selectedAudioUrl3}
+              size={Math.min(68, 75)}
+            />
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           </Box>
 
           {/* Clickable Link */}
           <a
+<<<<<<< HEAD
             href={audioUrl}
+=======
+            href={`${selectedAudioUrl3}`}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -344,7 +404,11 @@ const Slide3 = (props:Slide3Props) => {
                 "&:hover": { textDecoration: "underline" },
               }}
             >
+<<<<<<< HEAD
               {`${audioUrl.slice(0, 20)}.....`}
+=======
+              {`${selectedAudioUrl3?.slice(0, 20)}.....`}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             </Typography>
           </a>
         </Box>
@@ -376,6 +440,7 @@ const Slide3 = (props:Slide3Props) => {
         ))}
 
       {multipleTextValue3 &&
+<<<<<<< HEAD
         texts3.map((e: any, index: number) => {
           const textAlignRaw = String(
             pickSlide3Style(e, "textAlign", e?.textAlign ?? "center")
@@ -444,6 +509,67 @@ const Slide3 = (props:Slide3Props) => {
           sx={{
             position: "absolute",
             inset: 0,
+=======
+        texts3.map((e, index) => (
+          <Box
+            key={index}
+            sx={{
+              position: "relative",
+              height: { md: 210, sm: "175px", xs: "175px" }, // ✅ match editable container height
+              width: "100%",
+              mb: 2,
+              display: "flex",
+              justifyContent:
+                e.verticalAlign === "top"
+                  ? "flex-start"
+                  : e.verticalAlign === "center"
+                    ? "center"
+                    : "flex-end",
+              alignItems: "center",
+              border: "3px dashed transparent", // ✅ visually matches editable version but invisible
+              borderRadius: "6px",
+              p: 1,
+            }}
+          >
+            <Typography
+              sx={{
+                textAlign: e.textAlign,
+                fontSize: e.fontSize3,
+                fontWeight: e.fontWeight3,
+                color: e.fontColor3,
+                fontFamily: e.fontFamily3,
+                lineHeight: e.lineHeight,
+                letterSpacing: e.letterSpacing,
+                wordBreak: "break-word",
+                whiteSpace: "pre-line",
+                width: "100%",
+                height: "80%",
+                display: "flex",
+                alignItems:
+                  e.verticalAlign === "top"
+                    ? "flex-start"
+                    : e.verticalAlign === "bottom"
+                      ? "flex-end"
+                      : "center",
+                justifyContent:
+                  e.textAlign === "left"
+                    ? "flex-start"
+                    : e.textAlign === "right"
+                      ? "flex-end"
+                      : "center",
+                m: "auto",
+              }}
+            >
+              {e.value}
+            </Typography>
+          </Box>
+        ))}
+
+      {/* 📝 Single Text Layout */}
+      {selectedLayout3 === "oneText" && (
+        <Box
+          sx={{
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             display: "flex",
             flexDirection: "column",
             justifyContent:
@@ -469,7 +595,10 @@ const Slide3 = (props:Slide3Props) => {
             textAlign: textAlign3, // ✅ still needed for multiline/inline text
             whiteSpace: "pre-wrap",
             p: 1,
+<<<<<<< HEAD
             zIndex: 9998,
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           }}
         >
           {oneTextValue3}
@@ -477,7 +606,11 @@ const Slide3 = (props:Slide3Props) => {
       )}
 
       {
+<<<<<<< HEAD
         multipleTextValue3 || isOneTextActive ? null : (
+=======
+        multipleTextValue3 && selectedLayout3 === "oneText" ? null : (
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           <>
             {textElements3 &&
               textElements3.map((e) => (

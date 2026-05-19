@@ -36,7 +36,11 @@ const MinimalGradientAreaChart = ({
         dataKey="name"
         tickLine={false}
         axisLine={false}
+<<<<<<< HEAD
         tick={{ stroke: "rgba(0,0,0,0.3)", fontSize: 10 }}
+=======
+        tick={{ stroke: "rgba(255,255,255,0.3)", fontSize: 10 }}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         tickFormatter={() => ""}
       />
       <Area
@@ -93,19 +97,30 @@ const TotalProductChart = () => {
         maxWidth: { md: '100%', sm: '100%', xs: "100%" },
         minWidth: 300,
         mb: { md: 0, sm: 0, xs: 1 },
+<<<<<<< HEAD
         minHeight: 0,
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       }}
     >
       <Box
         sx={{
           position: "relative",
           p: 3,
+<<<<<<< HEAD
           color: COLORS.black,
           height: { md: 200, sm: 200, xs: 180 },
           boxShadow: "0 14px 30px rgba(5,10,36,0.08)",
           borderRadius: 4,
           border: "1px solid rgba(0,0,0,0.06)",
           background: "#ffffff",
+=======
+          color: "white",
+          height: { md: 200, sm: 200, xs: 180 },
+          boxShadow: 8,
+          borderRadius: 4,
+          background: `linear-gradient(135deg, ${COLORS.primary} 0%, ${COLORS.seconday} 100%)`,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         }}
       >
         {/* The minimal chart positioned absolutely behind the text/data */}
@@ -116,17 +131,26 @@ const TotalProductChart = () => {
             left: 0,
             width: "100%",
             height: "100%",
+<<<<<<< HEAD
             minWidth: 1,
             minHeight: 1,
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             opacity: 0.7,
           }}
         >
           <MinimalGradientAreaChart
             data={productData}
             colorId="colorProduct"
+<<<<<<< HEAD
             colorStart="rgba(86,190,204,0.45)"
             colorEnd="rgba(86,190,204,0.05)"
             strokeColor={COLORS.primary}
+=======
+            colorStart="#ffffff"
+            colorEnd="#ffffff"
+            strokeColor="#ffffff"
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           />
         </Box>
 
@@ -136,7 +160,11 @@ const TotalProductChart = () => {
             variant="body1"
             fontWeight="medium"
             letterSpacing={1.5}
+<<<<<<< HEAD
             sx={{ opacity: 0.8, color: COLORS.black }}
+=======
+            sx={{ opacity: 0.9 }}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           >
             TOTAL PRODUCTS
           </Typography>
@@ -162,7 +190,11 @@ const TotalProductChart = () => {
             <Typography
               variant="body2"
               fontWeight="semibold"
+<<<<<<< HEAD
               sx={{ opacity: 0.7, color: COLORS.black }}
+=======
+              sx={{ opacity: 0.8, color: COLORS.white }}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             >
               ALL TIMES PRODUCTS
             </Typography>

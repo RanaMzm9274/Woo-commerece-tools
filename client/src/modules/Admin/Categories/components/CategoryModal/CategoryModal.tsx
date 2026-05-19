@@ -47,7 +47,10 @@ type FormValues = {
 };
 
 const MAX_CHIPS = 50;
+<<<<<<< HEAD
 const MUG_DEFAULT_SUBS = ["Initials/Name", "Slogans"];
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
 // --- helpers ---
 const tokenize = (text: string): string[] =>
@@ -74,6 +77,7 @@ const normalizeAdd = (
   return room === 0 ? existing : [...existing, ...dedupIncoming.slice(0, room)];
 };
 
+<<<<<<< HEAD
 const ensureMugSubs = (category: string, current: string[]) => {
   if (!/mug/i.test(category)) return current;
   const lower = new Set(current.map((v) => v.toLowerCase()));
@@ -88,6 +92,8 @@ const ensureMugSubs = (category: string, current: string[]) => {
   return next.slice(0, MAX_CHIPS);
 };
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 const CategoryModal: React.FC<Props> = ({
   open,
   onCloseModal,
@@ -103,7 +109,10 @@ const CategoryModal: React.FC<Props> = ({
     handleSubmit,
     setValue,
     reset,
+<<<<<<< HEAD
     watch,
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     formState: { errors, isSubmitting },
     clearErrors,
     setError,
@@ -139,6 +148,7 @@ const CategoryModal: React.FC<Props> = ({
     setValue("subCategories", subs, { shouldDirty: true, shouldValidate: false });
   }, [subs, setValue]);
 
+<<<<<<< HEAD
   const watchedCategory = watch("category");
   useEffect(() => {
     const cat = String(watchedCategory ?? "").trim();
@@ -146,6 +156,8 @@ const CategoryModal: React.FC<Props> = ({
     setSubs((cur) => ensureMugSubs(cat, cur));
   }, [watchedCategory]);
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   // rehydrate on open/initial change
   useEffect(() => {
     reset({
@@ -296,7 +308,11 @@ const CategoryModal: React.FC<Props> = ({
     const payload = {
       category,
       image: imagePreview || data.image!, // prefer latest picked
+<<<<<<< HEAD
       subCategories: ensureMugSubs(category, subs),
+=======
+      subCategories: subs,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       subSubCategories: subSubMap,
     };
 
@@ -407,7 +423,11 @@ const CategoryModal: React.FC<Props> = ({
             "&:hover .overlay": { opacity: 1 },
             "&:hover .upload-btn": { opacity: 1, transform: "translate(-50%, -50%) scale(1)" },
           }}
+<<<<<<< HEAD
           // onClick={() => fileInputRef.current?.click()}
+=======
+          onClick={() => fileInputRef.current?.click()}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         >
           <Box
             component="img"

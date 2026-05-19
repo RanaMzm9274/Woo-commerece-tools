@@ -1,8 +1,15 @@
+<<<<<<< HEAD
 import { createContext, useContext, useEffect, useMemo, useRef, useState, type MouseEvent as ReactMouseEvent, type ComponentProps } from "react";
 import { Box, Chip, IconButton, Paper, Switch, TextField, Tooltip, Typography } from "@mui/material";
 import {
   Close,
   ContentCopyOutlined,
+=======
+﻿import { useEffect, useMemo, useRef, useState } from "react";
+import { Box, Chip, IconButton, Paper, Switch, TextField, Tooltip, Typography } from "@mui/material";
+import {
+  Close,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   Forward10,
   Forward30,
   KeyboardArrowDownOutlined,
@@ -17,6 +24,7 @@ import { Rnd } from "react-rnd";
 import { COLORS } from "../../constant/color";
 import { useSlide2 } from "../../context/Slide2Context";
 import { motion } from "framer-motion";
+<<<<<<< HEAD
 import { useLocation, useParams } from "react-router-dom";
 import mergePreservePdf from "../../utils/mergePreservePdf";
 import { normalizeSlide } from "../SlideCover/SlideCover";
@@ -52,6 +60,11 @@ const focusEditableTextFromTarget = (target: EventTarget | null) => {
     }, 0);
   });
 };
+=======
+import { useLocation } from "react-router-dom";
+import mergePreservePdf from "../../utils/mergePreservePdf";
+import { normalizeSlide } from "../SlideCover/SlideCover";
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
 
 // Helper function to create a new text element
@@ -69,6 +82,7 @@ const createNewTextElement = (defaults: any) => ({
   size: { width: 200, height: 40 },
   isEditing: false,
 });
+<<<<<<< HEAD
 
 const normalizeMultiTexts = (arr: any[]) =>
   (Array.isArray(arr) ? arr : []).map((t) => ({
@@ -98,6 +112,8 @@ const stripLayoutTextElements = (
   });
   return { ...layout, textElements };
 };
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
 interface SlideSpreadProps {
   textAlign?: "start" | "center" | "end";
@@ -107,14 +123,19 @@ interface SlideSpreadProps {
   activeIndex?: number;
   addTextRight?: number;
   rightBox?: boolean;
+<<<<<<< HEAD
   isAdminEditor?: boolean;
   canvasScale?: number;
+=======
+  isAdminEditor?: boolean
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 }
 
 const SlideSpread = ({
   activeIndex,
   addTextRight,
   rightBox,
+<<<<<<< HEAD
   isAdminEditor,
   canvasScale,
 }: // togglePopup,
@@ -145,6 +166,11 @@ const SlideSpread = ({
     setSelectedStickerIndex2(null);
     setSelectedBgIndex2(null);
   };
+=======
+  isAdminEditor
+}: // togglePopup,
+  SlideSpreadProps) => {
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   const {
     images,
     selectedImg,
@@ -162,7 +188,10 @@ const SlideSpread = ({
     textAlign,
     verticalAlign,
     rotation,
+<<<<<<< HEAD
     setRotation,
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     setTexts,
     setShowOneTextRightSideBox,
     fontFamily,
@@ -193,18 +222,25 @@ const SlideSpread = ({
     setIsAIimage2,
     selectedAIimageUrl2,
     selectedStickers2,
+<<<<<<< HEAD
     setSelectedStickers2,
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     updateSticker2,
     removeSticker2,
     aimage2,
     setAIImage2,
     setSelectedLayout,
+<<<<<<< HEAD
     setSelectedAIimageUrl2,
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
     setImageFilter,
     setActiveFilterImageId,
 
     lineHeight2,
+<<<<<<< HEAD
     setLineHeight2,
     letterSpacing2,
     setLetterSpacing2,
@@ -395,6 +431,48 @@ const SlideSpread = ({
     return items;
   }, [draggableImages, selectedImg, textElements, selectedStickers2, isAIimage2, aimage2]);
 
+=======
+    letterSpacing2,
+    layout2,
+    setLayout2,
+
+    bgColor2,
+    bgImage2,
+    setBgColor2,
+    setBgImage2,
+    bgEdit2,
+    setBgEdit2,
+    bgLocked2,
+    setBgLocked2,
+    bgRect2,
+    setBgRect2,
+
+
+    // selection helpers you already had for images/text
+    selectedShapeImageId2,
+    setSelectedShapeImageId2,
+  } = useSlide2();
+
+  console.log(layout2, '--')
+
+  const [selectedBgIndex2, setSelectedBgIndex2] = useState<number | null>(null);
+
+  const location = useLocation();
+  const slide2 = location.state?.layout?.slides?.slide2 ?? null;
+
+
+  useEffect(() => {
+    if (!slide2) return;
+    const norm = normalizeSlide(slide2);
+    setBgColor2?.(norm.bgColor);
+    setBgImage2?.(norm.bgImage);
+    setLayout2(norm.layout);
+  }, [slide2, setBgColor2, setBgImage2, setLayout2]);
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const rightBoxRef = useRef<HTMLDivElement>(null);
+
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   const [selectedStickerIndex2, setSelectedStickerIndex2] = useState<number | null>(null);
 
 
@@ -537,7 +615,11 @@ const SlideSpread = ({
     }
   };
 
+<<<<<<< HEAD
   // 👇 Auto-reset multipleTextValue when all multiple texts are deleted
+=======
+  // ðŸ‘‡ Auto-reset multipleTextValue when all multiple texts are deleted
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   useEffect(() => {
     // When user re-selects the multipleTextValue layout
     if (multipleTextValue) {
@@ -552,7 +634,11 @@ const SlideSpread = ({
             fontColor: "#000000",
             fontFamily: "Roboto",
             textAlign: "center",
+<<<<<<< HEAD
             verticalAlign: "top",
+=======
+            verticalAlign: "center",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             rotation: 0,
             lineHeight: 1.5,
             letterSpacing: 0
@@ -566,7 +652,11 @@ const SlideSpread = ({
     setTexts((prev) => {
       const updated = prev.filter((_, i) => i !== index);
 
+<<<<<<< HEAD
       // ✅ If all boxes are deleted → reset layout
+=======
+      // âœ… If all boxes are deleted â†’ reset layout
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       if (updated.length === 0) {
         setMultipleTextValue(false);
         setSelectedLayout("blank");
@@ -577,7 +667,11 @@ const SlideSpread = ({
   };
 
 
+<<<<<<< HEAD
   // ✅ Place this useEffect HERE (below your state definitions)
+=======
+  // âœ… Place this useEffect HERE (below your state definitions)
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   useEffect(() => {
     if (editingIndex !== null && editingIndex !== undefined) {
       setTexts((prev) =>
@@ -769,6 +863,7 @@ const SlideSpread = ({
     document.addEventListener("mousedown", onDocClick);
     return () => document.removeEventListener("mousedown", onDocClick);
   }, [bgEdit2]);
+<<<<<<< HEAD
 
 
   // duplicate   
@@ -855,6 +950,27 @@ const SlideSpread = ({
             height: "700px",
             width: "var(--card-slide-w, 500px)",
             minWidth: "var(--card-slide-w, 500px)",
+=======
+
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        width: "100%",
+        gap: "5px",
+        position: "relative",
+      }}
+    >
+      {activeIndex === 1 && rightBox && (
+        <Box
+          ref={rightBoxRef}
+          sx={{
+            flex: 1,
+            zIndex: 10,
+            p: 2,
+            position: "relative",
+            height: { md: "700px", sm: "600px", xs: "70vh" },
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             opacity: isSlideActive ? 1 : 0.6,
             pointerEvents: isSlideActive ? "auto" : "none",
             backgroundColor: bgColor2 ?? "transparent",
@@ -875,6 +991,7 @@ const SlideSpread = ({
               : {},
           }}
         >
+<<<<<<< HEAD
           <AlignmentGuides
             {...align.guides}
             hide={!isSlideActive || !align.isActive}
@@ -883,13 +1000,25 @@ const SlideSpread = ({
           {/* BG */}
           {isAdminEditor && bgImage2 && (
             <ScaledRnd
+=======
+
+          {/* BG */}
+          {isAdminEditor && bgImage2 && (
+            <Rnd
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
               size={{ width: bgRect2.width, height: bgRect2.height }}
               position={{ x: bgRect2.x, y: bgRect2.y }}
               bounds="parent"
               enableUserSelectHack={false}
+<<<<<<< HEAD
               // ✅ only draggable when unlocked AND in edit mode
               disableDragging={!bgEdit2 || bgLocked2}
               // ✅ only resizable when unlocked AND in edit mode
+=======
+              // âœ… only draggable when unlocked AND in edit mode
+              disableDragging={!bgEdit2 || bgLocked2}
+              // âœ… only resizable when unlocked AND in edit mode
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
               enableResizing={
                 bgEdit2 && !bgLocked2
                   ? {
@@ -946,7 +1075,11 @@ const SlideSpread = ({
                   backgroundPosition: "center",
                   userSelect: "none",
                 }}
+<<<<<<< HEAD
                 // ✅ double-click only works when unlocked
+=======
+                // âœ… double-click only works when unlocked
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                 onDoubleClick={() => {
                   if (!bgLocked2) setBgEdit2(true);
                 }}
@@ -987,10 +1120,17 @@ const SlideSpread = ({
                   </Box>
                 )}
               </Box>
+<<<<<<< HEAD
             </ScaledRnd>
           )}
 
           {/* 🎚 Single selection-based switch (admin only) */}
+=======
+            </Rnd>
+          )}
+
+          {/* ðŸŽš Single selection-based switch (admin only) */}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           {isAdminEditor && (
             <Paper
               elevation={2}
@@ -1046,7 +1186,11 @@ const SlideSpread = ({
                   let lastTap = 0;
 
                   return (
+<<<<<<< HEAD
                     <ScaledRnd
+=======
+                    <Rnd
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                       key={textElement.id}
                       cancel={textElement.isEditing ? ".no-drag, .text-edit" : ".no-drag"}
                       enableUserSelectHack={false}
@@ -1064,6 +1208,7 @@ const SlideSpread = ({
                         transition: "border 0.2s ease",
                         cursor: textElement.isEditing ? "text" : "move",
                       }}
+<<<<<<< HEAD
                       onDragStart={() => align.onDragStart()}
                       onDrag={(_, d) => {
                         const snap = align.onDrag(
@@ -1084,10 +1229,15 @@ const SlideSpread = ({
                         touchStartTime = Date.now();
                       }}
                       onTouchEnd={(e: any) => {
+=======
+                      onTouchStart={() => { touchStartTime = Date.now(); }}
+                      onTouchEnd={() => {
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                         const now = Date.now();
                         const timeSince = now - lastTap;
                         const touchDuration = now - touchStartTime;
                         if (touchDuration < 200) {
+<<<<<<< HEAD
                           const shouldEdit = isIos || timeSince < 300;
                           setSelectedTextId(textElement.id);
                           if (shouldEdit) {
@@ -1108,11 +1258,19 @@ const SlideSpread = ({
                           if (shouldEdit) {
                             updateTextElement(textElement.id, { isEditing: true });
                             focusEditableTextFromTarget(e.currentTarget);
+=======
+                          if (timeSince < 300) {
+                            setSelectedTextId(textElement.id);
+                            updateTextElement(textElement.id, { isEditing: true });
+                          } else {
+                            setSelectedTextId(textElement.id);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                           }
                         }
                         lastTap = now;
                       }}
                       onMouseDown={() => setSelectedTextId(textElement.id)}
+<<<<<<< HEAD
                       onDoubleClick={(e: any) => {
                         setSelectedTextId(textElement.id);
                         updateTextElement(textElement.id, { isEditing: true });
@@ -1129,6 +1287,14 @@ const SlideSpread = ({
                         );
                         updateTextElement(textElement.id, { position: { x: snap.x, y: snap.y } });
                         align.onDragStop();
+=======
+                      onDoubleClick={() => {
+                        setSelectedTextId(textElement.id);
+                        updateTextElement(textElement.id, { isEditing: true });
+                      }}
+                      onDragStop={(_, d) => {
+                        updateTextElement(textElement.id, { position: { x: d.x, y: d.y } });
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                       }}
                       onResizeStop={(_, __, ref, ___, position) => {
                         updateTextElement(textElement.id, {
@@ -1189,7 +1355,11 @@ const SlideSpread = ({
                             className="no-drag"
                             onClick={(e) => { e.stopPropagation(); layerDown({ type: 'text', id: textElement.id }); }}
                             sx={{
+<<<<<<< HEAD
                               position: "absolute", top: -25, left: 20, bgcolor: "black", color: "white",
+=======
+                              position: "absolute", top: -25, left: 40, bgcolor: "black", color: "white",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                               borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center",
                               p: isMobile ? "4px" : "2px", zIndex: 9999, cursor: "pointer", "&:hover": { bgcolor: "#333" },
                             }}
@@ -1203,7 +1373,11 @@ const SlideSpread = ({
                             className="no-drag"
                             onClick={(e) => { e.stopPropagation(); layerUp({ type: 'text', id: textElement.id }); }}
                             sx={{
+<<<<<<< HEAD
                               position: "absolute", top: -25, left: 45, bgcolor: "black", color: "white",
+=======
+                              position: "absolute", top: -25, left: 80, bgcolor: "black", color: "white",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                               borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center",
                               p: isMobile ? "4px" : "2px", zIndex: 9999, cursor: "pointer", "&:hover": { bgcolor: "#333" },
                             }}
@@ -1212,6 +1386,7 @@ const SlideSpread = ({
                           </Box>
                         </Tooltip>
 
+<<<<<<< HEAD
                         {/* Duplicate */}
                         <Tooltip title="Duplicate text">
                           <IconButton
@@ -1232,6 +1407,8 @@ const SlideSpread = ({
                         </Tooltip>
 
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                         {/* Content: drag anywhere when NOT editing; click twice to edit */}
                         <Box
                           sx={{
@@ -1242,6 +1419,7 @@ const SlideSpread = ({
                             alignItems: vAlign,
                             justifyContent: hAlign,
                             userSelect: "none",
+<<<<<<< HEAD
                             touchAction: textElement.isEditing ? "manipulation" : "none",
                             transform: `rotate(${textElement.rotation || 0}deg)`,
                             border: hideTextOutline
@@ -1256,12 +1434,27 @@ const SlideSpread = ({
                             setSelectedTextId(textElement.id);
                             updateTextElement(textElement.id, { isEditing: true });
                             focusEditableTextFromTarget(e.currentTarget);
+=======
+                            touchAction: "none",
+                            transform: `rotate(${textElement.rotation || 0}deg)`,
+                            border: textElement.id === selectedTextId ? "2px solid #1976d2" : "1px dashed #4a7bd5",
+                            zIndex: textElement.zIndex,
+                            cursor: textElement.isEditing ? "text" : "move", // âœ… keep move cursor
+                          }}
+                          onDoubleClick={() => {
+                            setSelectedTextId(textElement.id);
+                            updateTextElement(textElement.id, { isEditing: true });
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                           }}
                         >
                           <TextField
                             variant="standard"
                             value={textElement.value}
+<<<<<<< HEAD
                             className="text-edit"         // ✅ used by cancel when editing
+=======
+                            className="text-edit"         // âœ… used by cancel when editing
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                             placeholder="Add Text"
                             multiline
                             fullWidth
@@ -1282,16 +1475,24 @@ const SlideSpread = ({
                                 display: "flex",
                                 alignItems: vAlign,
                                 justifyContent: hAlign,
+<<<<<<< HEAD
                                 // ✅ drag by default, only interact with text in edit mode
+=======
+                                // âœ… drag by default, only interact with text in edit mode
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                                 pointerEvents: textElement.isEditing ? "auto" : "none",
                               },
                             }}
                             onChange={(e) => updateTextElement(textElement.id, { value: e.target.value })}
+<<<<<<< HEAD
                             onFocus={(e) => {
                               e.stopPropagation();
                               setSelectedTextId(textElement.id);
                               updateTextElement(textElement.id, { isEditing: true });
                             }}
+=======
+                            onFocus={(e) => { e.stopPropagation(); updateTextElement(textElement.id, { isEditing: true }); }}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                             onBlur={(e) => { e.stopPropagation(); updateTextElement(textElement.id, { isEditing: false }); }}
                             sx={{
                               "& .MuiInputBase-input": { overflowY: "auto", textAlign: textElement.textAlign || "center" },
@@ -1299,13 +1500,21 @@ const SlideSpread = ({
                           />
                         </Box>
                       </Box>
+<<<<<<< HEAD
                     </ScaledRnd>
+=======
+                    </Rnd>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                   );
                 })}
 
               {/* VIDEO QR */}
               {selectedVideoUrl && (
+<<<<<<< HEAD
                 <ScaledRnd
+=======
+                <Rnd
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                   cancel=".no-drag"
                   position={{ x: qrPosition.x, y: qrPosition.y }}
                   onDragStop={(_, d) =>
@@ -1365,12 +1574,20 @@ const SlideSpread = ({
                       </IconButton>
                     </Box>
                   </motion.div>
+<<<<<<< HEAD
                 </ScaledRnd>
+=======
+                </Rnd>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
               )}
 
               {/* AUDIO QR */}
               {selectedAudioUrl && (
+<<<<<<< HEAD
                 <ScaledRnd
+=======
+                <Rnd
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                   cancel=".no-drag"
                   position={{ x: qrAudioPosition.x, y: qrAudioPosition.y }}
                   onDragStop={(_, d) =>
@@ -1419,7 +1636,11 @@ const SlideSpread = ({
                       </IconButton>
                     </Box>
                   </motion.div>
+<<<<<<< HEAD
                 </ScaledRnd>
+=======
+                </Rnd>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
               )}
 
               {/* USER IMAGES (per-item lock) */}
@@ -1431,7 +1652,11 @@ const SlideSpread = ({
                   const isLocked = !!locked;
 
                   return (
+<<<<<<< HEAD
                     <ScaledRnd
+=======
+                    <Rnd
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                       key={id}
                       size={{ width, height }}
                       position={{ x, y }}
@@ -1440,6 +1665,7 @@ const SlideSpread = ({
                       cancel=".non-draggable"
                       disableDragging={isLocked}
                       enableResizing={isLocked ? false : { bottomRight: true }}
+<<<<<<< HEAD
                       onDragStart={() => align.onDragStart()}
                       onDrag={(_, d) => {
                         if (isLocked) return;
@@ -1457,6 +1683,13 @@ const SlideSpread = ({
                           prev.map((img) => (img.id === id ? { ...img, x: snap.x, y: snap.y } : img))
                         );
                         align.onDragStop();
+=======
+                      onDragStop={(_, d) => {
+                        if (isLocked) return;
+                        setDraggableImages((prev) =>
+                          prev.map((img) => (img.id === id ? { ...img, x: d.x, y: d.y } : img))
+                        );
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                       }}
                       onResizeStop={(_, __, ref, ___, position) => {
                         if (isLocked) return;
@@ -1515,6 +1748,7 @@ const SlideSpread = ({
                             cursor: isLocked ? "default" : "move",
                           }}
                           onMouseDown={() => setSelectedShapeImageId2(id)}
+<<<<<<< HEAD
                           onTouchStart={(e) => {
                             e.stopPropagation();
                             setSelectedShapeImageId2(id);
@@ -1524,6 +1758,8 @@ const SlideSpread = ({
                             e.stopPropagation();
                             setSelectedShapeImageId2(id);
                           }}
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                         >
                           <img
                             src={src}
@@ -1587,7 +1823,11 @@ const SlideSpread = ({
                                 sx={{
                                   position: "absolute",
                                   top: -25,
+<<<<<<< HEAD
                                   left: 20,
+=======
+                                  left: 40,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                                   bgcolor: "black",
                                   color: "white",
                                   borderRadius: "50%",
@@ -1614,7 +1854,11 @@ const SlideSpread = ({
                                 sx={{
                                   position: "absolute",
                                   top: -25,
+<<<<<<< HEAD
                                   left: 45,
+=======
+                                  left: 80,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                                   bgcolor: "black",
                                   color: "white",
                                   borderRadius: "50%",
@@ -1633,6 +1877,7 @@ const SlideSpread = ({
                           </>
                         )}
 
+<<<<<<< HEAD
                         {/* Duplicate Image Button */}
                         {isAdminEditor && !isLocked && (
                           <Tooltip title="Duplicate">
@@ -1678,6 +1923,8 @@ const SlideSpread = ({
                           </Tooltip>
                         )}
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                         {/* close */}
                         {!isLocked && (
                           <Box
@@ -1709,7 +1956,11 @@ const SlideSpread = ({
                           </Box>
                         )}
                       </Box>
+<<<<<<< HEAD
                     </ScaledRnd>
+=======
+                    </Rnd>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                   );
                 })}
 
@@ -1719,6 +1970,7 @@ const SlideSpread = ({
                   sx={{
                     flex: 1,
                     display: "flex",
+<<<<<<< HEAD
                     alignItems: "stretch",
                     justifyContent: "flex-start",
                     height: "100%",
@@ -1730,6 +1982,17 @@ const SlideSpread = ({
                     top: 0,
                     left: 0,
                     boxSizing: "border-box",
+=======
+                    alignItems: "center",
+                    justifyContent: "center",
+                    height: { md: "675px", sm: "575px", xs: "60vh" },
+                    width: { md: "470px", sm: "370px", xs: "90%" },
+                    border: "3px dashed #3a7bd5",
+                    position: "absolute",
+                    bgcolor: "#6183cc36",
+                    p: 1,
+                    top: 10,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                   }}
                 >
                   <IconButton
@@ -1784,6 +2047,7 @@ const SlideSpread = ({
                       InputProps={{
                         disableUnderline: true,
                         sx: {
+<<<<<<< HEAD
                           height: "100%",
                           alignItems:
                             verticalAlign === "top"
@@ -1792,6 +2056,9 @@ const SlideSpread = ({
                                 ? "center"
                                 : "flex-end",
                           "& .MuiInputBase-input, & .MuiInputBase-inputMultiline": {
+=======
+                          "& .MuiInputBase-input": {
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                             fontSize: fontSize,
                             fontWeight: fontWeight,
                             color: fontColor,
@@ -1800,6 +2067,7 @@ const SlideSpread = ({
                             transform: `rotate(${rotation}deg)`,
                             lineHeight: lineHeight2,
                             letterSpacing: letterSpacing2,
+<<<<<<< HEAD
                             minHeight: "unset !important",
                             height: "auto !important",
                             maxHeight: "100%",
@@ -1809,6 +2077,12 @@ const SlideSpread = ({
                         },
                       }}
                       sx={{ width: "100%", height: "100%" }}
+=======
+                            height: 200,
+                          },
+                        },
+                      }}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                       autoFocus
                       multiline
                       fullWidth
@@ -1839,7 +2113,11 @@ const SlideSpread = ({
                         height: { md: "210px", sm: "180px", xs: "180px" },
                         width: "100%",
                         mb: 2,
+<<<<<<< HEAD
                         border: hideTextOutline ? "none" : "3px dashed #3a7bd5",
+=======
+                        border: "3px dashed #3a7bd5",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                         borderRadius: "6px",
                         justifyContent: "center",
                         display: "flex",
@@ -1985,7 +2263,11 @@ const SlideSpread = ({
 
               {/* AI IMAGE (kept as-is, not part of lock demo) */}
               {isAIimage2 && (
+<<<<<<< HEAD
                 <ScaledRnd
+=======
+                <Rnd
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                   size={{ width: aimage2.width, height: aimage2.height }}
                   position={{ x: aimage2.x, y: aimage2.y }}
                   onDragStop={(_, d) => setAIImage2((prev) => ({ ...prev, x: d.x, y: d.y }))}
@@ -2028,7 +2310,11 @@ const SlideSpread = ({
                       <Close />
                     </IconButton>
                   </Box>
+<<<<<<< HEAD
                 </ScaledRnd>
+=======
+                </Rnd>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
               )}
 
               {/* STICKERS (per-item lock) */}
@@ -2038,7 +2324,11 @@ const SlideSpread = ({
                 const isLocked = !!sticker.locked;
 
                 return (
+<<<<<<< HEAD
                   <ScaledRnd
+=======
+                  <Rnd
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                     key={sticker.id || index}
                     size={{ width: sticker.width, height: sticker.height }}
                     position={{ x: sticker.x, y: sticker.y }}
@@ -2048,6 +2338,7 @@ const SlideSpread = ({
                     disableDragging={isLocked}
                     enableResizing={isLocked ? false : { bottomRight: true }}
                     onMouseDown={() => setSelectedStickerIndex2(index)}
+<<<<<<< HEAD
                     onDragStart={() => align.onDragStart()}
                     onDrag={(_, d) => {
                       if (isLocked) return;
@@ -2085,6 +2376,16 @@ const SlideSpread = ({
                       }
                       align.onDragStop();
                     }}
+=======
+                    onDragStop={(_, d) =>
+                      !isLocked &&
+                      updateSticker2(index, {
+                        x: d.x,
+                        y: d.y,
+                        zIndex: sticker.zIndex,
+                      })
+                    }
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                     onResizeStop={(_, __, ref, ___, position) =>
                       !isLocked &&
                       updateSticker2(index, {
@@ -2183,7 +2484,11 @@ const SlideSpread = ({
                         </IconButton>
                       )}
                     </Box>
+<<<<<<< HEAD
                   </ScaledRnd>
+=======
+                  </Rnd>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                 );
               })}
             </>
@@ -2221,7 +2526,11 @@ const SlideSpread = ({
                             sx={{
                               width: "100%",
                               height: "100%",
+<<<<<<< HEAD
                               objectFit: "fill",
+=======
+                              objectFit: "cover",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                               borderRadius: 1,
                               display: "block",
                               pointerEvents: "none",
@@ -2229,7 +2538,11 @@ const SlideSpread = ({
                               WebkitClipPath: el.clipPath || "none",
                             }}
                           />
+<<<<<<< HEAD
                           {/* ✅ Only show upload icon when this frame is editable (NOT when locked) */}
+=======
+                          {/* âœ… Only show upload icon when this frame is editable (NOT when locked) */}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                           {isEditable && !isLocked && (
                             <Box
                               sx={{
@@ -2292,6 +2605,7 @@ const SlideSpread = ({
                           height: isActive ? 'auto' : te.height,
                           zIndex: (te.zIndex ?? 1) + 1000,
 
+<<<<<<< HEAD
                           // ✅ easiest way to center the block itself
                           display: "grid",
                           placeItems: "center",
@@ -2303,11 +2617,23 @@ const SlideSpread = ({
                           border: hideTextOutline
                             ? "none"
                             : isEditable
+=======
+                          // âœ… easiest way to center the block itself
+                          display: "grid",
+                          placeItems: "center",
+
+                          // âœ… cursor
+                          cursor: !isEditable ? "not-allowed" : (isActive ? "text" : "pointer"),
+
+                          // âœ… border
+                          border: isEditable
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                             ? (isActive ? "1px dashed #1976d2" : "1px dashed rgba(25,118,210,.35)")
                             : "none",
                           borderRadius: "6px",
                           transition: "border .15s ease",
                         }}
+<<<<<<< HEAD
                         onClick={isEditable ? (e) => {
                           handleTextFocus(index, te);
                           focusEditableTextFromTarget(e.currentTarget);
@@ -2320,6 +2646,10 @@ const SlideSpread = ({
                           handleTextFocus(index, te);
                           focusEditableTextFromTarget(e.currentTarget);
                         } : undefined}
+=======
+                        onClick={isEditable ? () => setEditingIndex(index) : undefined}
+                        onDoubleClick={isEditable ? () => setEditingIndex(index) : undefined}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                       >
                         <TextField
                           variant="standard"
@@ -2353,7 +2683,11 @@ const SlideSpread = ({
                             width: "100%",
                             height: "100%",
 
+<<<<<<< HEAD
                             // ✅ make sure both single & multiline inputs are centered
+=======
+                            // âœ… make sure both single & multiline inputs are centered
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                             "& .MuiInputBase-input, & .MuiInputBase-inputMultiline": {
                               textAlign: "center",
                               textAlignLast: "center",
@@ -2403,9 +2737,16 @@ const SlideSpread = ({
                       let lastTap = 0;
 
                       return (
+<<<<<<< HEAD
                         <ScaledRnd
                           key={textElement.id}
                           cancel={textElement.isEditing ? ".no-drag, .text-edit" : ".no-drag"}
+=======
+                        <Rnd
+                          key={textElement.id}
+                          cancel=".no-drag"
+                          dragHandleClassName="drag-area"
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                           enableUserSelectHack={false}
                           enableResizing={{
                             bottomRight: true,
@@ -2428,6 +2769,7 @@ const SlideSpread = ({
                             touchAction: "none",
                             transition: "border 0.2s ease",
                           }}
+<<<<<<< HEAD
                           onDragStart={() => align.onDragStart()}
                           onDrag={(_, d) => {
                             const snap = align.onDrag(
@@ -2453,11 +2795,18 @@ const SlideSpread = ({
                             touchStartTime = Date.now();
                           }}
                           onTouchEnd={(e: any) => {
+=======
+                          onTouchStart={() => {
+                            touchStartTime = Date.now();
+                          }}
+                          onTouchEnd={() => {
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                             const now = Date.now();
                             const timeSince = now - lastTap;
                             const touchDuration = now - touchStartTime;
 
                             if (touchDuration < 200) {
+<<<<<<< HEAD
                               const shouldEdit = isIos || timeSince < 300;
                               setSelectedTextId(textElement.id);
                               if (shouldEdit) {
@@ -2482,6 +2831,15 @@ const SlideSpread = ({
                                 updateTextElement(textElement.id, { isEditing: true });
                                 focusEditableTextFromTarget(e.currentTarget);
                               } else {
+=======
+                              if (timeSince < 300) {
+                                // Double tap = edit
+                                setSelectedTextId(textElement.id);
+                                updateTextElement(textElement.id, { isEditing: true });
+                              } else {
+                                // Single tap = select
+                                setSelectedTextId(textElement.id);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                                 updateTextElement(textElement.id, { isEditing: false });
                               }
                             }
@@ -2491,6 +2849,7 @@ const SlideSpread = ({
                             // Desktop: select on click
                             setSelectedTextId(textElement.id);
                           }}
+<<<<<<< HEAD
                           onDoubleClick={(e: any) => {
                             // Desktop: edit on double-click
                             setSelectedTextId(textElement.id);
@@ -2511,6 +2870,18 @@ const SlideSpread = ({
                               zIndex: 2001,
                             });
                             align.onDragStop();
+=======
+                          onClick={() => {
+                            // Desktop: edit on double-click
+                            setSelectedTextId(textElement.id);
+                            updateTextElement(textElement.id, { isEditing: true });
+                          }}
+                          onDragStop={(_, d) => {
+                            updateTextElement(textElement.id, {
+                              position: { x: d.x, y: d.y },
+                              zIndex: 2001,
+                            });
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                           }}
                           onResizeStop={(_, __, ref, ___, position) => {
                             updateTextElement(textElement.id, {
@@ -2544,7 +2915,11 @@ const SlideSpread = ({
                               height: "100%",
                             }}
                           >
+<<<<<<< HEAD
                             {/* ✅ Close Button */}
+=======
+                            {/* âœ… Close Button */}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                             <IconButton
                               size="small"
                               className="no-drag"
@@ -2606,6 +2981,7 @@ const SlideSpread = ({
                                 justifyContent: hAlign,
                                 cursor: textElement.isEditing ? "text" : "move",
                                 userSelect: "none",
+<<<<<<< HEAD
                                 touchAction: textElement.isEditing ? "manipulation" : "none",
                                 transform: `rotate(${textElement.rotation || 0}deg)`,
                                 border: hideTextOutline
@@ -2621,11 +2997,31 @@ const SlideSpread = ({
                                 variant="standard"
                                 value={textElement.value}
                                 className="text-edit"
+=======
+                                touchAction: "none",
+                                transform: `rotate(${textElement.rotation || 0}deg)`,
+                                border:
+                                  textElement.id === selectedTextId
+                                    ? "2px solid #1976d2"
+                                    : "1px dashed #4a7bd5",
+                                zIndex: textElement.zIndex
+                              }}
+                            >
+                              {/* âœ… Editable Text */}
+                              <TextField
+                                variant="standard"
+                                value={textElement.value}
+                                className="no-drag"
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                                 placeholder="Add Text"
                                 multiline
                                 fullWidth
                                 tabIndex={0}
+<<<<<<< HEAD
                                 autoFocus={!!textElement.isEditing}
+=======
+                                autoFocus={textElement.id === selectedTextId ? true : false}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                                 InputProps={{
                                   readOnly: !textElement.isEditing,
                                   disableUnderline: true,
@@ -2653,7 +3049,10 @@ const SlideSpread = ({
                                 }
                                 onFocus={(e) => {
                                   e.stopPropagation();
+<<<<<<< HEAD
                                   setSelectedTextId(textElement.id);
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                                   updateTextElement(textElement.id, { isEditing: true });
                                 }}
                                 onBlur={(e) => {
@@ -2671,7 +3070,11 @@ const SlideSpread = ({
                             </Box>
 
                           </Box>
+<<<<<<< HEAD
                         </ScaledRnd>
+=======
+                        </Rnd>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                       );
                     })}
                   </>
@@ -2679,7 +3082,11 @@ const SlideSpread = ({
               }
 
               {selectedVideoUrl && (
+<<<<<<< HEAD
                 <ScaledRnd
+=======
+                <Rnd
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                   cancel=".no-drag"
                   position={{ x: qrPosition.x, y: qrPosition.y }}
                   onDragStop={(_, d) =>
@@ -2788,11 +3195,19 @@ const SlideSpread = ({
                       </IconButton>
                     </Box>
                   </motion.div>
+<<<<<<< HEAD
                 </ScaledRnd>
               )}
 
               {selectedAudioUrl && (
                 <ScaledRnd
+=======
+                </Rnd>
+              )}
+
+              {selectedAudioUrl && (
+                <Rnd
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                   cancel=".no-drag"
                   position={{ x: qrAudioPosition.x, y: qrAudioPosition.y }}
                   onDragStop={(_, d) =>
@@ -2821,7 +3236,11 @@ const SlideSpread = ({
                   }}
                 >
                   <motion.div
+<<<<<<< HEAD
                     key={selectedVideoUrl} // ✅ unique key triggers re-animation on change
+=======
+                    key={selectedVideoUrl} // âœ… unique key triggers re-animation on change
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                     initial={{ opacity: 0, x: 100 }} // start off-screen (right)
                     animate={{ opacity: 1, x: 0 }} // slide in
                     exit={{ opacity: 0, x: -100 }} // slide out left
@@ -2905,7 +3324,11 @@ const SlideSpread = ({
                       </IconButton>
                     </Box>
                   </motion.div>
+<<<<<<< HEAD
                 </ScaledRnd>
+=======
+                </Rnd>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
               )}
 
               {draggableImages
@@ -2914,16 +3337,23 @@ const SlideSpread = ({
                 .map(({ id, src, x, y, width, height, zIndex, rotation = 0, filter }: any) => {
                   const isMobile =
                     typeof window !== "undefined" && window.innerWidth < 768;
+<<<<<<< HEAD
                   const isSelected = selectedShapeImageId2 === id;
 
                   return (
                     <ScaledRnd
+=======
+
+                  return (
+                    <Rnd
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                       key={id}
                       size={{ width, height }}
                       position={{ x, y }}
                       bounds="parent"
                       enableUserSelectHack={false}
                       cancel=".non-draggable"
+<<<<<<< HEAD
                       onDragStart={() => align.onDragStart()}
                       onDrag={(_, d) => {
                         const snap = align.onDrag(d.x, d.y, width, height, alignItems, `img:${id}`);
@@ -2943,6 +3373,14 @@ const SlideSpread = ({
                           )
                         );
                         align.onDragStop();
+=======
+                      onDragStop={(_, d) => {
+                        setDraggableImages((prev) =>
+                          prev.map((img) =>
+                            img.id === id ? { ...img, x: d.x, y: d.y } : img
+                          )
+                        );
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                       }}
                       onResizeStop={(_, __, ref, ___, position) => {
                         const newWidth = parseInt(ref.style.width);
@@ -2966,9 +3404,13 @@ const SlideSpread = ({
                         boxSizing: "border-box",
                         borderRadius: 8,
                         touchAction: "none",
+<<<<<<< HEAD
                         outline: isSelected ? "2px solid #1976d2" : "none",
                       }}
                       onClick={() => setSelectedShapeImageId2(id)}
+=======
+                      }}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                       enableResizing={{ bottomRight: true }}
                       resizeHandleStyles={{
                         bottomRight: {
@@ -3000,6 +3442,7 @@ const SlideSpread = ({
                             height: "100%",
                             transform: `rotate(${rotation}deg)`,
                             transformOrigin: "center center",
+<<<<<<< HEAD
                             outline: isSelected ? "1px solid #cf57ffff" : "none",
                             borderRadius: isSelected ? 1 : 0,
                             pointerEvents: "auto",
@@ -3013,6 +3456,8 @@ const SlideSpread = ({
                             if (e?.pointerType !== "touch") return;
                             e.stopPropagation();
                             setSelectedShapeImageId2(id);
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                           }}
                         >
                           <img
@@ -3107,7 +3552,11 @@ const SlideSpread = ({
                           <Close fontSize={isMobile ? "medium" : "small"} />
                         </Box>
                       </Box>
+<<<<<<< HEAD
                     </ScaledRnd>
+=======
+                    </Rnd>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                   );
                 })}
 
@@ -3116,6 +3565,7 @@ const SlideSpread = ({
                   sx={{
                     flex: 1,
                     display: "flex",
+<<<<<<< HEAD
                     alignItems: "stretch",
                     justifyContent: "flex-start",
                     height: "100%",
@@ -3127,6 +3577,16 @@ const SlideSpread = ({
                     top: 0,
                     left: 0,
                     boxSizing: "border-box",
+=======
+                    alignItems: "center",
+                    justifyContent: "center",
+                    height: { md: "675px", sm: "575px", xs: "60vh" },
+                    width: { md: "470px", sm: "370px", xs: "100%" },
+                    border: "3px dashed #3a7bd5",
+                    bgcolor: "#6183cc36",
+                    position: "relative",
+                    p: 1,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                   }}
                 >
                   <IconButton
@@ -3165,12 +3625,15 @@ const SlideSpread = ({
                           : verticalAlign === "center"
                             ? "center"
                             : "flex-end",
+<<<<<<< HEAD
                       alignItems:
                         textAlign === "start"
                           ? "flex-start"
                           : textAlign === "center"
                             ? "center"
                             : "flex-end",
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                     }}
                   >
                     <TextField
@@ -3180,6 +3643,7 @@ const SlideSpread = ({
                       InputProps={{
                         disableUnderline: true,
                         sx: {
+<<<<<<< HEAD
                           height: "100%",
                           alignItems:
                             verticalAlign === "top"
@@ -3188,6 +3652,9 @@ const SlideSpread = ({
                                 ? "center"
                                 : "flex-end",
                           "& .MuiInputBase-input, & .MuiInputBase-inputMultiline": {
+=======
+                          "& .MuiInputBase-input": {
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                             fontSize: fontSize,
                             fontWeight: fontWeight,
                             color: fontColor,
@@ -3195,6 +3662,7 @@ const SlideSpread = ({
                             textAlign: textAlign,
                             transform: `rotate(${rotation}deg)`,
                             lineHeight: lineHeight2,
+<<<<<<< HEAD
                             letterSpacing: letterSpacing2,
                             minHeight: "unset !important",
                             height: "auto !important",
@@ -3205,6 +3673,12 @@ const SlideSpread = ({
                         },
                       }}
                       sx={{ width: "100%", height: "100%" }}
+=======
+                            letterSpacing: letterSpacing2
+                          },
+                        },
+                      }}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                       autoFocus
                       multiline
                       fullWidth
@@ -3234,7 +3708,11 @@ const SlideSpread = ({
                         height: { md: "210px", sm: "180px", xs: '180px' },
                         width: "100%",
                         mb: 2,
+<<<<<<< HEAD
                         border: hideTextOutline ? "none" : "3px dashed #3a7bd5",
+=======
+                        border: "3px dashed #3a7bd5",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                         borderRadius: "6px",
                         justifyContent: "center",
                         display: "flex",
@@ -3321,7 +3799,11 @@ const SlideSpread = ({
                               );
                             }
 
+<<<<<<< HEAD
                             // ✅ Then select new box
+=======
+                            // âœ… Then select new box
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                             setEditingIndex(index);
                             setFontSize(textObj.fontSize);
                             setFontFamily(textObj.fontFamily);
@@ -3377,6 +3859,7 @@ const SlideSpread = ({
               )}
 
               {isAIimage2 && (
+<<<<<<< HEAD
                 <ScaledRnd
                   cancel=".no-drag"
                   size={{ width: aimage2.width, height: aimage2.height }}
@@ -3411,6 +3894,19 @@ const SlideSpread = ({
                     }));
                     align.onDragStop();
                   }}
+=======
+                <Rnd
+                  cancel=".no-drag"
+                  size={{ width: aimage2.width, height: aimage2.height }}
+                  position={{ x: aimage2.x, y: aimage2.y }}
+                  onDragStop={(_, d) =>
+                    setAIImage2((prev) => ({
+                      ...prev,
+                      x: d.x,
+                      y: d.y,
+                    }))
+                  }
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                   onResizeStop={(_, __, ref, ___, position) =>
                     setAIImage2({
                       width: parseInt(ref.style.width),
@@ -3445,12 +3941,20 @@ const SlideSpread = ({
                   style={{
                     zIndex: 10,
                     border: "2px solid #1976d2",
+<<<<<<< HEAD
                     display: "flex", // ✅ make content fill
+=======
+                    display: "flex", // âœ… make content fill
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                     alignItems: "stretch",
                     justifyContent: "stretch",
                   }}
                 >
+<<<<<<< HEAD
                   {/* ✅ Ensure the container fills RND box */}
+=======
+                  {/* âœ… Ensure the container fills RND box */}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                   <Box
                     sx={{
                       position: "relative",
@@ -3459,7 +3963,11 @@ const SlideSpread = ({
                       display: "flex",
                     }}
                   >
+<<<<<<< HEAD
                     {/* ✅ Make image fill fully */}
+=======
+                    {/* âœ… Make image fill fully */}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                     <Box
                       component="img"
                       src={`${selectedAIimageUrl2}`}
@@ -3493,7 +4001,11 @@ const SlideSpread = ({
                       <Close />
                     </IconButton>
                   </Box>
+<<<<<<< HEAD
                 </ScaledRnd>
+=======
+                </Rnd>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
               )}
 
               {selectedStickers2.map((sticker, index) => {
@@ -3501,11 +4013,16 @@ const SlideSpread = ({
                   typeof window !== "undefined" && window.innerWidth < 768;
 
                 return (
+<<<<<<< HEAD
                   <ScaledRnd
+=======
+                  <Rnd
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                     key={sticker.id || index}
                     size={{ width: sticker.width, height: sticker.height }}
                     position={{ x: sticker.x, y: sticker.y }}
                     bounds="parent"
+<<<<<<< HEAD
                     enableUserSelectHack={false} // ✅ allows touch events
                     cancel=".non-draggable" // ✅ prevents RND drag hijack on buttons
                     onDragStart={() => align.onDragStart()}
@@ -3542,6 +4059,17 @@ const SlideSpread = ({
                       });
                       align.onDragStop();
                     }}
+=======
+                    enableUserSelectHack={false} // âœ… allows touch events
+                    cancel=".non-draggable" // âœ… prevents RND drag hijack on buttons
+                    onDragStop={(_, d) =>
+                      updateSticker2(index, {
+                        x: d.x,
+                        y: d.y,
+                        zIndex: sticker.zIndex,
+                      })
+                    }
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                     onResizeStop={(_, __, ref, ___, position) =>
                       updateSticker2(index, {
                         width: parseInt(ref.style.width),
@@ -3569,7 +4097,11 @@ const SlideSpread = ({
                     style={{
                       zIndex: sticker.zIndex,
                       position: "absolute",
+<<<<<<< HEAD
                       touchAction: "none", // ✅ allow touch drag + taps
+=======
+                      touchAction: "none", // âœ… allow touch drag + taps
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                     }}
                   >
                     <Box
@@ -3596,7 +4128,11 @@ const SlideSpread = ({
 
                       {/* Close Button */}
                       <IconButton
+<<<<<<< HEAD
                         className="non-draggable" // ✅ prevent drag capture
+=======
+                        className="non-draggable" // âœ… prevent drag capture
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                         size="small"
                         onClick={(e) => {
                           e.stopPropagation();
@@ -3650,7 +4186,11 @@ const SlideSpread = ({
                         <Forward10 fontSize={isMobile ? "medium" : "small"} />
                       </IconButton>
                     </Box>
+<<<<<<< HEAD
                   </ScaledRnd>
+=======
+                  </Rnd>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                 );
               })}
             </>}
@@ -3658,8 +4198,12 @@ const SlideSpread = ({
         </Box>
       )
       }
+<<<<<<< HEAD
       </Box >
     </CanvasScaleContext.Provider>
+=======
+    </Box >
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   );
 };
 

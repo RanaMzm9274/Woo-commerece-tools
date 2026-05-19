@@ -1,5 +1,9 @@
 import { Check, Delete, DrawOutlined, Flare, KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
+<<<<<<< HEAD
 import { Box, IconButton, useMediaQuery } from "@mui/material";
+=======
+import { Box, IconButton } from "@mui/material";
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 import { COLORS } from "../../../constant/color";
 import { convertToRealisticSketch } from "../../../source/SketchEffect";
 import { useSlide4 } from "../../../context/Slide4Context";
@@ -13,7 +17,10 @@ interface ImageAdjustment4PopupProps {
 
 const ImageAdjustment4Popup = (props: ImageAdjustment4PopupProps) => {
     const { onClose, isAdminEditor } = props
+<<<<<<< HEAD
     const isMobile = useMediaQuery("(max-width:600px)");
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
     const { setImageFilter4, imageFilter4, setDraggableImages4, selectedImg4, setImages4, setSelectedImage4, setActiveFilterImageId4, draggableImages4 } = useSlide4()
 
@@ -77,6 +84,7 @@ const ImageAdjustment4Popup = (props: ImageAdjustment4PopupProps) => {
 
 
     return (
+<<<<<<< HEAD
         <Box
             sx={{
                 position: isMobile ? "fixed" : "absolute",
@@ -105,11 +113,22 @@ const ImageAdjustment4Popup = (props: ImageAdjustment4PopupProps) => {
                     alignItems: isMobile ? "center" : "stretch",
                     justifyContent: isMobile ? "flex-start" : "center",
                     gap: isMobile ? 1 : 0,
+=======
+        <Box sx={{ position: 'absolute', right: '34%', zIndex: 99, height: 600, bgcolor: 'white', mt: 1, borderRadius: 1 }}>
+            <Box
+                sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    height: "600px", // adjust as you need
+                    width: "auto",
+                    justifyContent: 'center'
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                 }}
             >
                 {/* Scrollable Icon Section */}
                 <Box
                     sx={{
+<<<<<<< HEAD
                         flex: isMobile ? "1 1 auto" : 1,
                         overflowY: isMobile ? "hidden" : "auto",
                         overflowX: isMobile ? "auto" : "hidden",
@@ -122,6 +141,16 @@ const ImageAdjustment4Popup = (props: ImageAdjustment4PopupProps) => {
                         "&::-webkit-scrollbar": {
                             width: isMobile ? "0px" : "6px",
                             height: isMobile ? "6px" : "0px",
+=======
+                        flex: 1,
+                        overflowY: "auto",
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "10px",
+
+                        "&::-webkit-scrollbar": {
+                            width: "6px",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                         },
                         "&::-webkit-scrollbar-thumb": {
                             backgroundColor: "#ccc",
@@ -180,11 +209,17 @@ const ImageAdjustment4Popup = (props: ImageAdjustment4PopupProps) => {
                 {/* Fixed Check Button at Bottom */}
                 <Box
                     sx={{
+<<<<<<< HEAD
                         p: isMobile ? 0 : 1,
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
                         flexShrink: 0,
+=======
+                        p: 1,
+                        display: "flex",
+                        justifyContent: "center",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                     }}
                 >
                     <IconButton
@@ -213,10 +248,17 @@ const editingButtonStyle = {
     flexDirection: "column",
     alignItems: "center",
     fontSize: "13px",
+<<<<<<< HEAD
     minWidth: "56px",
     flexShrink: 0,
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     color: "#212121",
     "&:hover": {
         color: "#3a7bd5",
     },
+<<<<<<< HEAD
 };
+=======
+};
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0

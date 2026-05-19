@@ -13,13 +13,19 @@ import TableList from "../../../components/TableList/TableList";
 const DashboardHome = () => {
 
   const [orders, setOrders] = useState([]);
+<<<<<<< HEAD
   const [orderCount, setOrderCount] = useState(0);
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
   useEffect(() => {
     const loadOrders = async () => {
       try {
         const result = await fetchAllOrders();
+<<<<<<< HEAD
         setOrderCount(Array.isArray(result) ? result.length : 0);
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
         const formatted: any = result.map((item) => ({
           id: item.id,
@@ -55,11 +61,19 @@ const DashboardHome = () => {
         }}
       >
         <TotalProductChart />
+<<<<<<< HEAD
         <OrderChart orderCount={orderCount} />
         <VisitorMiniChart />
         <Box sx={{ width: '100%', display: 'flex', flexWrap: 'wrap', gap: 2 }}>
           <UsersChart />
           <AddCelebChart orderCount={orderCount} />
+=======
+        <OrderChart />
+        <VisitorMiniChart />
+        <Box sx={{ width: '100%', display: 'flex', flexWrap: 'wrap', gap: 2 }}>
+          <UsersChart />
+          <AddCelebChart />
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         </Box>
         {/* <SimpleAreaChart /> */}
       </Box>

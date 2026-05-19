@@ -18,7 +18,11 @@ const steps = [
     {
         step: 3,
         title: "Print & Create",
+<<<<<<< HEAD
         description: `Pay and receive a high resolution print ready file instantly in your inbox. Print at home, at work or in a store, you can apply your design to your own blanks for personalised gifts.`,
+=======
+        description: `Pay and receive your high quality PDF instantly in your inbox. Print at home, at work or in a store, you can apply your design to your own blanks for personalised gifts.`,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         color: COLORS.green
     }
 ]
@@ -26,7 +30,11 @@ const steps = [
 const VisualSection = () => {
     return (
         <Box py={3}>
+<<<<<<< HEAD
             <Typography sx={{ fontSize: { md: 30, sm: 25, xs: 20 }, fontWeight: 600, textAlign: 'center' }}>
+=======
+            <Typography sx={{ fontSize: { md: 30, sm: 25, xs: 20 }, fontWeight: 800, textAlign: 'center' }}>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                 DIY Personalisations 3 step Process
             </Typography>
 

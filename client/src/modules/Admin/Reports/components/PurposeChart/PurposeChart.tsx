@@ -69,7 +69,11 @@ const PurposeChart = () => {
         : [{ name: "—", value: 0 }];
 
     return (
+<<<<<<< HEAD
         <Box sx={{ width: "50%", minWidth: 0 }}>
+=======
+        <Box sx={{ width: "50%" }}>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             <Box
                 sx={{
                     display: "flex",

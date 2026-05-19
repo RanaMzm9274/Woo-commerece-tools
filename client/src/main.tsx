@@ -4,6 +4,7 @@ import App from "./core/App/App.tsx";
 import { BrowserRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
+<<<<<<< HEAD
 if (
   typeof window !== "undefined" &&
   import.meta.env.PROD &&
@@ -14,6 +15,8 @@ if (
   window.location.replace(secureUrl);
 }
 
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {

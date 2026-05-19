@@ -10,12 +10,16 @@ type CategoryType = {
   borderColor?: string;
   seasonalCard?: boolean,
   key?: number
+<<<<<<< HEAD
   
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 };
 
 const CategoryCard = (props: CategoryType) => {
   const { id, poster, title, borderColor, seasonalCard } = props;
   const navigate = useNavigate();
+<<<<<<< HEAD
 
    const go = () => {
     const name = title || "";
@@ -23,11 +27,17 @@ const CategoryCard = (props: CategoryType) => {
       state: { categoryId: id ?? null, categoryName: name },
     });
   };
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 
   return (
     <Box
       component={"div"}
+<<<<<<< HEAD
      onClick={go}
+=======
+      onClick={() => navigate(`${USER_ROUTES.VIEW_ALL}/${encodeURIComponent(title || "")}`)}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       key={id}
       sx={{
         border: "3px solid lightgray",

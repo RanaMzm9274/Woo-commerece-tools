@@ -8,10 +8,15 @@ export const USER_ROUTES = {
   OUR_BLOGS_DETAILS: "/blogs-details",
   OUR_SUSTAIANIBILITY: "/sustainability",
   VIEW_ALL: "/view-all",
+<<<<<<< HEAD
   USER_DRAFTS_CARDS: "/drafts",
   ADD_TO_CART: "/add-to-cart",
   COMMUNITY_HUB: "/community-hub",
   PREMIUM_PLANS: "/premium-plans",
+=======
+  ADD_TO_CART: "add-to-cart",
+  COMMUNITY_HUB: "/community-hub",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   SUBSCRIPTION: "/subscription",
   SUCCESS_PAY: "/success-payment",
   SIGNIN: "/signin",
@@ -34,8 +39,11 @@ export const ADMINS_DASHBOARD = {
   ADMIN_CATEGORIES: "/admin-category",
   ADMIN_BLOGS: "/admin-blogs",
   ADMIN_BLOGS_EDITOR: "/admin-blogs-editor",
+<<<<<<< HEAD
   ADMIN_BUNDLES: "/admin-bundles",
   ADMIN_SUBSCRIPTION_PLANS: "/admin-subscription-plans",
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
   ADMIN_TOTURIAL_GUIDE: "/admin-toturial-guide",
   ADMIN_COMMUNITY_HUB: "/admin-community-hub",
   ADD_COMMUNITY_HUB_POST: "/add-community-hub-post",

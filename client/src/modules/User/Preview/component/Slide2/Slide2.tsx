@@ -7,11 +7,15 @@ type AnyEl = Record<string, any>;
 const safeClip = (cp?: string | null) => (cp && typeof cp === "string" ? cp : "none");
 const safeFilter = (f?: string | null) => (f && typeof f === "string" ? f : "none");
 const val = <T,>(v: T | undefined, d: T) => (v === undefined || v === null ? d : v);
+<<<<<<< HEAD
 const normalizeUrl = (value: any) => {
   if (typeof value === "string") return value.trim();
   if (value && typeof value === "object" && typeof value.url === "string") return value.url.trim();
   return "";
 };
+=======
+
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
 type Slide2Props = {
   ref?: any
 }
@@ -33,7 +37,10 @@ const Slide2 = (props: Slide2Props) => {
     qrPosition,
     textAlign,
     selectedLayout,
+<<<<<<< HEAD
     showOneTextRightSideBox,
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     textElements,
     qrAudioPosition,
     selectedAIimageUrl2,
@@ -46,6 +53,7 @@ const Slide2 = (props: Slide2Props) => {
     bgColor2,
   } = useSlide2();
   const { ref } = props
+<<<<<<< HEAD
   const isOneTextActive = selectedLayout === "oneText" || showOneTextRightSideBox;
   const videoUrl = normalizeUrl(selectedVideoUrl);
   const audioUrl = normalizeUrl(selectedAudioUrl);
@@ -58,6 +66,15 @@ const Slide2 = (props: Slide2Props) => {
       sx={{
         position: "relative",
         width: "100%",
+=======
+
+  return (
+    <Box
+    ref={ref}
+      sx={{
+        position: "relative",
+        width: 485,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         height: "100%",
         overflow: "hidden",
         borderRadius: 2,
@@ -70,7 +87,11 @@ const Slide2 = (props: Slide2Props) => {
       }}
     >
       {layout2 && (
+<<<<<<< HEAD
         <Box sx={{ width: "100%", height: "100%", position: "relative" }}>
+=======
+        <Box sx={{ width: "100%", height: "100%", position: "relative", p: 1 }}>
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           {/* IMAGES / BG ELEMENTS */}
           {layout2?.elements
             ?.slice()
@@ -96,7 +117,11 @@ const Slide2 = (props: Slide2Props) => {
                   sx={{
                     width: "100%",
                     height: "100%",
+<<<<<<< HEAD
                     objectFit: el.id === "bg-image" ? "cover" : (el.objectFit || "fill"),
+=======
+                    objectFit: el.objectFit || "cover",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                     borderRadius: 1,
                     display: "block",
                     pointerEvents: "none",
@@ -203,7 +228,11 @@ const Slide2 = (props: Slide2Props) => {
         </Box>
       )}
 
+<<<<<<< HEAD
       {videoUrl && (
+=======
+      {selectedVideoUrl && (
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         <Box
           sx={{
             position: "absolute",
@@ -241,12 +270,23 @@ const Slide2 = (props: Slide2Props) => {
               borderRadius: 2,
             }}
           >
+<<<<<<< HEAD
             <QrGenerator url={qrVideoUrl} size={70} />
+=======
+            <QrGenerator
+              url={qrPosition.url || selectedVideoUrl}
+              size={Math.min(68, 70)}
+            />
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           </Box>
 
           {/* Clickable Link */}
           <a
+<<<<<<< HEAD
             href={videoUrl}
+=======
+            href={`${selectedVideoUrl}`}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -263,13 +303,21 @@ const Slide2 = (props: Slide2Props) => {
                 "&:hover": { textDecoration: "underline" },
               }}
             >
+<<<<<<< HEAD
               {`${videoUrl.slice(0, 20)}.....`}
+=======
+              {`${selectedVideoUrl.slice(0, 20)}.....`}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             </Typography>
           </a>
         </Box>
       )}
 
+<<<<<<< HEAD
       {audioUrl && (
+=======
+      {selectedAudioUrl && (
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         <Box
           sx={{
             position: "absolute",
@@ -307,12 +355,23 @@ const Slide2 = (props: Slide2Props) => {
               borderRadius: 2,
             }}
           >
+<<<<<<< HEAD
             <QrGenerator url={qrAudioUrl} size={70} />
+=======
+            <QrGenerator
+              url={qrAudioPosition.url || selectedAudioUrl}
+              size={Math.min(68, 70)}
+            />
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           </Box>
 
           {/* Clickable Link */}
           <a
+<<<<<<< HEAD
             href={audioUrl}
+=======
+            href={`${selectedAudioUrl}`}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -329,7 +388,11 @@ const Slide2 = (props: Slide2Props) => {
                 "&:hover": { textDecoration: "underline" },
               }}
             >
+<<<<<<< HEAD
               {`${audioUrl.slice(0, 20)}.....`}
+=======
+              {`${selectedAudioUrl.slice(0, 20)}.....`}
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             </Typography>
           </a>
         </Box>
@@ -361,6 +424,7 @@ const Slide2 = (props: Slide2Props) => {
         ))}
 
       {multipleTextValue &&
+<<<<<<< HEAD
         texts.map((e: any, index: number) => (
           <Box
             key={index}
@@ -373,11 +437,24 @@ const Slide2 = (props: Slide2Props) => {
               borderRadius: "6px",
               display: "flex",
               alignItems:
+=======
+        texts.map((e, index) => (
+          <Box
+            key={index}
+            sx={{
+              position: "relative",
+              height: { md: 210, sm: '175px', xs: '174px' },
+              width: "100%",
+              mb: 2,
+              display: "flex",
+              justifyContent:
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                 e.verticalAlign === "top"
                   ? "flex-start"
                   : e.verticalAlign === "center"
                     ? "center"
                     : "flex-end",
+<<<<<<< HEAD
               justifyContent:
                 e.textAlign === "left"
                   ? "flex-start"
@@ -387,10 +464,17 @@ const Slide2 = (props: Slide2Props) => {
               p: 1,
               zIndex: 9999,
               pointerEvents: "none",
+=======
+              alignItems: "center",
+              border: "3px dashed transparent", // ✅ visually matches editable version but invisible
+              borderRadius: "6px",
+              p: 1,
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             }}
           >
             <Typography
               sx={{
+<<<<<<< HEAD
                 fontSize: e.fontSize ?? 16,
                 fontWeight: e.fontWeight ?? 400,
                 color: e.fontColor ?? "#000",
@@ -401,6 +485,33 @@ const Slide2 = (props: Slide2Props) => {
                 width: "100%",
                 whiteSpace: "pre-wrap",
                 wordBreak: "break-word",
+=======
+                textAlign: e.textAlign,
+                fontSize: e.fontSize1,
+                fontWeight: e.fontWeight,
+                color: e.fontColor,
+                fontFamily: e.fontFamily,
+                lineHeight: e.lineHeight,
+                letterSpacing: e.letterSpacing,
+                wordBreak: "break-word",
+                whiteSpace: "pre-line",
+                width: "100%",
+                height: "80%",
+                display: "flex",
+                alignItems:
+                  e.verticalAlign === "top"
+                    ? "flex-start"
+                    : e.verticalAlign === "bottom"
+                      ? "flex-end"
+                      : "center",
+                justifyContent:
+                  e.textAlign === "left"
+                    ? "flex-start"
+                    : e.textAlign === "right"
+                      ? "flex-end"
+                      : "center",
+                m: "auto",
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
               }}
             >
               {e.value}
@@ -408,6 +519,7 @@ const Slide2 = (props: Slide2Props) => {
           </Box>
         ))}
 
+<<<<<<< HEAD
 
       {/* 📝 Single Text Layout */}
       {isOneTextActive && (
@@ -415,6 +527,12 @@ const Slide2 = (props: Slide2Props) => {
           sx={{
             position: "absolute",
             inset: 0,
+=======
+      {/* 📝 Single Text Layout */}
+      {selectedLayout === "oneText" && (
+        <Box
+          sx={{
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
             display: "flex",
             flexDirection: "column",
             justifyContent:
@@ -440,7 +558,10 @@ const Slide2 = (props: Slide2Props) => {
             textAlign: textAlign, // ✅ still needed for multiline/inline text
             whiteSpace: "pre-wrap",
             p: 1,
+<<<<<<< HEAD
             zIndex: 9998,
+=======
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           }}
         >
           {oneTextValue}
@@ -448,7 +569,11 @@ const Slide2 = (props: Slide2Props) => {
       )}
 
       {
+<<<<<<< HEAD
         multipleTextValue || isOneTextActive ? null : (
+=======
+        multipleTextValue || selectedLayout === "oneText" ? null : (
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
           <>
             {textElements &&
               textElements.map((e) => (

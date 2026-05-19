@@ -57,6 +57,7 @@ const MediaPopup = ({ onClose, mediaType, activeIndex }: MediaPopupProps) => {
       const fileSizeMB = file.size / (1024 * 1024);
       const ext = file.name.split(".").pop()?.toLowerCase();
 
+<<<<<<< HEAD
       // Check file type
       if (!ext || !allowedExtensions.includes(ext)) {
         alert(`Error: ${file.name} is not a supported audio format.`);
@@ -66,6 +67,17 @@ const MediaPopup = ({ onClose, mediaType, activeIndex }: MediaPopupProps) => {
       // Check file size (max 50MB)
       if (fileSizeMB > 50) {
         alert(`Error: ${file.name} is too large (max 50MB).`);
+=======
+      // ✅ Check file type
+      if (!ext || !allowedExtensions.includes(ext)) {
+        alert(`❌ ${file.name} is not a supported audio format.`);
+        return false;
+      }
+
+      // ✅ Check file size (max 50MB)
+      if (fileSizeMB > 50) {
+        alert(`❌ ${file.name} is too large (max 50MB).`);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         return false;
       }
 
@@ -77,7 +89,11 @@ const MediaPopup = ({ onClose, mediaType, activeIndex }: MediaPopupProps) => {
       return;
     }
 
+<<<<<<< HEAD
     // Set valid audio files
+=======
+    // ✅ Set valid audio files
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     setAudio(validFiles);
   };
 
@@ -105,7 +121,11 @@ const MediaPopup = ({ onClose, mediaType, activeIndex }: MediaPopupProps) => {
 
       if (error) throw error;
     } catch (err) {
+<<<<<<< HEAD
       console.error("Error saving audio:", err);
+=======
+      console.error("❌ Error saving audio:", err);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
     }
   };
 
@@ -124,7 +144,11 @@ const MediaPopup = ({ onClose, mediaType, activeIndex }: MediaPopupProps) => {
         const fileName = `${audioId}.${fileExt}`;
         const filePath = `audio/${fileName}`;
 
+<<<<<<< HEAD
         // Upload audio file
+=======
+        // 1️⃣ Upload audio file
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         const { error: uploadError } = await supabase.storage
           .from("media")
           .upload(filePath, file, {
@@ -140,16 +164,28 @@ const MediaPopup = ({ onClose, mediaType, activeIndex }: MediaPopupProps) => {
           continue;
         }
 
+<<<<<<< HEAD
         // Get public URL
+=======
+        // 2️⃣ Get public URL
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         const { data: publicData } = supabase.storage
           .from("media")
           .getPublicUrl(filePath);
 
+<<<<<<< HEAD
         // Save URL to DB
         await saveAudioUrlToDB(audioId, publicData.publicUrl);
         setSelectedAudioUrl(publicData.publicUrl);
 
         // Schedule auto-delete (2 min for testing or 1 week in production)
+=======
+        // 3️⃣ Save URL to DB
+        await saveAudioUrlToDB(audioId, publicData.publicUrl);
+        setSelectedAudioUrl(publicData.publicUrl);
+
+        // 4️⃣ Schedule auto-delete (2 min for testing or 1 week in production)
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
         handleAutoDeletedAudio(
           user?.id,
           audioId,
@@ -189,7 +225,11 @@ const MediaPopup = ({ onClose, mediaType, activeIndex }: MediaPopupProps) => {
       .single();
 
     if (error) {
+<<<<<<< HEAD
       console.error("Error fetching audios:", error);
+=======
+      console.error("❌ Error fetching audios:", error);
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
       return;
     }
 
@@ -387,7 +427,11 @@ const MediaPopup = ({ onClose, mediaType, activeIndex }: MediaPopupProps) => {
                   {
                     isDeleteMedia ? <Typography
                       sx={{ fontSize: "14px", fontWeight: "bold", mb: 1, color: 'red', opacity: 0.5 }}
+<<<<<<< HEAD
                     >Your videos are deleted after one week</Typography> : <Typography
+=======
+                    >⏱️ Your videos is deleted after one week</Typography> : <Typography
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                       sx={{ fontSize: "16px", fontWeight: "bold", mb: 1 }}
                     >
                       Your Uploaded Audios:
@@ -395,7 +439,11 @@ const MediaPopup = ({ onClose, mediaType, activeIndex }: MediaPopupProps) => {
                       <hr />
                       <span style={{ fontSize: '14px', fontWeight: 500, }}>
                         Double tap your video to
+<<<<<<< HEAD
                         load your qr code onto your card
+=======
+                        load your qr code onto your card
+>>>>>>> 8c992743900e1e9073f6cca2f5700ab2ef0bf4c0
                       </span>
                     </Typography>
                   }
