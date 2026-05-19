@@ -241,6 +241,14 @@ const CategoriesWisePreview: React.FC = () => {
   const navigate = useNavigate();
   const isMobile = useMediaQuery("(max-width:450px)");
   const isIosWebKit = useMemo(() => isIosTouchDevice(), []);
+  const isSafariWebKitBrowser = useMemo(() => {
+    if (typeof navigator === "undefined") return false;
+    const ua = navigator.userAgent || "";
+    const isSafari = /Safari/i.test(ua);
+    const isOtherEngine =
+      /Chrome|CriOS|Chromium|FxiOS|Firefox|EdgiOS|EdgA|OPiOS|OPR|Android/i.test(ua);
+    return isSafari && !isOtherEngine;
+  }, []);
 
   const config = state?.config;
   const category = state?.category ?? "";
@@ -709,6 +717,22 @@ const CategoriesWisePreview: React.FC = () => {
     [baseH, baseW, prepareSlideForCanvas, slides],
   );
 
+  const captureSlidesForSubscription = useCallback(
+    async (format: "jpeg" | "png", maxDim = 1600) => {
+      const preferCanvas = isIosWebKit || isSafariWebKitBrowser;
+      if (preferCanvas) {
+        const canvasFirst = await captureSlidesFromCanvasRenderer(format, maxDim);
+        if (canvasFirst.length) return canvasFirst;
+        return await captureSlidesFromDom(format, maxDim);
+      }
+
+      const domFirst = await captureSlidesFromDom(format, maxDim);
+      if (domFirst.length) return domFirst;
+      return await captureSlidesFromCanvasRenderer(format, maxDim);
+    },
+    [captureSlidesFromCanvasRenderer, captureSlidesFromDom, isIosWebKit, isSafariWebKitBrowser],
+  );
+
   const readCapturedFromStorage = useCallback(() => {
     if (prefetchedSlidesRef.current?.length) {
       return prefetchedSlidesRef.current;
@@ -740,9 +764,7 @@ const CategoriesWisePreview: React.FC = () => {
         await ensureCaptureSupportReady();
         const format = isTransparentCaptureCategory ? "png" : "jpeg";
         const maxDim = isTransparentCaptureCategory ? 2400 : 1600;
-        quickList = isIosWebKit
-          ? await captureSlidesFromCanvasRenderer(format, maxDim)
-          : await captureSlidesFromDom(format, maxDim);
+        quickList = await captureSlidesForSubscription(format, maxDim);
         if (quickList.length) {
           prefetchedSlidesRef.current = quickList;
         }
@@ -822,9 +844,7 @@ const CategoriesWisePreview: React.FC = () => {
         await ensureCaptureSupportReady();
         const format = isTransparentCaptureCategory ? "png" : "jpeg";
         const maxDim = isTransparentCaptureCategory ? 2400 : 1600;
-        const list = isIosWebKit
-          ? await captureSlidesFromCanvasRenderer(format, maxDim)
-          : await captureSlidesFromDom(format, maxDim);
+        const list = await captureSlidesForSubscription(format, maxDim);
         if (cancelled || !list.length) return [];
         prefetchedSlidesRef.current = list;
         return list;
@@ -851,11 +871,9 @@ const CategoriesWisePreview: React.FC = () => {
     };
   }, [
     captureKey,
-    captureSlidesFromCanvasRenderer,
-    captureSlidesFromDom,
+    captureSlidesForSubscription,
     ensureCaptureSupportReady,
     hasCaptured,
-    isIosWebKit,
     isTransparentCaptureCategory,
     readCapturedFromStorage,
     shouldPrefetchCapturedSlides,

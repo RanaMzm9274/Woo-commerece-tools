@@ -549,6 +549,14 @@ const PreviewBookCard = () => {
   const [downloading, setDownloading] = useState(false);
   const navigate = useNavigate();
   const isIosWebKit = useMemo(() => isIosTouchDevice(), []);
+  const isSafariWebKitBrowser = useMemo(() => {
+    if (typeof navigator === "undefined") return false;
+    const ua = navigator.userAgent || "";
+    const isSafari = /Safari/i.test(ua);
+    const isOtherEngine =
+      /Chrome|CriOS|Chromium|FxiOS|Firefox|EdgiOS|EdgA|OPiOS|OPR|Android/i.test(ua);
+    return isSafari && !isOtherEngine;
+  }, []);
   const slide1Ctx = useSlide1();
   const slide2Ctx = useSlide2();
   const slide3Ctx = useSlide3();
@@ -801,9 +809,18 @@ const PreviewBookCard = () => {
     if (downloading) return;
     setDownloading(true);
     try {
-      const domResult = isIosWebKit ? null : await captureCardSlides();
-      const iosCanvasResult = isIosWebKit ? await captureCardSlidesFromCanvasRenderer() : null;
-      const activeResult = iosCanvasResult ?? domResult ?? { captured: [], slidesObj: {}, validCount: 0 };
+      const preferCanvas = isIosWebKit || isSafariWebKitBrowser;
+      const canvasResult = preferCanvas ? await captureCardSlidesFromCanvasRenderer() : null;
+      const domResult =
+        preferCanvas && (canvasResult?.validCount ?? 0) > 0 ? null : await captureCardSlides();
+      const activeResult =
+        (preferCanvas
+          ? canvasResult?.validCount
+            ? canvasResult
+            : domResult
+          : domResult?.validCount
+          ? domResult
+          : canvasResult) ?? { captured: [], slidesObj: {}, validCount: 0 };
       const { captured, slidesObj, validCount } = activeResult;
       const expectedCount = CAPTURE_ORDER.length;
       const previewOnly = validCount < expectedCount;
@@ -866,7 +883,7 @@ const PreviewBookCard = () => {
     } finally {
       setDownloading(false);
     }
-  }, [captureCardSlides, captureCardSlidesFromCanvasRenderer, downloading, isIosWebKit, navigate]);
+  }, [captureCardSlides, captureCardSlidesFromCanvasRenderer, downloading, isIosWebKit, isSafariWebKitBrowser, navigate]);
 
 
   return (

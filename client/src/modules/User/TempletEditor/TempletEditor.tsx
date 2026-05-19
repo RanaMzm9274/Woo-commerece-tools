@@ -33,6 +33,7 @@ import {
   scaleTemplateElementBy,
 } from "../../../lib/templateEditorScale";
 import { isIosTouchDevice } from "../../../lib/platform";
+import { collectTemplateSlideFonts, renderTemplateSlideToCanvasWithStats } from "../../../lib/templateSlideCanvas";
 
 /* --------- Types --------- */
 type BaseEl = {
@@ -1418,8 +1419,86 @@ export default function TempletEditor() {
       // ✅ For mugs: use raw slide data in preview to avoid Safari dropping image layers
       if (isMugCategory(adminDesign.category)) {
         const node = slideRefs.current[0] ?? slideRefs.current[activeSlide];
+        const buildMugImageFromSlide = async (): Promise<string | null> => {
+          const slide = userSlides[0] ?? userSlides[activeSlide];
+          if (!slide) return null;
+          try {
+            const blobToDataUrl = (blob: Blob) =>
+              new Promise<string>((resolve, reject) => {
+                const fr = new FileReader();
+                fr.onload = () => resolve(String(fr.result || ""));
+                fr.onerror = reject;
+                fr.readAsDataURL(blob);
+              });
+            const toDataUrlSafe = async (src: string) => {
+              if (!src || src.startsWith("data:")) return src;
+              try {
+                const absolute = src.startsWith("/") ? `${window.location.origin}${src}` : src;
+                const resp = await fetch(absolute, { mode: "cors" });
+                if (!resp.ok) return src;
+                const blob = await resp.blob();
+                return await blobToDataUrl(blob);
+              } catch {
+                return src;
+              }
+            };
+
+            const raw: any = slide;
+            const bgImage = String(
+              raw?.bgImage ??
+                raw?.backgroundImage ??
+                raw?.bgImage1 ??
+                raw?.backgroundImage1 ??
+                "",
+            ).trim();
+            const bgRect = raw?.bgRect ?? raw?.backgroundRect ?? raw?.bgRect1 ?? raw?.backgroundRect1 ?? null;
+            const baseW = Math.max(1, Number(artboardWidth || 1));
+            const baseH = Math.max(1, Number(artboardHeight || 1));
+            const bgImageEl = bgImage
+              ? ({
+                  id: "mug-bg-image",
+                  type: "image",
+                  src: bgImage,
+                  x: Number(bgRect?.x ?? 0) || 0,
+                  y: Number(bgRect?.y ?? 0) || 0,
+                  width: Math.max(1, Number(bgRect?.width ?? baseW) || baseW),
+                  height: Math.max(1, Number(bgRect?.height ?? baseH) || baseH),
+                  zIndex: -9999,
+                } as any)
+              : null;
+
+            const preparedElements = await Promise.all(
+              ((slide as any)?.elements ?? []).map(async (el: any) => {
+                if (el?.type !== "image" && el?.type !== "sticker") return el;
+                const src = String(el?.src ?? "");
+                return { ...el, src: (await toDataUrlSafe(src)) || src };
+              }),
+            );
+            const preparedSlide: any = {
+              ...(slide as any),
+              elements: bgImageEl ? [bgImageEl, ...preparedElements] : preparedElements,
+            };
+
+            const fonts = collectTemplateSlideFonts([preparedSlide]);
+            if (fonts.length) loadGoogleFontsOnce(buildGoogleFontsUrls(fonts));
+            const result = await renderTemplateSlideToCanvasWithStats(preparedSlide, {
+              width: artboardWidth,
+              height: artboardHeight,
+              pixelRatio: Math.max(2, previewCapture.pixelRatio || 2),
+              backgroundColor: "#ffffff",
+            });
+            if (result.expectedAssets > 0 && result.drawnAssets < result.expectedAssets) {
+              return null;
+            }
+            return result.canvas.toDataURL("image/png");
+          } catch {
+            return null;
+          }
+        };
+
         const mugImage =
-          (isSafari || isIos) && node
+          (await buildMugImageFromSlide()) ||
+          ((isSafari || isIos) && node
             ? await capturePngFromNode(node, {
                 width: artboardWidth,
                 height: artboardHeight,
@@ -1427,7 +1506,7 @@ export default function TempletEditor() {
                 quality: previewCapture.quality,
                 pixelRatio: previewCapture.pixelRatio,
               })
-            : null;
+            : null);
         try {
           if (mugImage) {
             sessionStorage.setItem("templ_preview_mug_image", mugImage);
@@ -1485,6 +1564,7 @@ export default function TempletEditor() {
 
       {/* MAIN */}
       <Box
+        className="templet-editor-wrapper"
         sx={{
           display: "flex",
           flexDirection: "column",
@@ -1849,6 +1929,9 @@ export default function TempletEditor() {
                                   className="no-drag"
                                   contentEditable={isIos ? true : ("plaintext-only" as any)}
                                   dir="ltr"
+                                  spellCheck={false}
+                                  autoCorrect="off"
+                                  autoCapitalize="off"
                                   ref={(node: HTMLDivElement | null) => {
                                     editableTextRefs.current[el.id] = node;
                                     const isFocused =
@@ -1917,7 +2000,9 @@ export default function TempletEditor() {
                                     fontSize: t.fontSize,
                                     fontFamily,
                                     color: textColor,
-                                    textDecoration,
+                                    textDecoration: "none",
+                                    WebkitTextDecorationLine: "none",
+                                    WebkitTextFillColor: "currentColor",
                                     lineHeight,
                                     backgroundColor: "transparent",
                                     outline: "none",

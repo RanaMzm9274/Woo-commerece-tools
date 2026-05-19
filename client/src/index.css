@@ -18,6 +18,32 @@ body {
   text-align: center;
 }
 
+/* iOS data-detector hardening for template editor/preview text surfaces */
+.templet-editor-wrapper,
+.templet-preview-wrapper,
+.templet-editor-wrapper *,
+.templet-preview-wrapper * {
+  -webkit-text-size-adjust: 100%;
+}
+
+.templet-editor-wrapper [contenteditable="true"],
+.templet-preview-wrapper [contenteditable="true"],
+.templet-editor-wrapper input,
+.templet-editor-wrapper textarea,
+.templet-preview-wrapper input,
+.templet-preview-wrapper textarea {
+  text-decoration: none !important;
+  -webkit-text-decoration-line: none !important;
+  -webkit-text-fill-color: currentColor;
+}
+
+.templet-editor-wrapper a,
+.templet-preview-wrapper a {
+  text-decoration: none !important;
+  color: inherit !important;
+  pointer-events: none;
+}
+
 
 .panning-img {
   animation: panLeftRight 10s infinite linear;

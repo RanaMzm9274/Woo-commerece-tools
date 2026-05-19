@@ -676,10 +676,10 @@ const TempletEditorPreview: React.FC = () => {
   );
   const [flatDesignImage, setFlatDesignImage] = useState<string | null>(mugImageSrc ?? null);
   const shouldUseProvidedMugImage = useMemo(
-    // On Safari/iOS, prefer rendering from slide JSON when available.
-    // `mugImage` is kept as fallback when slide payload is missing.
-    () => Boolean(mugImageSrc) && isSafariTextureCapture && previewSlides.length === 0,
-    [isSafariTextureCapture, mugImageSrc, previewSlides.length],
+    // Deterministic mug texture source:
+    // if prebuilt mug image exists, always prefer it over runtime rebuild.
+    () => Boolean(mugImageSrc),
+    [mugImageSrc],
   );
 
   const baseWidth = useMemo(
@@ -790,7 +790,7 @@ const TempletEditorPreview: React.FC = () => {
             const textAnchor = align === "left" ? "start" : align === "right" ? "end" : "middle";
             const startOffset = align === "left" ? "0%" : align === "right" ? "100%" : "50%";
             const curveId = `mug-preview-curve-${slide?.id ?? "s"}-${el?.id ?? "t"}`;
-            const lineHeight = Math.max(1, Number(el?.lineHeight ?? el?.line_height ?? 1.16));
+            const lineHeight = Math.max(1, Number(el?.lineHeight ?? el?.line_height ?? 1.2));
             const fontFamily = resolveTextFontFamily(el) || "Arial";
             const fontWeight = resolveTextWeight(el);
             const fontStyle = resolveTextStyle(el);
@@ -1076,9 +1076,9 @@ const TempletEditorPreview: React.FC = () => {
           />
         </Box>
       </Box>
-      <div ref={containerRef} style={{ width: "100%", height: "90vh" }} />
+      <div ref={containerRef} className="templet-preview-wrapper" style={{ width: "100%", height: "90vh" }} />
       {textureSlide && (
-        <Box sx={{ position: "fixed", left: -10000, top: 0, opacity: 0, pointerEvents: "none" }}>
+        <Box className="templet-preview-wrapper" sx={{ position: "fixed", left: -10000, top: 0, opacity: 0, pointerEvents: "none" }}>
           <Box
             ref={flatSlideRef}
             sx={{ width: baseWidth, height: baseHeight, position: "relative" }}

@@ -727,6 +727,13 @@ const Subscription = () => {
       Object.keys(getValidSlides(subscriptionPreviewSlides)).length > 0,
     [isStickerFromRouteOrStorage, isStripeReturn, subscriptionPreviewSlides],
   );
+  const lockStripeMugPreview = useMemo(
+    () =>
+      isStripeReturn &&
+      isMugWrapSize(String(localStorage.getItem("selectedSize") || selectedPlan || "")) &&
+      Object.keys(getValidSlides(subscriptionPreviewSlides)).length > 0,
+    [isStripeReturn, selectedPlan, subscriptionPreviewSlides],
+  );
   const hasPreparedTemplatePreviewSlides = Object.keys(preparedTemplatePreviewSlides).length > 0;
   const subscriptionPreviewSlide1 = activeTemplatePreviewSession
     ? preparedTemplatePreviewSlides?.slide1 || ""
@@ -747,7 +754,7 @@ const Subscription = () => {
 
     const loadSlides = async () => {
       const previewFallbackSlides = getValidSlides(subscriptionPreviewSlides);
-      if (lockStripeStickerPreview && Object.keys(previewFallbackSlides).length) {
+      if ((lockStripeStickerPreview || lockStripeMugPreview) && Object.keys(previewFallbackSlides).length) {
         if (mounted) setSlidesObj(previewFallbackSlides);
         return;
       }
@@ -810,7 +817,7 @@ const Subscription = () => {
     return () => {
       mounted = false;
     };
-  }, [isIosWebKit, isPreviewOnly, isStripeReturn, lockStripeStickerPreview, state?.slides, subscriptionPreviewSlides]);
+  }, [isIosWebKit, isPreviewOnly, isStripeReturn, lockStripeMugPreview, lockStripeStickerPreview, state?.slides, subscriptionPreviewSlides]);
 
   useEffect(() => {
     if (!activeTemplatePreviewSession) {
@@ -855,7 +862,7 @@ const Subscription = () => {
 
   const firstSlideUrl = activeTemplatePreviewSession
     ? subscriptionPreviewSlide1 || (shouldUseIosTemplateCanvasPreview ? iosTemplatePreviewSrc : "")
-    : lockStripeStickerPreview
+    : lockStripeStickerPreview || lockStripeMugPreview
     ? subscriptionPreviewSlides?.slide1 || slidesObj?.slide1 || ""
     : slidesObj?.slide1 || (!isIosWebKit && isStripeReturn ? subscriptionPreviewSlides?.slide1 || "" : "");
   const captureWidth = Math.max(1, Math.round(Number(previewConfig?.mmWidth) || 800));
@@ -1296,7 +1303,7 @@ const Subscription = () => {
   const storeSlidesPayload = useCallback((next: Record<string, string>) => {
     const valid = getValidSlides(next);
     if (!Object.keys(valid).length) return;
-    if (lockStripeStickerPreview) return;
+    if (lockStripeStickerPreview || lockStripeMugPreview) return;
 
     setSlidesObj(valid);
     (globalThis as any).__slidesCache = valid;
@@ -1313,7 +1320,7 @@ const Subscription = () => {
     try {
       void saveSlidesToIdb(valid);
     } catch {}
-  }, [lockStripeStickerPreview]);
+  }, [lockStripeMugPreview, lockStripeStickerPreview]);
 
   const readCapturedSlidesFromStorage = useCallback(() => {
     try {
@@ -1627,7 +1634,7 @@ const Subscription = () => {
   }, [planCode, planLoading, bundleKeyLoading, isInBundleItems]);
 
   const getSlidesPayload = async () => {
-    if (lockStripeStickerPreview) {
+    if (lockStripeStickerPreview || lockStripeMugPreview) {
       const persisted = getValidSlides(subscriptionPreviewSlides);
       if (Object.keys(persisted).length) return persisted;
     }
@@ -2175,7 +2182,7 @@ const Subscription = () => {
     const skipLegacyIosPrefetch = isIosWebKit && isLegacyCardProduct && Boolean(firstSlideUrl);
     const skipTemplateRegeneration =
       activeTemplatePreviewSession && (hasPreparedTemplatePreviewSlides || isIosWebKit);
-    const skipStripeStickerRegeneration = lockStripeStickerPreview;
+    const skipStripeStickerRegeneration = lockStripeStickerPreview || lockStripeMugPreview;
     // Subscription should consume the preview page payload. Re-capturing here can
     // replace a correct mockup with a WebKit partial bitmap.
     if (skipStripeStickerRegeneration) return;
@@ -2263,6 +2270,7 @@ const Subscription = () => {
     hasPreparedTemplatePreviewSlides,
     isIosWebKit,
     isLegacyCardProduct,
+    lockStripeMugPreview,
     lockStripeStickerPreview,
     isPreviewOnly,
     firstSlideUrl,
@@ -2511,6 +2519,46 @@ const Subscription = () => {
     () => /clothing|clothes|apparel/i.test(String(categoryName ?? "")),
     [categoryName]
   );
+  const paidStickerPinnedPreviewSrc = useMemo(() => {
+    if (!lockStripeStickerPreview) return "";
+    return String(subscriptionPreviewSlides?.slide1 || "").trim();
+  }, [lockStripeStickerPreview, subscriptionPreviewSlides]);
+  const paidCardsPinnedPreviewSrc = useMemo(() => {
+    if (!isStripeReturn || !isCardsCategory(categoryName)) return "";
+    const direct = String(slidesObj?.slide1 || "").trim();
+    if (direct) return direct;
+    const persisted = String(subscriptionPreviewSlides?.slide1 || "").trim();
+    if (persisted) return persisted;
+    try {
+      const fromSession = JSON.parse(sessionStorage.getItem("slides") || "{}");
+      const s1 = String(fromSession?.slide1 || "").trim();
+      if (s1) return s1;
+    } catch {}
+    try {
+      const fromLocal = JSON.parse(localStorage.getItem("slides_backup") || "{}");
+      return String(fromLocal?.slide1 || "").trim();
+    } catch {
+      return "";
+    }
+  }, [categoryName, isStripeReturn, slidesObj, subscriptionPreviewSlides]);
+  const paidMugPinnedPreviewSrc = useMemo(() => {
+    if (!lockStripeMugPreview) return "";
+    const persisted = String(subscriptionPreviewSlides?.slide1 || "").trim();
+    if (persisted) return persisted;
+    const direct = String(slidesObj?.slide1 || "").trim();
+    if (direct) return direct;
+    try {
+      const fromSession = JSON.parse(sessionStorage.getItem("slides") || "{}");
+      const s1 = String(fromSession?.slide1 || "").trim();
+      if (s1) return s1;
+    } catch {}
+    try {
+      const fromLocal = JSON.parse(localStorage.getItem("slides_backup") || "{}");
+      return String(fromLocal?.slide1 || "").trim();
+    } catch {
+      return "";
+    }
+  }, [lockStripeMugPreview, slidesObj, subscriptionPreviewSlides]);
 
   const [firstSlideProcessed, setFirstSlideProcessed] = useState(firstSlideUrl);
   const [hydratedPreviewSrc, setHydratedPreviewSrc] = useState("");
@@ -2527,7 +2575,7 @@ const Subscription = () => {
 
     setFirstSlideProcessed(firstSlideUrl);
 
-    if (!isStickerCategory && !isCandleCategory && !isBagCategory && !isClothingCategory) {
+    if (!isCandleCategory && !isBagCategory && !isClothingCategory) {
       return;
     }
 
@@ -2583,7 +2631,14 @@ const Subscription = () => {
   }, [firstSlideUrl, isStickerCategory, isCandleCategory, isBagCategory, isClothingCategory]);
 
   useEffect(() => {
-    const candidate = mugPreview || firstSlideProcessed || iosLegacyCardPreviewSrc || "";
+    const candidate =
+      paidStickerPinnedPreviewSrc ||
+      paidCardsPinnedPreviewSrc ||
+      paidMugPinnedPreviewSrc ||
+      mugPreview ||
+      firstSlideProcessed ||
+      iosLegacyCardPreviewSrc ||
+      "";
     if (!candidate) {
       if (hydratedPreviewSrc) setHydratedPreviewSrc("");
       return;
@@ -2604,7 +2659,7 @@ const Subscription = () => {
     return () => {
       cancelled = true;
     };
-  }, [firstSlideProcessed, hydratedPreviewSrc, iosLegacyCardPreviewSrc, mugPreview]);
+  }, [firstSlideProcessed, hydratedPreviewSrc, iosLegacyCardPreviewSrc, mugPreview, paidCardsPinnedPreviewSrc, paidMugPinnedPreviewSrc, paidStickerPinnedPreviewSrc]);
 
   // const productName =
   //   product?.title ||
@@ -2623,8 +2678,22 @@ const Subscription = () => {
   // Prefer the preview page's prepared bitmap for non-WebKit rendering. On iOS,
   // show the live raw slide on the mockup so a text-only bitmap can never hide
   // slide 1's background/design layers.
-  const previewSrc = hydratedPreviewSrc || mugPreview || firstSlideProcessed || iosLegacyCardPreviewSrc || "";
+  const previewSrc =
+    paidStickerPinnedPreviewSrc ||
+    paidCardsPinnedPreviewSrc ||
+    paidMugPinnedPreviewSrc ||
+    hydratedPreviewSrc ||
+    mugPreview ||
+    firstSlideProcessed ||
+    iosLegacyCardPreviewSrc ||
+    "";
+  const forcePinnedStickerPaidPreview = Boolean(paidStickerPinnedPreviewSrc);
+  const forcePinnedCardsPaidPreview = Boolean(paidCardsPinnedPreviewSrc);
+  const forcePinnedMugPaidPreview = Boolean(paidMugPinnedPreviewSrc);
   const preferLiveTemplatePreview =
+    !forcePinnedStickerPaidPreview &&
+    !forcePinnedCardsPaidPreview &&
+    !forcePinnedMugPaidPreview &&
     isIosWebKit &&
     activeTemplatePreviewSession &&
     rawSlides.length > 0 &&
@@ -2636,7 +2705,7 @@ const Subscription = () => {
     activeTemplatePreviewSession && rawSlides.length > 0 && (preferLiveTemplatePreview || !previewSrc);
   const showLiveCardPreview = isLegacyCardProduct && !previewSrc;
   const stripLiveMockupBackground =
-    isStickerCategory || isCandleCategory || isBagCategory || isClothingCategory;
+    isCandleCategory || isBagCategory || isClothingCategory;
   const iosStablePreviewLayerSx = isIosWebKit
     ? {
         backfaceVisibility: "hidden" as const,
