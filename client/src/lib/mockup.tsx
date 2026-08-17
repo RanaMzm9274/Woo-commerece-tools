@@ -224,13 +224,13 @@ const CATEGORY_MOCKUPS: Array<{
       },
       cfg: {
         mockupSrc: "/assets/mockup/photoArt-mockup.jpeg",
-        cardAspectRatio: "1 / 1.25",
+        cardAspectRatio: "1 / 1.35",
         surfaceAspectRatio: "1 / 1",
         overlay: {
-          top: "21%",
-          left: "36%",
-          width: "32%",
-          height: "57%",
+          top: "26%",
+          left: "28%",
+          width: "47%",
+          height: "47%",
           rotate: "0deg",
           objectFit: "fill",
           opacity: 0.98,

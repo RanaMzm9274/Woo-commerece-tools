@@ -1,4 +1,4 @@
-import { Box, Container, Grid, Typography, Chip, Button, LinearProgress } from "@mui/material";
+import { Box, Container, Grid, Typography, Chip, Button, CircularProgress, LinearProgress } from "@mui/material";
 import { useMemo, useState, useEffect, useCallback, useRef } from "react";
 import TableBgImg from "/assets/images/table.png";
 import LandingButton from "../../../components/LandingButton/LandingButton";
@@ -974,7 +974,10 @@ const Subscription = () => {
     }
   }, [product?.type, selectedProductSnapshot?.type]);
   const shouldRenderCardRawForPdf =
-    isIosWebKit && isLegacyCardProduct && routeCardRawSlides.length > 0;
+    isIosWebKit &&
+    isLegacyCardProduct &&
+    routeCardRawSlides.length > 0 &&
+    !isStripeReturn;
   const activeTemplatePreviewSession = useMemo(
     () =>
       !isLegacyCardProduct &&
@@ -1797,7 +1800,7 @@ const Subscription = () => {
   );
 
   useEffect(() => {
-    if (!isIosWebKit || !isLegacyCardProduct) {
+    if (!isIosWebKit || !isLegacyCardProduct || isStripeReturn) {
       setIosLegacyCardPreviewSrc("");
       return;
     }
@@ -1846,6 +1849,7 @@ const Subscription = () => {
   ensureCaptureSupportReady,
   isIosWebKit,
   isLegacyCardProduct,
+  isStripeReturn,
 ]);
 
   const storeSlidesPayload = useCallback((next: Record<string, string>) => {
@@ -2107,8 +2111,10 @@ const Subscription = () => {
     () =>
       /clothing|clothes|apparel|mug|candle/i.test(
         String(categoryName ?? ""),
-      ) || isSafariBusinessLeaflet,
-    [categoryName, isSafariBusinessLeaflet],
+      ) ||
+      isSafariBusinessLeaflet ||
+      (isIosWebKit && isLegacyCardProduct),
+    [categoryName, isIosWebKit, isLegacyCardProduct, isSafariBusinessLeaflet],
   );
   const durableCheckoutSourceKey = useMemo(() => {
     const snapshotProductKey =
@@ -2435,18 +2441,42 @@ const Subscription = () => {
         activeTemplatePreviewSession && hasPreparedTemplatePreviewSlides
           ? preparedTemplatePreviewSlides
           : {};
+      const isPaidIosCard =
+        isStripeReturn && isIosWebKit && isLegacyCardProduct;
+      const paidIosCardCapturedList = isPaidIosCard
+        ? readCapturedSlidesFromStorage()
+        : [];
+      const paidIosCardCapturedSource = Object.fromEntries(
+        paidIosCardCapturedList.map((src, index) => [`slide${index + 1}`, src]),
+      );
+      const paidIosCardRuntimeSource =
+        isPaidIosCard
+          ? getValidSlides({
+              ...subscriptionPreviewSlides,
+              ...slidesObj,
+              ...paidIosCardCapturedSource,
+            })
+          : {};
       // On the paid return, getSlidesPayload resolves the exact pre-Stripe
       // checkout snapshot from IndexedDB. Never let an older preview payload
       // bypass that lookup for categories using the durable handoff.
-      const durablePaidSource =
-        isStripeReturn && usesDurableCheckoutSource
-          ? await getSlidesPayload()
+      const durablePaidSource = Object.keys(paidIosCardRuntimeSource).length
+        ? paidIosCardRuntimeSource
+        : isStripeReturn && usesDurableCheckoutSource
+          ? isPaidIosCard
+            ? await withTimeout(getSlidesPayload(), 5_000, {} as Record<string, string>)
+            : await getSlidesPayload()
           : {};
       const current = Object.keys(durablePaidSource).length
         ? durablePaidSource
         : Object.keys(preparedPreviewSlides).length
         ? preparedPreviewSlides
-        : await getSlidesPayload();
+        : isPaidIosCard
+          ? {}
+          : await getSlidesPayload();
+      if (isPaidIosCard && !Object.keys(current).length) {
+        throw new Error("Could not restore the paid card design. Please refresh and try again.");
+      }
       const currentKeys = Object.keys(current || {}).filter((k) => current[k]);
       const expectedCount = (() => {
         if (rawSlides.length) return rawSlides.length;
@@ -2464,13 +2494,6 @@ const Subscription = () => {
       const hasPng = !needPng
         ? true
         : currentKeys.every((k) => String(current[k] || "").startsWith("data:image/png"));
-      const forceSafariClothingLayerCapture =
-        !isStripeReturn &&
-        isIosDevice &&
-        needPng &&
-        isClothingFromRouteOrStorage &&
-        rawSlides.length > 0;
-
       if (shouldRenderCardRawForPdf) {
         const list = await captureCardRawSlidesFromCanvasRenderer(format, needPng ? 2400 : 1600);
         if (list.length) {
@@ -2481,7 +2504,6 @@ const Subscription = () => {
       }
 
       if (
-        !forceSafariClothingLayerCapture &&
         hasEnough &&
         (hasPng || (isIosWebKit && Object.keys(preparedPreviewSlides).length)) &&
         (!isPreviewOnly || isMugsCategory || isSafariBusinessLeaflet)
@@ -2500,7 +2522,7 @@ const Subscription = () => {
         : capturedList.length > 0;
       const capturedHasPng =
         !needPng || capturedList.every((u) => String(u || "").startsWith("data:image/png"));
-      if (!forceSafariClothingLayerCapture && capturedEnough && capturedHasPng) {
+      if (capturedEnough && capturedHasPng) {
         const next = Object.fromEntries(capturedList.map((u, idx) => [`slide${idx + 1}`, u]));
         storeSlidesPayload(next);
         return next;
@@ -2549,7 +2571,9 @@ const Subscription = () => {
       readCapturedSlidesFromStorage,
       rawSlides.length,
       shouldRenderCardRawForPdf,
+      slidesObj,
       storeSlidesPayload,
+      subscriptionPreviewSlides,
       usesDurableCheckoutSource,
     ]
   );
@@ -2926,8 +2950,7 @@ const Subscription = () => {
       isIosWebKit && isLegacyCardProduct && Boolean(firstSlideUrl) && !shouldRenderCardRawForPdf;
     const skipTemplateRegeneration =
       activeTemplatePreviewSession &&
-      (hasPreparedTemplatePreviewSlides || isIosWebKit) &&
-      !(isIosWebKit && isClothingFromRouteOrStorage);
+      (hasPreparedTemplatePreviewSlides || isIosWebKit);
     const skipStripeStickerRegeneration = lockStripeStickerPreview;
     // Subscription should consume the preview page payload. Re-capturing here can
     // replace a correct mockup with a WebKit partial bitmap.
@@ -2950,8 +2973,7 @@ const Subscription = () => {
             : 0;
         const bypassStoredIosPreviewSlides =
           shouldRenderCardRawForPdf ||
-          (isIosWebKit && activeTemplatePreviewSession && rawSlides.length > 0) ||
-          (isIosWebKit && isClothingFromRouteOrStorage && rawSlides.length > 0);
+          (isIosWebKit && activeTemplatePreviewSession && rawSlides.length > 0);
         const hasEnough = expectedCount ? currentKeys.length >= expectedCount : currentKeys.length > 0;
         const hasPng =
           prefetchCaptureFormat !== "png" ||
@@ -3398,15 +3420,14 @@ const Subscription = () => {
   const slidesObjPrebuiltCardPreviewSrc = pickSlideByNumber(slidesObj, cardPreviewSlideNumber);
   const stableCardMockupPreviewSrc =
     isIosCardMockupFlow
-      ? routeCardRawSlides.length > 0
-        // While the verified canvas render is pending, leave previewSrc empty
-        // so the complete live raw slide is shown. Never flash a cached partial
-        // Safari DOM capture over a known-complete raw model.
-        ? iosLegacyCardPreviewSrc || ""
-        : iosLegacyCardPreviewSrc ||
-          routePrebuiltCardPreviewSrc ||
+      ? routeCardRawSlides.length > 0 && !isStripeReturn
+        // PreviewCards already verified this canvas capture before navigating.
+        // Use it immediately while the higher-resolution checkout render runs.
+        ? routePrebuiltCardPreviewSrc || iosLegacyCardPreviewSrc || ""
+        : routePrebuiltCardPreviewSrc ||
           slidesObjPrebuiltCardPreviewSrc ||
           cardMockupPreviewSrc ||
+          iosLegacyCardPreviewSrc ||
           ""
       : cardMockupPreviewSrc ||
         routePrebuiltCardPreviewSrc ||
@@ -3459,8 +3480,8 @@ const Subscription = () => {
   // For iOS card mockups, prefer the safe prebuilt Slide1 capture over any
   // older hydrated/cached bitmap that WebKit may have decoded as blank.
   const previewSrc = isIosCardMockupFlow
-    ? routeCardRawSlides.length > 0
-      ? mugPreview || iosLegacyCardPreviewSrc || ""
+    ? routeCardRawSlides.length > 0 && !isStripeReturn
+      ? mugPreview || hydratedPreviewSrc || ""
       : mugPreview || stableCardMockupPreviewSrc || hydratedPreviewSrc || iosLegacyCardPreviewSrc || ""
     : hydratedPreviewSrc || mugPreview || cardSafePreviewSrc || "";
   const preferLiveTemplatePreview =
@@ -3507,12 +3528,21 @@ const Subscription = () => {
             }),
       }
     : {};
+  const isIosPhotoArtMockup =
+    isIosWebKit && /photo\s*art/i.test(String(categoryName ?? ""));
   const effectiveMockupOverlay = useMemo(() => {
     if (!mock?.overlay) {
       return { top: "20%", left: "20%", width: "60%", height: "60%" };
     }
+    if (isIosPhotoArtMockup) {
+      return {
+        ...mock.overlay,
+        objectFit: "contain" as const,
+        sx: { ...(mock.overlay.sx as any), overflow: "hidden" },
+      };
+    }
     return mock.overlay;
-  }, [mock]);
+  }, [isIosPhotoArtMockup, mock]);
 
   const liveMockupOverlay = useMemo(() => {
     if (!useMockupBackground || !previewSurfaceSize.w || !previewSurfaceSize.h) return null;
@@ -3559,6 +3589,27 @@ const Subscription = () => {
       height: Math.max(1, Math.round(overlayHeight)),
     };
   }, [effectiveMockupOverlay, previewSurfaceSize.h, previewSurfaceSize.w, useMockupBackground]);
+
+  const hasPlacedPersonalisedPreview = isIosCardMockupFlow
+    ? Boolean(previewSrc)
+    : showOverlayPreview || showFlatPreview || showLiveTemplatePreview || showLiveCardPreview;
+  const previewPlacementReady =
+    hasPlacedPersonalisedPreview &&
+    (!allowMockup || !mock?.mockupSrc || mockupOk);
+  const [previewWaitExpired, setPreviewWaitExpired] = useState(false);
+
+  useEffect(() => {
+    if (previewPlacementReady) {
+      setPreviewWaitExpired(false);
+      return;
+    }
+
+    setPreviewWaitExpired(false);
+    const timeoutId = window.setTimeout(() => setPreviewWaitExpired(true), 20_000);
+    return () => window.clearTimeout(timeoutId);
+  }, [previewPlacementReady, cardMockupPreviewStorageKey, subscriptionPreviewKey]);
+
+  const showPreviewLoader = !previewPlacementReady && !previewWaitExpired;
 
   return (
     <MainLayout>
@@ -3923,6 +3974,30 @@ const Subscription = () => {
                   }}
                 >
                   No preview found
+                </Box>
+              )}
+              {showPreviewLoader && (
+                <Box
+                  role="status"
+                  aria-live="polite"
+                  aria-label="Preparing your personalised mock-up"
+                  sx={{
+                    position: "absolute",
+                    inset: 0,
+                    zIndex: 30,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 1.5,
+                    bgcolor: "rgba(255,255,255,0.96)",
+                    color: COLORS.black,
+                  }}
+                >
+                  <CircularProgress sx={{ color: COLORS.primary }} />
+                  <Typography sx={{ fontWeight: 700 }}>
+                    Preparing your personalised mock-up...
+                  </Typography>
                 </Box>
               )}
             </Grid>
