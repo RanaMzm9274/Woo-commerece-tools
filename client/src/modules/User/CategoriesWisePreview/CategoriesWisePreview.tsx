@@ -8,7 +8,7 @@ import { safeSetLocalStorage, safeSetSessionStorage } from "../../../lib/storage
 import { saveSlidesToScopes } from "../../../lib/slidesScope";
 import { saveSubscriptionPreviewPayload } from "../../../lib/subscriptionPreview";
 import { toJpeg, toPng } from "html-to-image";
-import { isIosTouchDevice } from "../../../lib/platform";
+import { isIosTouchDevice, isWebKitBrowser } from "../../../lib/platform";
 import { renderTemplateSlideToCanvasWithStats } from "../../../lib/templateSlideCanvas";
 import {
   buildGoogleFontsUrls,
@@ -33,6 +33,7 @@ type NavState = {
   slideIndex?: number;
   category?: string;
   previewKey?: string;
+  previewRevision?: number;
 
   // ✅ from TempletEditor (new)
   capturedSlides?: string[];
@@ -265,9 +266,13 @@ const CategoriesWisePreview: React.FC = () => {
   const navigate = useNavigate();
   const isMobile = useMediaQuery("(max-width:450px)");
   const isIosWebKit = useMemo(() => isIosTouchDevice(), []);
+  const isSafariWebKit = useMemo(() => isWebKitBrowser(), []);
 
   const config = state?.config;
   const category = state?.category ?? "";
+  const needsSafariTemplateWarmup =
+    isSafariWebKit &&
+    /candle|business\s*leaflets?/i.test(String(category ?? ""));
   const isTransparentCaptureCategory =
     /sticker|bag|tote|clothing|clothes|apparel|notebook/i.test(String(category ?? ""));
   const start = state?.slideIndex ?? 0;
@@ -300,8 +305,9 @@ const CategoriesWisePreview: React.FC = () => {
   const captureKey = useMemo(() => {
     const ids = slides.map((s) => String(s?.id ?? "")).join(",");
     const pid = productId ?? "state";
-    return `${pid}::${String(category ?? "")}::${slides.length}::${ids}`;
-  }, [category, slides, productId]);
+    const revision = String(state?.previewRevision ?? "legacy");
+    return `${pid}::${String(category ?? "")}::${slides.length}::${ids}::${revision}`;
+  }, [category, slides, productId, state?.previewRevision]);
   const slidesScopeKeys = useMemo(
     () => [`preview:${captureKey}`],
     [captureKey],
@@ -610,9 +616,9 @@ const CategoriesWisePreview: React.FC = () => {
   const captureSlidesFromDom = async (format: "jpeg" | "png", maxDim = 1600) => {
     const out: string[] = [];
     const fontEmbedCSS = await resolveCaptureFontEmbedCss(slides);
-    for (let i = 0; i < slides.length; i++) {
+    const captureNode = async (i: number) => {
       const node = slideNodeRefs.current[i];
-      if (!node) continue;
+      if (!node) return "";
       await waitForNodeAssets(node);
       await waitForNextPaint();
       const rect = node.getBoundingClientRect();
@@ -620,30 +626,41 @@ const CategoriesWisePreview: React.FC = () => {
       const ratio = maxSide ? maxDim / maxSide : 1.5;
       const pixelRatio = Math.min(2, Math.max(0.5, ratio));
       if (format === "png") {
-        const png = await toPng(node, {
+        return await toPng(node, {
           pixelRatio,
           backgroundColor: "transparent",
           cacheBust: false,
           skipFonts: !fontEmbedCSS,
           fontEmbedCSS: fontEmbedCSS || undefined,
         });
-        out.push(png);
-      } else {
-        const jpg = await toJpeg(node, {
-          quality: 0.78,
-          pixelRatio,
-          backgroundColor: "#ffffff",
-          cacheBust: false,
-          skipFonts: !fontEmbedCSS,
-          fontEmbedCSS: fontEmbedCSS || undefined,
-        });
-        out.push(jpg);
       }
+
+      return await toJpeg(node, {
+        quality: 0.78,
+        pixelRatio,
+        backgroundColor: "#ffffff",
+        cacheBust: false,
+        skipFonts: !fontEmbedCSS,
+        fontEmbedCSS: fontEmbedCSS || undefined,
+      });
+    };
+
+    // WebKit's first Candle/Leaflet serialization is an engine warm-up and can
+    // contain only part of the slide. Discard it, then capture every slide
+    // normally so no real slide becomes the warm-up frame.
+    if (needsSafariTemplateWarmup && slides.length > 0) {
+      await captureNode(0);
+      await waitForNextPaint();
+    }
+
+    for (let i = 0; i < slides.length; i += 1) {
+      const capturedSlide = await captureNode(i);
+      if (capturedSlide) out[i] = capturedSlide;
       if (i < slides.length - 1) {
         await new Promise((resolve) => setTimeout(resolve, 0));
       }
     }
-    return out;
+    return out.filter(Boolean);
   };
 
   const captureSingleSlideFromDom = async (
@@ -711,7 +728,18 @@ const CategoriesWisePreview: React.FC = () => {
       const ratio = maxSide ? maxDim / maxSide : 1.5;
       const pixelRatio = Math.min(format === "png" ? 3 : 2.5, Math.max(1, ratio));
 
-      for (let i = 0; i < slides.length; i++) {
+      if (needsSafariTemplateWarmup && slides.length > 0) {
+        const warmupSlide = await prepareSlideForCanvas(slides[0]);
+        await renderTemplateSlideToCanvasWithStats(warmupSlide as any, {
+          width: baseW,
+          height: baseH,
+          pixelRatio,
+          backgroundColor: format === "png" ? "transparent" : "#ffffff",
+        });
+        await waitForNextPaint();
+      }
+
+      for (let i = 0; i < slides.length; i += 1) {
         const preparedSlide = await prepareSlideForCanvas(slides[i]);
         const result = await renderTemplateSlideToCanvasWithStats(preparedSlide as any, {
           width: baseW,
@@ -724,15 +752,18 @@ const CategoriesWisePreview: React.FC = () => {
           return [];
         }
         const canvas = result.canvas;
-        out.push(format === "png" ? canvas.toDataURL("image/png") : canvas.toDataURL("image/jpeg", 0.88));
+        out[i] =
+          format === "png"
+            ? canvas.toDataURL("image/png")
+            : canvas.toDataURL("image/jpeg", 0.88);
         if (i < slides.length - 1) {
           await new Promise((resolve) => setTimeout(resolve, 0));
         }
       }
 
-      return out;
+      return out.filter(Boolean);
     },
-    [baseH, baseW, prepareSlideForCanvas, slides],
+    [baseH, baseW, needsSafariTemplateWarmup, prepareSlideForCanvas, slides],
   );
 
   const readCapturedFromStorage = useCallback(() => {

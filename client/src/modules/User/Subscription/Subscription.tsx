@@ -880,6 +880,16 @@ const Subscription = () => {
       return false;
     }
   }, [location.search]);
+  const isBusinessLeafletFromRouteOrStorage = useMemo(() => {
+    const fromQuery = String(new URLSearchParams(location.search).get("category") || "").trim();
+    if (isBusinessLeafletsCategory(fromQuery)) return true;
+    try {
+      const fromLocal = String(localStorage.getItem("selectedCategory") || "").trim();
+      return isBusinessLeafletsCategory(fromLocal);
+    } catch {
+      return false;
+    }
+  }, [location.search]);
   const [rawSlides, setRawSlides] = useState<RawSlide[]>(() =>
     readInitialRawSlides({
       previewKey: state?.previewKey,
@@ -919,6 +929,8 @@ const Subscription = () => {
   const isIosDevice = useMemo(() => isIosTouchDevice(), []);
   const iosMajorVersion = useMemo(() => getIosMajorVersion(), []);
   const isLegacyIosWebKit = isIosWebKit && iosMajorVersion !== null && iosMajorVersion < 15;
+  const isSafariBusinessLeafletPreview =
+    isIosWebKit && isBusinessLeafletFromRouteOrStorage;
 
   useEffect(() => {
     setCardMockupPreviewSrc(readStoredCardMockupPreviewSrc(cardMockupPreviewStorageKey));
@@ -981,11 +993,22 @@ const Subscription = () => {
         isStripeReturn && isStickerFromRouteOrStorage && Object.keys(persisted).length > 0;
       const lockPaidClothingPreview =
         isStripeReturn && isClothingFromRouteOrStorage && Object.keys(persisted).length > 0;
+      const lockSafariLeafletPreview =
+        isSafariBusinessLeafletPreview && Object.keys(persisted).length > 0;
       if (lockPaidClothingPreview) {
         // The runtime payload is hydrated from the immutable checkout snapshot.
         // Let it replace the older preview copy after Stripe returns; otherwise
         // a stale/partial WebKit capture can keep winning this merge forever.
         return getValidSlides({ ...persisted, ...runtime });
+      }
+      if (lockSafariLeafletPreview) {
+        // Before Stripe, the preview-page payload contains both freshly
+        // captured edited sides. A scoped runtime fallback can contain a
+        // current slide1 but an older/default slide2, so persisted must win
+        // per key. After Stripe, the durable checkout runtime is authoritative.
+        return isStripeReturn
+          ? getValidSlides({ ...persisted, ...runtime })
+          : getValidSlides({ ...runtime, ...persisted });
       }
       return lockStripeStickerPreview
         ? getValidSlides({ ...runtime, ...persisted })
@@ -994,6 +1017,7 @@ const Subscription = () => {
     [
       activeTemplatePreviewSession,
       isClothingFromRouteOrStorage,
+      isSafariBusinessLeafletPreview,
       isStickerFromRouteOrStorage,
       isStripeReturn,
       slidesObj,
@@ -2075,12 +2099,16 @@ const Subscription = () => {
     () => (product?.id && product?.type ? `${product.type}:${product.id}` : ""),
     [product]
   );
+  const isSafariBusinessLeaflet =
+    isIosWebKit &&
+    (isSafariBusinessLeafletPreview ||
+      isBusinessLeafletsCategory(categoryName));
   const usesDurableCheckoutSource = useMemo(
     () =>
       /clothing|clothes|apparel|mug|candle/i.test(
         String(categoryName ?? ""),
-      ),
-    [categoryName],
+      ) || isSafariBusinessLeaflet,
+    [categoryName, isSafariBusinessLeaflet],
   );
   const durableCheckoutSourceKey = useMemo(() => {
     const snapshotProductKey =
@@ -2307,9 +2335,20 @@ const Subscription = () => {
     try {
       if (!STRIPE_PK) throw new Error("Stripe key missing in env");
       const prep = getCheckoutPreparation(selectedPlan);
+      const exactSafariLeafletCheckoutSlides = isSafariBusinessLeaflet
+        ? getValidSlides(
+            activeTemplatePreviewSession
+              ? preparedTemplatePreviewSlides
+              : { ...subscriptionPreviewSlides, ...slidesObj },
+          )
+        : {};
+      const slidesForCheckout =
+        Object.keys(exactSafariLeafletCheckoutSlides).length > 0
+          ? Promise.resolve(exactSafariLeafletCheckoutSlides)
+          : ensureSlidesPayload(prep.captureFormat);
       const [stripe, preparedSlides] = await Promise.all([
         stripePromise,
-        ensureSlidesPayload(prep.captureFormat),
+        slidesForCheckout,
       ]);
       if (!stripe) throw new Error("Stripe not available");
       const validPreparedSlides = getValidSlides(preparedSlides);
@@ -2445,7 +2484,7 @@ const Subscription = () => {
         !forceSafariClothingLayerCapture &&
         hasEnough &&
         (hasPng || (isIosWebKit && Object.keys(preparedPreviewSlides).length)) &&
-        (!isPreviewOnly || isMugsCategory)
+        (!isPreviewOnly || isMugsCategory || isSafariBusinessLeaflet)
       ) {
         const validCurrent = getValidSlides(current as Record<string, string>);
         if (Object.keys(validCurrent).length) {
@@ -2504,6 +2543,7 @@ const Subscription = () => {
       isLegacyCardProduct,
       isMugsCategory,
       isPreviewOnly,
+      isSafariBusinessLeaflet,
       isStripeReturn,
       preparedTemplatePreviewSlides,
       readCapturedSlidesFromStorage,
@@ -2583,7 +2623,9 @@ const Subscription = () => {
         /clothing|clothes|apparel/i.test(String(categoryName ?? ""));
       const canUsePreparedSlidesCache =
         !isPaidClothingSource &&
+        !(isStripeReturn && isSafariBusinessLeaflet) &&
         !prep.isMugWrap &&
+        !prep.isCandlesGrid &&
         !shouldRenderCardRawForPdf &&
         !isLegacyCardProduct;
       if (canUsePreparedSlidesCache) {
@@ -2862,6 +2904,7 @@ const Subscription = () => {
       categoryName,
       ensureSlidesPayload,
       getCheckoutPreparation,
+      isSafariBusinessLeaflet,
       isStripeReturn,
       isLegacyCardProduct,
       loadPreparedSlidesPayload,
@@ -3425,7 +3468,8 @@ const Subscription = () => {
     activeTemplatePreviewSession &&
     rawSlides.length > 0 &&
     !isLegacyCardProduct &&
-    !isBagCategory;
+    !isBagCategory &&
+    !(isStripeReturn && isSafariBusinessLeaflet);
   const routeCardLiveSlide = routeCardRawSlides[cardPreviewSlideIndex] ?? routeCardRawSlides[0] ?? null;
   const preferLiveCardPreview =
     (isLegacyCardProduct || isCardsCategoryPage) &&

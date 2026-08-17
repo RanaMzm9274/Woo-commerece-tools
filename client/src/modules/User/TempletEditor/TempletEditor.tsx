@@ -1294,6 +1294,7 @@ export default function TempletEditor() {
     setIsDirty(true);
     const shouldClearLeafletUnderlay =
       /business\s*leaflets?/i.test(String(adminDesign?.category ?? "")) &&
+      !(isSafari || isIos) &&
       (/png/i.test(String(file.type ?? "")) || /\.png$/i.test(file.name ?? ""));
 
     setUserSlides((prev) => {
@@ -1464,11 +1465,17 @@ export default function TempletEditor() {
       canvasPx: adminDesign.canvasPx,
       slideIndex: activeSlide,
       category: adminDesign.category,
+      // Element ids stay unchanged when a user edits text, so the preview
+      // cache needs a per-navigation revision to distinguish this design from
+      // an older rendering of the same admin template.
+      previewRevision: Date.now(),
     };
 
     try {
       try {
         sessionStorage.setItem("templ_preview_slides", JSON.stringify(userSlides));
+        sessionStorage.removeItem("capturedSlides");
+        sessionStorage.removeItem("capturedSlidesKey");
       } catch {}
 
       // ✅ For mugs: use raw slide data in preview to avoid Safari dropping image layers
@@ -2196,4 +2203,3 @@ export default function TempletEditor() {
     </>
   );
 }
-
